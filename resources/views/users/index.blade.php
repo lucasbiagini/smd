@@ -3,10 +3,10 @@
 
 @section('header')
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Processos') }}
+        {{ __('Usuários') }}
     </h2>
 @endsection
 
 @section('content')
-    You're logged in!
+    <users></users>
 @endsection

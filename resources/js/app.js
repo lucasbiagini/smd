@@ -6,15 +6,21 @@ import Vue from 'vue'
  * Bootstrap-vue
  */
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-// Import Bootstrap and BootstrapVue CSS files (order is important)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-// Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 
-Vue.component('index-component', () => import('./components/index.vue'))
+Vue.component('users', () => import('./components/users/index.vue'))
+Vue.component('setores', () => import('./components/setores/index.vue'))
+Vue.component('setores-create', () => import('./components/setores/create.vue'))
+
+/**
+ * Sweetalert2
+ */
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+Vue.use(VueSweetalert2);
 
 new Vue({
     el: '#app'
