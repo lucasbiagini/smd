@@ -75,74 +75,28 @@
 
         <!-- Info modal -->
         <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
-            <div v-if="editUser !==null">
+            <div v-if="selectedUser !==null">
                 <div>
                     <b-tabs content-class="mt-3">
-                        <b-tab title="Perfil" :active="editUser.tab === 'perfil'" @click="editUser.tab = 'perfil'">
-                            <b-form-group id="nome-group" label="Nome:" label-for="nome">
-                                <b-form-input
-                                    id="nome"
-                                    v-model="editUser.name"
-                                    placeholder="Insira o nome do usuário"
-                                    required
-                                ></b-form-input>
-                            </b-form-group>
-                            <b-form-group id="status-group" label="Status:" label-for="status">
-                                <b-form-checkbox v-model="editUser.status" switch size="lg">
-                                    {{ editUser.status ? 'Usuário ATIVO (Clique para desativar)' : 'Usuário INATIVO (Clique para ativar)'}}
-                                </b-form-checkbox>
-                            </b-form-group>
+                        <b-tab title="Perfil" :active="tab === 'perfil'" @click="tab = 'perfil'">
+                            <edit-user :user="selectedUser"></edit-user>
                         </b-tab>
-                        <b-tab title="Permissões" :active="editUser.tab === 'permissions'" @click="editUser.tab = 'permissions'">
-                            <b-container>
-                                <b-row>
-                                    <b-col>
-                                    <label class="typo__label" for="multiselect-setores">Setor</label>
-                                    <multiselect
-                                        v-model="selectedCountries"
-                                        :multiple="false"
-                                        id="multiselect-setores"
-                                        label="name"
-                                        track-by="code"
-                                        placeholder="Type to search"
-                                        open-direction="bottom"
-                                        :options="countries"
-                                        :searchable="true"
-                                        :loading="isLoading"
-                                        :internal-search="false"
-                                        :clear-on-select="false"
-                                        :close-on-select="true"
-                                        :options-limit="300"
-                                        :limit="3"
-                                        :limit-text="limitText"
-                                        :max-height="600"
-                                        :show-no-results="false"
-                                        :hide-selected="true"
-                                        @search-change="asyncFind">
-                                        <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
-                                    </multiselect>
-                                    <pre class="language-json"><code>{{ selectedCountries  }}</code></pre>
-                                    </b-col>
-                                    <b-col>2 of 3</b-col>
-                                    <b-col>
-                                        <b-button>Incluir</b-button>
-                                    </b-col>
-                                </b-row>
-                            </b-container>
+                        <b-tab title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">
+                            <setor-role :user_id="selectedUser.id"></setor-role>
                         </b-tab>
                     </b-tabs>
                 </div>
             </div>
-                <template #modal-footer="{ salvar, cancelar }">
-                    <div class="w-100" v-show="editUser !== null && editUser.tab === 'perfil'">
-                        <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">
-                            Cancelar
-                        </b-button>
-                        <b-button id="salvar" variant="primary" size="sm" class="float-right mr-2" @click="saveUser">
-                            Salvar
-                        </b-button>
-                    </div>
-                </template>
+            <template #modal-footer="{ salvar, cancelar }">
+                <div class="w-100" v-show="selectedUser !== null && tab === 'perfil'">
+                    <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">
+                        Cancelar
+                    </b-button>
+                    <b-button id="salvar" variant="primary" size="sm" class="float-right mr-2" @click="saveUser">
+                        Salvar
+                    </b-button>
+                </div>
+            </template>
         </b-modal>
     </b-container>
 </ol>
@@ -182,16 +136,17 @@ export default ({
                 title: '',
                 content: ''
             },
-            editUser: null,
-            selectedCountries: [],
-            countries: [],
-            isLoading: false
+            selectedUser: null,
+            tab: null
         }
     },
     mounted () {
         this.fetch()
 
-        this.$root.$on('user:updated', () => this.fetch())
+        this.$root.$on('user:updated', () => {
+            this.resetInfoModal()
+            this.fetch()
+        })
     },
     methods: {
         async fetch () {
@@ -218,18 +173,18 @@ export default ({
         info(item, index, button) {
             this.infoModal.title = item.name
             this.infoModal.content = item
-            this.editUser = {
+            this.selectedUser = {
                 id: item.id,
                 name: item.name,
                 status: item.status === 1 ? true : false,
-                tab: 'perfil'
             }
+            this.tab = 'perfil'
             this.$root.$emit('bv::show::modal', this.infoModal.id, button)
         },
         resetInfoModal() {
             this.infoModal.title = ''
             this.infoModal.content = ''
-            this.editUser = null
+            this.selectedUser = null
             this.$refs['modal'].hide()
         },
         onFiltered(filteredItems) {
@@ -239,39 +194,7 @@ export default ({
             // this.fetch()
         },
         saveUser () {
-            axios.patch('/users/' + this.editUser.id, {
-                name: this.editUser.name,
-                status: this.editUser.status
-            })
-                .then(response => {
-                    this.resetInfoModal()
-                    this.$swal.fire({
-                        timer: 1000,
-                        title: 'Sucesso!',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        toast: true,
-                        position: 'top-end',
-                        timerProgressBar: true
-                    })
-                    this.$root.$emit('user:updated')
-                })
-                .catch(error => {
-
-                })
-        },
-        limitText (count) {
-            return `and ${count} other countries`
-        },
-        asyncFind (query) {
-            this.isLoading = true
-            axios.post('/countries').then(response => {
-                this.countries = response.data
-                this.isLoading = false
-            })
-        },
-        clearAll () {
-            this.selectedCountries = []
+            this.$root.$emit('user:save')
         }
     },
     computed: {
