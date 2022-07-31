@@ -18,4 +18,9 @@ class SetorRepository implements ISetor
             'desc' => $desc
         ]);
     }
+
+    public function searchSetor ($query)
+    {
+        return Setor::where('name', 'like', "%$query%")->take(5)->get();
+    }
 }

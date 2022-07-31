@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/countries', function (\Illuminate\Support\Facades\Request $request) {
-   return json_decode('[{"name":"Afghanistan","code":"AF"},{"name":"Åland Islands","code":"AX"},{"name":"Albania","code":"AL"},{"name":"Algeria","code":"DZ"},{"name":"American Samoa","code":"AS"},{"name":"AndorrA","code":"AD"},{"name":"Angola","code":"AO"}]');
-});
-
 Route::middleware(['auth', 'verified'])->group(function () {
 
     /**
@@ -37,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/', 'UserController@index')->name('users.index');
             Route::post('/', 'PaginateUserController')->name('users.list');
             Route::patch('/{user}', 'UpdateUserController')->name('users.update');
+            Route::get('/{user}/roles', 'GetUserRolesController')->name('user.roles');
         });
 
         /**
@@ -48,10 +45,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ], function () {
             Route::get('/', 'SetorController@index')->name('setores.index');
             Route::post('/', 'PaginateSetorController')->name('setores.list');
+            Route::post('/search', 'SearchSetorController')->name('setores.search');
             Route::post('/create', 'StoreSetorController')->name('setores.store');
-            Route::get('/{post}', 'SetorController@show')->name('setores.show');
-            Route::patch('/{post}', 'SetorController@update')->name('setores.update');
-            Route::delete('/{post}', 'SetorController@destroy')->name('setores.destroy');
         });
 
         /**
@@ -63,7 +58,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ], function () {
             Route::get('/', 'RoleController@index')->name('roles.index');
             Route::post('/', 'PaginateRoleController')->name('roles.list');
+            Route::post('/search', 'SearchRoleController')->name('roles.search');
             Route::post('/create', 'StoreRoleController')->name('roles.store');
+        });
+
+        /**
+         * SetorUser
+         */
+        Route::group([
+            'namespace' => 'SetorUser',
+            'prefix' => 'setor-user'
+        ], function () {
+            Route::post('/create', 'StoreSetorUserController')->name('setor-user.store');
+            Route::post('/{setor_user}/role', 'RemoveRoleController')->name('setor-user.remove-role');
         });
     });
 });

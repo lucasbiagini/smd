@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Role;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Role\StoreRoleRequest;
+use App\Http\Requests\Role\SearchRoleRequest;
 use App\Repositories\Role\IRole;
 
-class StoreRoleController extends Controller
+class SearchRoleController extends Controller
 {
     private IRole $role;
 
@@ -15,8 +15,8 @@ class StoreRoleController extends Controller
         $this->role = $role;
     }
 
-    public function __invoke (StoreRoleRequest $request)
+    public function __invoke (SearchRoleRequest $request)
     {
-        return $this->role->store($request->name);
+        return $this->role->searchRole($request->only('query')['query']);
     }
 }

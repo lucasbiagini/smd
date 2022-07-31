@@ -18,4 +18,14 @@ class RoleRepository implements IRole
             'guard_name' => 'web'
         ]);
     }
+
+    public function searchRole ($query)
+    {
+        return Role::where('name', 'like', "%$query%")->take(5)->get();
+    }
+
+    public function findById ($id)
+    {
+        return Role::find($id);
+    }
 }
