@@ -93,9 +93,42 @@
                                 </b-form-checkbox>
                             </b-form-group>
                         </b-tab>
-                        <b-tab title="Setores" :active="editUser.tab === 'setores'" @click="editUser.tab = 'setores'">
-
-
+                        <b-tab title="Permissões" :active="editUser.tab === 'permissions'" @click="editUser.tab = 'permissions'">
+                            <b-container>
+                                <b-row>
+                                    <b-col>
+                                    <label class="typo__label" for="multiselect-setores">Setor</label>
+                                    <multiselect
+                                        v-model="selectedCountries"
+                                        :multiple="false"
+                                        id="multiselect-setores"
+                                        label="name"
+                                        track-by="code"
+                                        placeholder="Type to search"
+                                        open-direction="bottom"
+                                        :options="countries"
+                                        :searchable="true"
+                                        :loading="isLoading"
+                                        :internal-search="false"
+                                        :clear-on-select="false"
+                                        :close-on-select="true"
+                                        :options-limit="300"
+                                        :limit="3"
+                                        :limit-text="limitText"
+                                        :max-height="600"
+                                        :show-no-results="false"
+                                        :hide-selected="true"
+                                        @search-change="asyncFind">
+                                        <span slot="noResult">Oops! No elements found. Consider changing the search query.</span>
+                                    </multiselect>
+                                    <pre class="language-json"><code>{{ selectedCountries  }}</code></pre>
+                                    </b-col>
+                                    <b-col>2 of 3</b-col>
+                                    <b-col>
+                                        <b-button>Incluir</b-button>
+                                    </b-col>
+                                </b-row>
+                            </b-container>
                         </b-tab>
                     </b-tabs>
                 </div>
@@ -117,8 +150,12 @@
 
 <script>
 import axios from 'axios'
+import Multiselect from "vue-multiselect";
 
 export default ({
+    components: {
+        Multiselect
+    },
     data () {
         return {
             defaults: {
@@ -145,7 +182,10 @@ export default ({
                 title: '',
                 content: ''
             },
-            editUser: null
+            editUser: null,
+            selectedCountries: [],
+            countries: [],
+            isLoading: false
         }
     },
     mounted () {
@@ -219,6 +259,19 @@ export default ({
                 .catch(error => {
 
                 })
+        },
+        limitText (count) {
+            return `and ${count} other countries`
+        },
+        asyncFind (query) {
+            this.isLoading = true
+            axios.post('/countries').then(response => {
+                this.countries = response.data
+                this.isLoading = false
+            })
+        },
+        clearAll () {
+            this.selectedCountries = []
         }
     },
     computed: {
@@ -250,3 +303,5 @@ export default ({
     }
 })
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

@@ -24,6 +24,13 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
 
+// /**
+//  * Vue Multiselect
+//  */
+// import Multiselect from "vue-multiselect";
+// Vue.use(Multiselect)
+
+
 new Vue({
     el: '#app'
 })
