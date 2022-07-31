@@ -14,6 +14,8 @@ Vue.use(IconsPlugin)
 Vue.component('users', () => import('./components/users/index.vue'))
 Vue.component('setores', () => import('./components/setores/index.vue'))
 Vue.component('setores-create', () => import('./components/setores/create.vue'))
+Vue.component('roles', () => import('./components/roles/index.vue'))
+Vue.component('roles-create', () => import('./components/roles/create.vue'))
 
 /**
  * Sweetalert2

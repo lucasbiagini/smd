@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Role\IRole;
+use App\Repositories\Role\RoleRepository;
 use App\Repositories\Setor\ISetor;
 use App\Repositories\Setor\SetorRepository;
 use App\Repositories\User\IUser;
@@ -19,6 +21,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(IUser::class, UserRepository::class);
         $this->app->bind(ISetor::class, SetorRepository::class);
+        $this->app->bind(IRole::class, RoleRepository::class);
     }
 
     /**

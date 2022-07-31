@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Setor;
+namespace App\Http\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PaginateSetorRequest extends FormRequest
+class PaginateRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class PaginateSetorRequest extends FormRequest
     public function rules()
     {
         return [
-            'sortBy' => ['required', 'in:id,name,desc'],
+            'sortBy' => ['required', 'in:id,name'],
             'sortDirection' => ['required', 'in:asc,desc'],
             'perPage' => ['required', 'integer']
         ];

@@ -49,6 +49,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::patch('/{post}', 'SetorController@update')->name('setores.update');
             Route::delete('/{post}', 'SetorController@destroy')->name('setores.destroy');
         });
+
+        /**
+         * Roles
+         */
+        Route::group([
+           'namespace' => 'Role',
+           'prefix' => 'roles'
+        ], function () {
+            Route::get('/', 'RoleController@index')->name('roles.index');
+            Route::post('/', 'PaginateRoleController')->name('roles.list');
+            Route::post('/create', 'StoreRoleController')->name('roles.store');
+        });
     });
 });
 

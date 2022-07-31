@@ -74,24 +74,34 @@
         </b-table>
 
         <!-- Info modal -->
-        <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal">
+        <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
             <div v-if="editUser !==null">
-                <b-form-group id="nome-group" label="Nome:" label-for="nome">
-                        <b-form-input
-                            id="nome"
-                            v-model="editUser.name"
-                            placeholder="Insira o nome do usuário"
-                            required
-                        ></b-form-input>
-                </b-form-group>
-                <b-form-group id="status-group" label="Status:" label-for="status">
-                        <b-form-checkbox v-model="editUser.status" switch size="lg">
-                            {{ editUser.status ? 'Usuário ATIVO (Clique para desativar)' : 'Usuário INATIVO (Clique para ativar)'}}
-                        </b-form-checkbox>
-                </b-form-group>
+                <div>
+                    <b-tabs content-class="mt-3">
+                        <b-tab title="Perfil" :active="editUser.tab === 'perfil'" @click="editUser.tab = 'perfil'">
+                            <b-form-group id="nome-group" label="Nome:" label-for="nome">
+                                <b-form-input
+                                    id="nome"
+                                    v-model="editUser.name"
+                                    placeholder="Insira o nome do usuário"
+                                    required
+                                ></b-form-input>
+                            </b-form-group>
+                            <b-form-group id="status-group" label="Status:" label-for="status">
+                                <b-form-checkbox v-model="editUser.status" switch size="lg">
+                                    {{ editUser.status ? 'Usuário ATIVO (Clique para desativar)' : 'Usuário INATIVO (Clique para ativar)'}}
+                                </b-form-checkbox>
+                            </b-form-group>
+                        </b-tab>
+                        <b-tab title="Setores" :active="editUser.tab === 'setores'" @click="editUser.tab = 'setores'">
+
+
+                        </b-tab>
+                    </b-tabs>
+                </div>
             </div>
                 <template #modal-footer="{ salvar, cancelar }">
-                    <div class="w-100">
+                    <div class="w-100" v-show="editUser !== null && editUser.tab === 'perfil'">
                         <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">
                             Cancelar
                         </b-button>
@@ -171,7 +181,8 @@ export default ({
             this.editUser = {
                 id: item.id,
                 name: item.name,
-                status: item.status === 1 ? true : false
+                status: item.status === 1 ? true : false,
+                tab: 'perfil'
             }
             this.$root.$emit('bv::show::modal', this.infoModal.id, button)
         },
