@@ -4,13 +4,13 @@
             <b-form-input
                 id="nome"
                 v-model="form.name"
-                placeholder="Insira o nome do usuário"
+                placeholder="Insira o nome do setor"
                 required
             ></b-form-input>
         </b-form-group>
         <b-form-group id="status-group" label="Status:" label-for="status">
             <b-form-checkbox v-model="form.status" switch size="lg">
-                {{ form.status ? 'Usuário ATIVO (Clique para desativar)' : 'Usuário INATIVO (Clique para ativar)'}}
+                {{ form.status ? 'Setor ATIVO (Clique para desativar)' : 'Setor INATIVO (Clique para ativar)'}}
             </b-form-checkbox>
         </b-form-group>
     </div>
@@ -21,28 +21,28 @@ import axios from 'axios'
 
 export default({
     props: [
-        'user'
+        'setor'
     ],
     data () {
         return {
             form: {
-                name: this.user.name,
-                status: this.user.status
+                name: this.setor.name,
+                status: this.setor.status
             }
         }
     },
     mounted () {
-        this.$root.$on('user:save', () => this.save())
+        this.$root.$on('setor:save', () => this.save())
     },
     methods: {
         reset () {
-          this.form = {
-              name: this.user.name,
-              status: this.user.status
-          }
+            this.form = {
+                name: this.setor.name,
+                status: this.setor.status
+            }
         },
         save () {
-            axios.patch('/users/' + this.user.id, {
+            axios.patch('/setores/' + this.setor.id, {
                 name: this.form.name,
                 status: this.form.status
             })
@@ -56,7 +56,7 @@ export default({
                         position: 'top-end',
                         timerProgressBar: true
                     })
-                    this.$root.$emit('user:updated')
+                    this.$root.$emit('setor:updated')
                 })
                 .catch(error => {
 

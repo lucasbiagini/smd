@@ -23,4 +23,14 @@ class SetorRepository implements ISetor
     {
         return Setor::where('name', 'like', "%$query%")->take(5)->get();
     }
+
+    public function updateSetor (Setor $user, $name, $status)
+    {
+        $user->update([
+            'name' => $name,
+            'status' => $status
+        ]);
+
+        return $user->save();
+    }
 }

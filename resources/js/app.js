@@ -15,9 +15,11 @@ Vue.component('users', () => import('./components/users/index.vue'))
 Vue.component('edit-user', () => import('./components/users/edit.vue'))
 Vue.component('setor-role', () => import ('./components/users/setor-role.vue'))
 Vue.component('setores', () => import('./components/setores/index.vue'))
-Vue.component('setores-create', () => import('./components/setores/create.vue'))
+Vue.component('create-setor', () => import('./components/setores/create.vue'))
+Vue.component('edit-setor', () => import('./components/setores/edit.vue'))
+Vue.component('setores-permissions', () => import('./components/setores/permissions'))
 Vue.component('roles', () => import('./components/roles/index.vue'))
-Vue.component('roles-create', () => import('./components/roles/create.vue'))
+Vue.component('create-role', () => import('./components/roles/create.vue'))
 
 /**
  * Sweetalert2

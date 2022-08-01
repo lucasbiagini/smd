@@ -4,7 +4,7 @@
 @section('header')
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('Perfis') }}
-        <roles-create></roles-create>
+        <create-role></create-role>
     </h2>
 @endsection
 

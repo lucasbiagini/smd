@@ -13,7 +13,7 @@ class Setor extends Model
 
     protected $fillable = [
         'name',
-        'desc'
+        'status'
     ];
 
     public function users ()

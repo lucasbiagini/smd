@@ -75,20 +75,20 @@
 
         <!-- Info modal -->
         <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
-            <div v-if="selectedUser !==null">
+            <div v-if="selectedItem !== null">
                 <div>
                     <b-tabs content-class="mt-3">
-                        <b-tab title="Perfil" :active="tab === 'perfil'" @click="tab = 'perfil'">
-                            <edit-user :user="selectedUser"></edit-user>
+                        <b-tab title="Editar" :active="tab === 'editar'" @click="tab = 'editar'">
+                            <edit-user :user="selectedItem"></edit-user>
                         </b-tab>
                         <b-tab title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">
-                            <setor-role :user_id="selectedUser.id"></setor-role>
+                            <setor-role :user_id="selectedItem.id"></setor-role>
                         </b-tab>
                     </b-tabs>
                 </div>
             </div>
             <template #modal-footer="{ salvar, cancelar }">
-                <div class="w-100" v-show="selectedUser !== null && tab === 'perfil'">
+                <div class="w-100" v-show="selectedItem !== null && tab === 'editar'">
                     <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">
                         Cancelar
                     </b-button>
@@ -136,7 +136,7 @@ export default ({
                 title: '',
                 content: ''
             },
-            selectedUser: null,
+            selectedItem: null,
             tab: null
         }
     },
@@ -173,25 +173,22 @@ export default ({
         info(item, index, button) {
             this.infoModal.title = item.name
             this.infoModal.content = item
-            this.selectedUser = {
+            this.selectedItem = {
                 id: item.id,
                 name: item.name,
                 status: item.status === 1 ? true : false,
             }
-            this.tab = 'perfil'
+            this.tab = 'editar'
             this.$root.$emit('bv::show::modal', this.infoModal.id, button)
         },
         resetInfoModal() {
             this.infoModal.title = ''
             this.infoModal.content = ''
-            this.selectedUser = null
+            this.selectedItem = null
             this.$refs['modal'].hide()
         },
         onFiltered(filteredItems) {
-            // Trigger pagination to update the number of buttons/pages due to filtering
-            // this.current_page = 1
             this.per_page = filteredItems.length > 0 ? filteredItems.length : this.defaults.per_page
-            // this.fetch()
         },
         saveUser () {
             this.$root.$emit('user:save')

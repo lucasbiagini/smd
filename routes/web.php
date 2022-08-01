@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/', 'PaginateSetorController')->name('setores.list');
             Route::post('/search', 'SearchSetorController')->name('setores.search');
             Route::post('/create', 'StoreSetorController')->name('setores.store');
+            Route::patch('/{setor}', 'UpdateSetorController')->name('setores.update');
         });
 
         /**
