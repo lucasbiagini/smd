@@ -4,7 +4,7 @@
             v-b-modal.create-setor
             variant="success"
         >
-            Button
+            Adicionar Setor
         </b-button>
         <b-modal
             id="create-setor"

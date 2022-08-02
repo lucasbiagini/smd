@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/logout', function () {
+   return redirect('/login');
+});
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     /**
@@ -100,9 +104,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'namespace' => 'Permission',
                 'prefix' => 'permissions'
             ], function () {
-                Route::middleware(['permission'])->group(function () {
-                    Route::get('/all', 'AllPermissionsController')->name('permissions.all');
-                });
+                Route::get('/all', 'AllPermissionsController')->name('permissions.all');
             });
         });
     });

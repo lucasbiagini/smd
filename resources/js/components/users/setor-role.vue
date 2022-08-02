@@ -214,7 +214,15 @@ export default({
                     this.fetchRoles()
                 })
                 .catch(error => {
-                    console.log(error)
+                    this.$swal.fire({
+                        timer: 10000,
+                        title: error.response.data.message,
+                        icon: 'error',
+                        showConfirmButton: false,
+                        toast: true,
+                        position: 'top-end',
+                        timerProgressBar: true
+                    })
                 })
             this.isRemovingRole = false
 

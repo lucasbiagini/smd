@@ -2,7 +2,8 @@
     <div>
             <b-modal
                 id="modal-select-setor"
-                centered title="Selecione um setor"
+                title="Selecione um setor"
+                centered
                 hide-footer
                 no-close-on-backdrop
                 no-close-on-esc

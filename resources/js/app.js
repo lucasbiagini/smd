@@ -22,6 +22,7 @@ Vue.component('roles', () => import('./components/roles/index.vue'))
 Vue.component('create-role', () => import('./components/roles/create.vue'))
 Vue.component('role-permissions', () => import('./components/roles/permissions.vue'))
 Vue.component('edit-role', () => import('./components/roles/edit.vue'))
+Vue.component('index-unauthorized', () => import('./components/index/unauthorized.vue'))
 
 /**
  * Sweetalert2

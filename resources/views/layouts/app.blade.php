@@ -44,9 +44,9 @@
                 @elseif (auth()->user()->setores()->where('status', 1)->count() > 0)
                     <select-setor :user_id="{{ auth()->user()->id }}"></select-setor>
                 @elseif (!auth()->user()->status)
-                    <h1>usuário não está ativo</h1>
+                    <index-unauthorized message="Usuário inativo."></index-unauthorized>
                 @else
-                    <h1>nenhum setor cadastrado ou ativo no momento.</h1>
+                    <index-unauthorized message="Nenhum setor cadastrado ou ativo no momento."></index-unauthorized>
                 @endif
             </div>
         </div>

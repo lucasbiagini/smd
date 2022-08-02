@@ -58,14 +58,15 @@
                 <b-button
                     size="sm"
                     @click="info(row.item, row.index, $event.target)"
+                    variant="primary"
                     v-if="$can('users.update','setor-user.store', 'setor-user.remove-role')"
                 >
                     <b-icon-pencil></b-icon-pencil>
                 </b-button>
-                <b-button size="sm" @click="row.toggleDetails">
-                    <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>
-                    <b-icon-eye-slash v-else></b-icon-eye-slash>
-                </b-button>
+<!--                <b-button size="sm" @click="row.toggleDetails">-->
+<!--                    <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>-->
+<!--                    <b-icon-eye-slash v-else></b-icon-eye-slash>-->
+<!--                </b-button>-->
             </template>
 
             <template #row-details="row">
@@ -129,7 +130,7 @@ export default ({
             fields: [
                 { key: 'name', label: 'Nome', sortable: true, sortDirection: 'desc', class: 'text-center', stickyColumn: true },
                 { key: 'email', label: 'Email', sortable: true, class: 'text-center', stickyColumn: true },
-                { key: 'actions', label: 'Actions', class: 'text-right', stickyColumn: true }
+                { key: 'actions', label: 'Ações', class: 'text-right', stickyColumn: true }
             ],
             pageOptions: null,
             sortBy: '',

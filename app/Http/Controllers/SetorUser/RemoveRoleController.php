@@ -22,6 +22,19 @@ class RemoveRoleController extends Controller
     public function __invoke (RemoveRoleRequest $request, SetorUser $setor_user)
     {
         $role = $this->role->findById($request->role_id);
+        if ($role->name === 'Administrador') {
+            $count_other_adminstradores = SetorUser::where('setor_id', $setor_user->setor_id)
+                ->where('user_id', '!=', $setor_user->user_id)
+                ->whereHas('roles', function ($query) {
+                    $query->where('name', 'Administrador');
+                })
+                ->count();
+
+            if ($count_other_adminstradores === 1) return response([
+                'message' => 'Não é possível remover o único Administrador do setor.'
+            ], 422);
+        }
+
         $setor_user->removeRole($role->name);
         $this->setor_user->deleteIfHasNoRole($setor_user);
     }

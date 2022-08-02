@@ -98,6 +98,11 @@ class User extends Authenticatable implements MustVerifyEmail
             ->where('setor_id', '=', session('setor_id'))
             ->first();
 
+        if (!isset($setor_user)) {
+            session()->forget('setor_id');
+            return redirect('/');
+        }
+
         $allPermissions = collect([]);
         foreach ($setor_user->roles as $role) {
             $permissions = $role->permissions->pluck('name');

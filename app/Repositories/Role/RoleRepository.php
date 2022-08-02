@@ -8,7 +8,7 @@ class RoleRepository implements IRole
 {
     public function paginateRoles ($sortBy, $sortDirection, $perPage)
     {
-        return Role::where('name', '!=', 'admin')
+        return Role::whereNotIn('name', ['admin', 'Administrador'])
             ->orderBy($sortBy, $sortDirection)
             ->paginate($perPage);
     }
@@ -39,5 +39,10 @@ class RoleRepository implements IRole
         ]);
 
         return $user->save();
+    }
+
+    public function findByName ($name)
+    {
+        return Role::where('name', $name)->first();
     }
 }

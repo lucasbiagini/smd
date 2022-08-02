@@ -11,4 +11,5 @@ interface IRole
     public function searchRole($query);
     public function findById($id);
     public function updateRole(Role $setor, $name, $status);
+    public function findByName($name);
 }
