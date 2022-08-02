@@ -8,7 +8,9 @@ class RoleRepository implements IRole
 {
     public function paginateRoles ($sortBy, $sortDirection, $perPage)
     {
-        return Role::orderBy($sortBy, $sortDirection)->paginate($perPage);
+        return Role::where('name', '!=', 'admin')
+            ->orderBy($sortBy, $sortDirection)
+            ->paginate($perPage);
     }
 
     public function store ($name)

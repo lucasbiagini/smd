@@ -34,6 +34,9 @@
 import axios from 'axios'
 
 export default({
+    props: [
+      'user_id'
+    ],
     data () {
         return {
             setores: [],
@@ -49,7 +52,7 @@ export default({
     methods: {
         async fetch () {
             this.isFetching = true
-            await axios.get('/setores/all')
+            await axios.get(`/users/${this.user_id}/setores`)
                 .then(response => {
                     this.setores = response.data
                 })

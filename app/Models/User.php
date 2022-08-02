@@ -57,8 +57,18 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasPermissionTo ($permission): bool
     {
         if ($this->hasRole('admin')) return true;
-        foreach ($this->setor_user as $setor_user) return $setor_user->hasPermissionTo($permission);
-        return false;
+
+        if (!session()->has('setor_id')) return false; // returns false if session variable setor_id isn't set
+
+        $setor = $this->setor_user()
+            ->where('setor_id', session('setor_id'))
+            ->first();
+
+        if (!isset($setor)) return false; // or if couldn't find setor
+
+        if (!$setor->status) return false; // or if setor is not active
+
+        return $setor->hasPermissionTo($permission);
     }
 
     public function hasSetor(Setor $setor)

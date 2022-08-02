@@ -42,7 +42,7 @@
                     </div>
                 </main>
                 @else
-                    <select-setor></select-setor>
+                    <select-setor :user_id="{{ auth()->user()->id }}"></select-setor>
                 @endif
             </div>
         </div>
