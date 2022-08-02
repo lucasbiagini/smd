@@ -8,7 +8,7 @@ class SetorRepository implements ISetor
 {
     public function paginateSetores ($sortBy, $sortDirection, $perPage)
     {
-        return Setor::orderBy($sortBy, $sortDirection)->paginate($perPage);
+        return Setor::ofSetor()->orderBy($sortBy, $sortDirection)->paginate($perPage);
     }
 
     public function store ($name, $desc)
@@ -21,7 +21,7 @@ class SetorRepository implements ISetor
 
     public function searchSetor ($query)
     {
-        return Setor::where('name', 'like', "%$query%")->take(5)->get();
+        return Setor::ofSetor()->where('name', 'like', "%$query%")->take(5)->get();
     }
 
     public function updateSetor (Setor $user, $name, $status)
@@ -36,6 +36,6 @@ class SetorRepository implements ISetor
 
     public function all ()
     {
-        return Setor::all();
+        return Setor::ofSetor()->all();
     }
 }

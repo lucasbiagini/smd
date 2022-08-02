@@ -19,6 +19,13 @@ class SetorUser extends Model
 
     protected $guard_name = 'web';
 
+    public function scopeOfSetor($query)
+    {
+        if (!auth()->user()->hasRole('admin') && session()->has('setor_id')) {
+            $query->where('setor_id', session('setor_id'));
+        }
+    }
+
     public function user ()
     {
         return $this->belongsTo(User::class);

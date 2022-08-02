@@ -8,7 +8,7 @@ class SetorUserRepository implements ISetorUser
 {
     public function findOrCreate($setor_id, $user_id)
     {
-        $setor_user = SetorUser::where('setor_id', $setor_id)
+        $setor_user = SetorUser::ofSetor()->where('setor_id', $setor_id)
             ->where('user_id', $user_id)
             ->first();
 

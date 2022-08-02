@@ -9,12 +9,12 @@ class UserRepository implements IUser
 {
     public function findById ($id)
     {
-        return User::find($id);
+        return User::ofSetor()->find($id);
     }
 
     public function paginateUsers($sortBy, $sortDirection, $perPage)
     {
-        return User::orderBy($sortBy, $sortDirection)->paginate($perPage);
+        return User::ofSetor()->orderBy($sortBy, $sortDirection)->paginate($perPage);
     }
 
     public function updateUser (User $user, $name, $status)
@@ -29,6 +29,6 @@ class UserRepository implements IUser
 
     public function getRoles (User $user)
     {
-        return SetorUser::where('user_id', $user->id)->with('user', 'setor', 'roles')->get();
+        return SetorUser::ofSetor()->where('user_id', $user->id)->with('user', 'setor', 'roles')->get();
     }
 }

@@ -44,6 +44,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeOfSetor($query)
+    {
+        if (!auth()->user()->hasRole('admin') && session()->has('setor_id')) {
+            $query->whereHas('setor_user', function ($query) {
+                $query->where('setor_id', session('setor_id'));
+            });
+        }
+    }
+
     public function setores ()
     {
         return $this->belongsToMany(Setor::class, 'setor_user', 'user_id', 'setor_id');
