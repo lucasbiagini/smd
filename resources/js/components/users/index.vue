@@ -58,7 +58,7 @@
                 <b-button
                     size="sm"
                     @click="info(row.item, row.index, $event.target)"
-                    v-if="$can('users.update','users.roles')"
+                    v-if="$can('users.update','setor-user.store', 'setor-user.remove-role')"
                 >
                     <b-icon-pencil></b-icon-pencil>
                 </b-button>
@@ -85,7 +85,7 @@
                         <b-tab v-if="$can('users.update')" title="Editar" :active="tab === 'editar'" @click="tab = 'editar'">
                             <edit-user :user="selectedItem"></edit-user>
                         </b-tab>
-                        <b-tab v-if="$can('users.roles')" title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">
+                        <b-tab v-if="$can('setor-user.store', 'setor-user.remove-role')" title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">
                             <setor-role :user_id="selectedItem.id"></setor-role>
                         </b-tab>
                     </b-tabs>
