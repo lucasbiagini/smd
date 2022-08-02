@@ -176,7 +176,7 @@ export default ({
             this.selectedItem = {
                 id: item.id,
                 name: item.name,
-                status: item.status === 1 ? true : false,
+                status: item.status === 1
             }
             this.tab = 'editar'
             this.$root.$emit('bv::show::modal', this.infoModal.id, button)

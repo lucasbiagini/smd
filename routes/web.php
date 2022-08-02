@@ -51,7 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         /**
-         * Roles
+         * Roles Routes
          */
         Route::group([
            'namespace' => 'Role',
@@ -61,10 +61,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/', 'PaginateRoleController')->name('roles.list');
             Route::post('/search', 'SearchRoleController')->name('roles.search');
             Route::post('/create', 'StoreRoleController')->name('roles.store');
+            Route::get('/{role}/permissions', 'ListRolePermissionsController')->name('role.permissions.list');
+            Route::post('/{role}/permissions', 'SyncRolePermissionsController')->name('roles.permissions.sync');
+            Route::patch('/{role}', 'UpdateRoleController')->name('roles.update');
         });
 
         /**
-         * SetorUser
+         * SetorUser Routes
          */
         Route::group([
             'namespace' => 'SetorUser',
@@ -72,6 +75,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ], function () {
             Route::post('/create', 'StoreSetorUserController')->name('setor-user.store');
             Route::post('/{setor_user}/role', 'RemoveRoleController')->name('setor-user.remove-role');
+        });
+
+        /**
+         * Permissions Routes
+         */
+        Route::group([
+            'namespace' => 'Permission',
+            'prefix' => 'permissions'
+        ], function () {
+           Route::get('/all', 'AllPermissionsController')->name('permissions.all');
         });
     });
 });

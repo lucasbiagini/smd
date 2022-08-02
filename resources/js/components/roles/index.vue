@@ -73,8 +73,29 @@
             </b-table>
 
             <!-- Info modal -->
-            <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
-                <pre>{{ infoModal.content }}</pre>
+            <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
+                <div v-if="selectedItem !== null">
+                    <div>
+                        <b-tabs content-class="mt-3">
+                            <b-tab title="Editar" :active="tab === 'editar'" @click="tab = 'editar'">
+                                <edit-role :role="selectedItem"></edit-role>
+                            </b-tab>
+                            <b-tab title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">
+                                <role-permissions :role_id="selectedItem.id"></role-permissions>
+                            </b-tab>
+                        </b-tabs>
+                    </div>
+                </div>
+                <template #modal-footer="{ salvar, cancelar }">
+                    <div class="w-100" v-show="selectedItem !== null">
+                        <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">
+                            Cancelar
+                        </b-button>
+                        <b-button id="salvar" variant="primary" size="sm" class="float-right mr-2" @click="save">
+                            Salvar
+                        </b-button>
+                    </div>
+                </template>
             </b-modal>
         </b-container>
     </ol>
@@ -108,12 +129,22 @@ export default ({
                 id: 'info-modal',
                 title: '',
                 content: ''
-            }
+            },
+            selectedItem: null,
+            tab: null
         }
     },
     mounted () {
         this.fetch()
         this.$root.$on('role:created', () => this.fetch())
+        this.$root.$on('role:updated', () => {
+            this.resetInfoModal()
+            this.fetch()
+        })
+        this.$root.$on('role:permissions', () => {
+            this.resetInfoModal()
+            this.fetch()
+        })
     },
     methods: {
         async fetch () {
@@ -138,16 +169,28 @@ export default ({
             this.isFetching = false
         },
         info(item, index, button) {
-            this.infoModal.title = `Row index: ${index}`
-            this.infoModal.content = JSON.stringify(item, null, 2)
+            this.infoModal.title = item.name
+            this.infoModal.content = item
+            this.selectedItem = {
+                id: item.id,
+                name: item.name,
+                status: item.status === 1
+            }
+            this.tab = 'editar'
             this.$root.$emit('bv::show::modal', this.infoModal.id, button)
         },
         resetInfoModal() {
             this.infoModal.title = ''
             this.infoModal.content = ''
+            this.selectedItem = null
+            this.$refs['modal'].hide()
         },
         onFiltered(filteredItems) {
             this.per_page = filteredItems.length > 0 ? filteredItems.length : this.defaults.per_page
+        },
+        save() {
+            if (this.tab === 'editar') this.$root.$emit('role:save')
+            else if (this.tab === 'permissions') this.$root.$emit('role:permissions')
         }
     },
     computed: {

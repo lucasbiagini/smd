@@ -75,23 +75,14 @@
             <!-- Info modal -->
             <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
                 <div v-if="selectedItem !== null">
-                    <div>
-                        <b-tabs content-class="mt-3">
-                            <b-tab title="Editar" :active="tab === 'editar'" @click="tab = 'editar'">
-                                <edit-setor :setor="selectedItem"></edit-setor>
-                            </b-tab>
-                            <b-tab title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">
-<!--                                <setor-permissions :setor_id="selectedItem.id"></setor-permissions>-->
-                            </b-tab>
-                        </b-tabs>
-                    </div>
+                    <edit-setor :setor="selectedItem"></edit-setor>
                 </div>
                 <template #modal-footer="{ salvar, cancelar }">
-                    <div class="w-100" v-show="selectedItem !== null && tab === 'editar'">
+                    <div class="w-100" v-show="selectedItem !== null">
                         <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">
                             Cancelar
                         </b-button>
-                        <b-button id="salvar" variant="primary" size="sm" class="float-right mr-2" @click="saveSetor">
+                        <b-button id="salvar" variant="primary" size="sm" class="float-right mr-2" @click="save">
                             Salvar
                         </b-button>
                     </div>
@@ -131,8 +122,7 @@ export default ({
                 title: '',
                 content: ''
             },
-            selectedItem: null,
-            tab: null
+            selectedItem: null
         }
     },
     mounted () {
@@ -171,9 +161,8 @@ export default ({
             this.selectedItem = {
                 id: item.id,
                 name: item.name,
-                status: item.status === 1 ? true : false,
+                status: item.status === 1
             }
-            this.tab = 'editar'
             this.$root.$emit('bv::show::modal', this.infoModal.id, button)
         },
         resetInfoModal() {
@@ -185,7 +174,7 @@ export default ({
         onFiltered(filteredItems) {
             this.per_page = filteredItems.length > 0 ? filteredItems.length : this.defaults.per_page
         },
-        saveSetor() {
+        save() {
             this.$root.$emit('setor:save')
         }
     },
