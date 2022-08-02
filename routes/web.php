@@ -35,7 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::get('/', 'UserController@index')->name('users.index');
                     Route::post('/', 'PaginateUserController')->name('users.list');
                     Route::patch('/{user}', 'UpdateUserController')->name('users.update');
-                    Route::get('/{user}/roles', 'GetUserRolesController')->name('user.roles');
+                    Route::get('/{user}/roles', 'GetUserRolesController')->name('users.roles');
                 });
                 Route::get('/{user}/setores', 'GetUserSetoresController')->name('user.setores');
             });
