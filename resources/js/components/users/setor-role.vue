@@ -89,7 +89,7 @@
                             @mouseover="hovering = userRoleIndex + '_' + roleIndex"
                             @mouseout="hovering = null"
                         >
-                            O usuário <strong>{{ userRole.user.name }}</strong> possui perfil <strong>{{ role.name }}</strong> no setor <strong>{{ userRole.setor.name }}</strong>
+                            O usuário <strong>{{ userRole.user.name }}</strong> do setor <strong>{{ userRole.setor.name }}</strong> possui perfil <strong>{{ role.name }}</strong>
                             <b-badge
                                 v-show="hovering === userRoleIndex + '_' + roleIndex "
                                 size="sm"

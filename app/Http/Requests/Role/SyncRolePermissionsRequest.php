@@ -24,7 +24,7 @@ class SyncRolePermissionsRequest extends FormRequest
     public function rules()
     {
         return [
-            'permissions' => ['required', 'array'],
+            'permissions' => ['array'],
             'permissions.*' => ['required', 'string', 'distinct', 'exists:permissions,name']
         ];
     }

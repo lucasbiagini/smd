@@ -47,4 +47,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Setor::class, 'setor_user', 'user_id', 'setor_id');
     }
+
+    public function setor_user ()
+    {
+        return $this->hasMany(SetorUser::class);
+    }
+
+    public function hasPermissionTo ($permission)
+    {
+        foreach ($this->setor_user as $setor_user) return $setor_user->hasPermissionTo($permission);
+        return false;
+    }
 }
