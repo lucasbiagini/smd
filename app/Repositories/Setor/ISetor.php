@@ -10,4 +10,5 @@ interface ISetor
     public function store($name, $desc);
     public function searchSetor($query);
     public function updateSetor(Setor $setor, $name, $status);
+    public function all();
 }

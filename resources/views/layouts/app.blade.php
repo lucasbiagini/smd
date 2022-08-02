@@ -19,6 +19,7 @@
     <body class="font-sans antialiased">
         <div id="app">
             <div class="min-h-screen bg-gray-100" v-cloak>
+                @if(session()->has('setor_id'))
                 @include('layouts.navigation')
 
                 <!-- Page Heading -->
@@ -40,6 +41,9 @@
                         </div>
                     </div>
                 </main>
+                @else
+                    <select-setor></select-setor>
+                @endif
             </div>
         </div>
     </body>

@@ -34,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/', 'PaginateUserController')->name('users.list');
             Route::patch('/{user}', 'UpdateUserController')->name('users.update');
             Route::get('/{user}/roles', 'GetUserRolesController')->name('user.roles');
+            Route::get('/{user}/setores', 'GetUserSetoresController')->name('user.setores');
         });
 
         /**
@@ -48,6 +49,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/search', 'SearchSetorController')->name('setores.search');
             Route::post('/create', 'StoreSetorController')->name('setores.store');
             Route::patch('/{setor}', 'UpdateSetorController')->name('setores.update');
+            Route::get('/all', 'AllSetoresController')->name('setores.all');
+            Route::post('/{setor}/select', 'SelectSetorController')->name('setores.select');
         });
 
         /**

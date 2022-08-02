@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -53,9 +54,15 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(SetorUser::class);
     }
 
-    public function hasPermissionTo ($permission)
+    public function hasPermissionTo ($permission): bool
     {
+        if ($this->hasRole('admin')) return true;
         foreach ($this->setor_user as $setor_user) return $setor_user->hasPermissionTo($permission);
         return false;
+    }
+
+    public function hasSetor(Setor $setor)
+    {
+        return $this->setor_user->map(function ($su) { return $su->setor_id; })->contains($setor->id);
     }
 }

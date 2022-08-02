@@ -33,4 +33,9 @@ class SetorRepository implements ISetor
 
         return $user->save();
     }
+
+    public function all ()
+    {
+        return Setor::all();
+    }
 }
