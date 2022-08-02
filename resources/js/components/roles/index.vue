@@ -55,7 +55,11 @@
             >
 
                 <template #cell(actions)="row">
-                    <b-button size="sm" @click="info(row.item, row.index, $event.target)">
+                    <b-button
+                        size="sm"
+                        @click="info(row.item, row.index, $event.target)"
+                        v-if="$can('roles.update', 'role.permissions.list', 'role.permissions.sync')"
+                    >
                         Info modal
                     </b-button>
                     <b-button size="sm" @click="row.toggleDetails">
@@ -77,10 +81,10 @@
                 <div v-if="selectedItem !== null">
                     <div>
                         <b-tabs content-class="mt-3">
-                            <b-tab title="Editar" :active="tab === 'editar'" @click="tab = 'editar'">
+                            <b-tab v-if="$can('roles.update')" title="Editar" :active="tab === 'editar'" @click="tab = 'editar'">
                                 <edit-role :role="selectedItem"></edit-role>
                             </b-tab>
-                            <b-tab title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">
+                            <b-tab v-if="$can('role.permissions.list', 'role.permissions.sync')" title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">
                                 <role-permissions :role_id="selectedItem.id"></role-permissions>
                             </b-tab>
                         </b-tabs>
@@ -136,7 +140,10 @@ export default ({
     },
     mounted () {
         this.fetch()
-        this.$root.$on('role:created', () => this.fetch())
+        this.$root.$on('role:' +
+            '' +
+            '' +
+            'd', () => this.fetch())
         this.$root.$on('role:updated', () => {
             this.resetInfoModal()
             this.fetch()

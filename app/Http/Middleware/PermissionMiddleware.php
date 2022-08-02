@@ -21,6 +21,8 @@ class PermissionMiddleware
 //        return $next($request);
         $authGuard = app('auth')->guard($guard);
 
+        if ($authGuard->user()->hasRole('admin')) return $next($request);
+
         if ($authGuard->guest()) {
             throw UnauthorizedException::notLoggedIn();
         }
@@ -39,8 +41,8 @@ class PermissionMiddleware
 
 
         foreach ($permissions as $permission) {
-            foreach ($authGuard->user()->setores as $setor) {
-                if ($setor->pivot->can($permission)) {
+            foreach ($authGuard->user()->setor_user as $setor_user) {
+                if ($setor_user->hasPermissionTo($permission)) {
                     return $next($request);
                 }
             }

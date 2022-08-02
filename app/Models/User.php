@@ -54,25 +54,47 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(SetorUser::class);
     }
 
-    public function hasPermissionTo ($permission): bool
+    public function hasPermissionTo (...$permissions): bool
     {
         if ($this->hasRole('admin')) return true;
 
         if (!session()->has('setor_id')) return false; // returns false if session variable setor_id isn't set
 
-        $setor = $this->setor_user()
+        $setor_user = $this->setor_user()
             ->where('setor_id', session('setor_id'))
             ->first();
 
-        if (!isset($setor)) return false; // or if couldn't find setor
+        if (!isset($setor_user)) return false; // or if couldn't find setor
 
-        if (!$setor->status) return false; // or if setor is not active
+        if (!$setor_user->setor->status) return false; // or if setor is not active
 
-        return $setor->hasPermissionTo($permission);
+        foreach($permissions as $permission)
+            if ($setor_user->hasPermissionTo($permission)) return true;
+
+        return false;
     }
 
     public function hasSetor(Setor $setor)
     {
         return $this->setor_user->map(function ($su) { return $su->setor_id; })->contains($setor->id);
+    }
+
+    public function getAllPermissionsAttribute()
+    {
+        if ($this->hasRole('admin')) return Permission::all()->pluck('name');
+
+        if (!session()->has('setor_id')) return collect([]);
+
+        $setor_user = $this->setor_user()
+            ->where('setor_id', '=', session('setor_id'))
+            ->first();
+
+        $allPermissions = collect([]);
+        foreach ($setor_user->roles as $role) {
+            $permissions = $role->permissions->pluck('name');
+            $allPermissions = $allPermissions->concat($permissions)->unique();
+        }
+
+        return $allPermissions;
     }
 }

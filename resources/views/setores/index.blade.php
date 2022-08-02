@@ -4,7 +4,9 @@
 @section('header')
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         {{ __('Setores') }}
-        <create-setor></create-setor>
+        @if(auth()->user()->hasPermissionTo('setores.store'))
+            <create-setor></create-setor>
+        @endif
     </h2>
 @endsection
 

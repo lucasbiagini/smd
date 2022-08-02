@@ -30,12 +30,11 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.use(VueSweetalert2);
 
-// /**
-//  * Vue Multiselect
-//  */
-// import Multiselect from "vue-multiselect";
-// Vue.use(Multiselect)
-
+/**
+ * Global Mixins
+ */
+import Permissions from './mixins/Permissions';
+Vue.mixin(Permissions);
 
 new Vue({
     el: '#app'

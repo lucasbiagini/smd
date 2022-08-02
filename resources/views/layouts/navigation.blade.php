@@ -9,9 +9,9 @@
     <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
             <b-nav-item {{ request()->route()->getName() == 'home' ? 'active' : '' }} href="{{ route('home') }}">{{ __('Processos') }}</b-nav-item>
-            <b-nav-item {{ request()->route()->getName() == 'users.index' ? 'active' : '' }} href="{{ route('users.index') }}">{{ __('Usuários') }}</b-nav-item>
-            <b-nav-item {{ request()->route()->getName() == 'setores.index' ? 'active' : '' }} href="{{ route('setores.index') }}">{{ __('Setores') }}</b-nav-item>
-            <b-nav-item {{ request()->route()->getName() == 'roles.index' ? 'active' : '' }} href="{{ route('roles.index') }}">{{ __('Perfis') }}</b-nav-item>
+            <b-nav-item v-if="$can('users.index')" {{ request()->route()->getName() == 'users.index' ? 'active' : '' }} href="{{ route('users.index') }}">{{ __('Usuários') }}</b-nav-item>
+            <b-nav-item v-if="$can('setores.index')" {{ request()->route()->getName() == 'setores.index' ? 'active' : '' }} href="{{ route('setores.index') }}">{{ __('Setores') }}</b-nav-item>
+            <b-nav-item v-if="$can('roles.index')" {{ request()->route()->getName() == 'roles.index' ? 'active' : '' }} href="{{ route('roles.index') }}">{{ __('Perfis') }}</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

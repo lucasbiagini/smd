@@ -20,31 +20,43 @@
         <div id="app">
             <div class="min-h-screen bg-gray-100" v-cloak>
                 @if(session()->has('setor_id'))
-                @include('layouts.navigation')
+                    @include('layouts.navigation')
 
-                <!-- Page Heading -->
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        @yield('header')
-                    </div>
-                </header>
+                    <!-- Page Heading -->
+                    <header class="bg-white shadow">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            @yield('header')
+                        </div>
+                    </header>
 
-                <!-- Page Content -->
-                <main>
-                    <div class="py-12">
-                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                                <div class="p-6 bg-white border-b border-gray-200">
-                                    @yield('content')
+                    <!-- Page Content -->
+                    <main>
+                        <div class="py-12">
+                            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                                    <div class="p-6 bg-white border-b border-gray-200">
+                                        @yield('content')
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </main>
-                @else
+                    </main>
+                @elseif (auth()->user()->setores()->where('status', 1)->count() > 0)
                     <select-setor :user_id="{{ auth()->user()->id }}"></select-setor>
+                @elseif (!auth()->user()->status)
+                    <h1>usuário não está ativo</h1>
+                @else
+                    <h1>nenhum setor cadastrado ou ativo no momento.</h1>
                 @endif
             </div>
         </div>
     </body>
+
+    <script>
+        @auth
+            window.Permissions = {!! json_encode(auth()->user()->allPermissions, true) !!};
+        @else
+            window.Permissions = [];
+        @endauth
+    </script>
 </html>

@@ -55,7 +55,11 @@
             >
 
                 <template #cell(actions)="row">
-                    <b-button size="sm" @click="info(row.item, row.index, $event.target)">
+                    <b-button
+                        size="sm"
+                        @click="info(row.item, row.index, $event.target)"
+                        v-if="$can('setores.update')"
+                    >
                         Info modal
                     </b-button>
                     <b-button size="sm" @click="row.toggleDetails">
