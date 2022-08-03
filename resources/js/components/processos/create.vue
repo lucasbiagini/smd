@@ -4,7 +4,7 @@
             v-b-modal.create-processo
             variant="success"
         >
-            Adicionar Processo
+            Cadastrar
         </b-button>
         <b-modal
             id="create-processo"

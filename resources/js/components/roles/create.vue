@@ -4,7 +4,7 @@
             v-b-modal.create-role
             variant="success"
         >
-            Adicionar Perfil
+            Cadastrar
         </b-button>
         <b-modal
             id="create-role"

@@ -63,10 +63,10 @@
                     >
                         <b-icon-pencil></b-icon-pencil>
                     </b-button>
-                    <!--                    <b-button size="sm" @click="row.toggleDetails">-->
-                    <!--                        <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>-->
-                    <!--                        <b-icon-eye-slash v-else></b-icon-eye-slash>-->
-                    <!--                    </b-button>-->
+<!--                    <b-button size="sm" @click="row.toggleDetails">-->
+<!--                        <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>-->
+<!--                        <b-icon-eye-slash v-else></b-icon-eye-slash>-->
+<!--                    </b-button>-->
                 </template>
 
                 <template #row-details="row">
@@ -78,31 +78,22 @@
                 </template>
             </b-table>
 
-<!--            &lt;!&ndash; Info modal &ndash;&gt;-->
-<!--            <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">-->
-<!--                <div v-if="selectedItem !== null">-->
-<!--                    <div>-->
-<!--                        <b-tabs content-class="mt-3">-->
-<!--                            <b-tab v-if="$can('processos.update')" title="Editar" :active="tab === 'editar'" @click="tab = 'editar'">-->
-<!--                                <edit-processo :processo="selectedItem"></edit-processo>-->
-<!--                            </b-tab>-->
-<!--                            <b-tab v-if="$can('processo.permissions.list', 'processo.permissions.sync')" title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">-->
-<!--                                <processo-permissions :processo_id="selectedItem.id"></processo-permissions>-->
-<!--                            </b-tab>-->
-<!--                        </b-tabs>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <template #modal-footer="{ salvar, cancelar }">-->
-<!--                    <div class="w-100" v-show="selectedItem !== null">-->
-<!--                        <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">-->
-<!--                            Cancelar-->
-<!--                        </b-button>-->
-<!--                        <b-button id="salvar" variant="primary" size="sm" class="float-right mr-2" @click="save">-->
-<!--                            Salvar-->
-<!--                        </b-button>-->
-<!--                    </div>-->
-<!--                </template>-->
-<!--            </b-modal>-->
+            <!-- Info modal -->
+            <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
+                <div v-if="selectedItem !== null">
+                    <edit-processo :processo="selectedItem"></edit-processo>
+                </div>
+                <template #modal-footer="{ salvar, cancelar }">
+                    <div class="w-100" v-show="selectedItem !== null">
+                        <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">
+                            Cancelar
+                        </b-button>
+                        <b-button id="salvar" variant="primary" size="sm" class="float-right mr-2" @click="save">
+                            Salvar
+                        </b-button>
+                    </div>
+                </template>
+            </b-modal>
         </b-container>
     </ol>
 </template>
@@ -137,8 +128,7 @@ export default ({
                 title: '',
                 content: ''
             },
-            selectedItem: null,
-            tab: null
+            selectedItem: null
         }
     },
     mounted () {
@@ -177,9 +167,8 @@ export default ({
             this.selectedItem = {
                 id: item.id,
                 name: item.name,
-                status: item.status === 1
+                ref: item.ref
             }
-            this.tab = 'editar'
             this.$root.$emit('bv::show::modal', this.infoModal.id, button)
         },
         resetInfoModal() {
@@ -191,10 +180,9 @@ export default ({
         onFiltered(filteredItems) {
             this.per_page = filteredItems.length > 0 ? filteredItems.length : this.defaults.per_page
         },
-        // save() {
-        //     if (this.tab === 'editar') this.$root.$emit('processo:save')
-        //     else if (this.tab === 'permissions') this.$root.$emit('processo:permissions')
-        // }
+        save() {
+            this.$root.$emit('processo:save')
+        }
     },
     computed: {
         sortOptions() {

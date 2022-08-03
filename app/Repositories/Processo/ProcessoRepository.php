@@ -24,4 +24,14 @@ class ProcessoRepository implements IProcesso
             'setor_id' => $setor_id
         ]);
     }
+
+    public function updateProcesso (Processo $processo, $name, $ref)
+    {
+        $processo->update([
+            'name' => $name,
+            'ref' => $ref
+        ]);
+
+        return $processo->save();
+    }
 }

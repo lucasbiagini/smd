@@ -25,6 +25,8 @@ Vue.component('edit-role', () => import('./components/roles/edit.vue'))
 Vue.component('index-unauthorized', () => import('./components/index/unauthorized.vue'))
 Vue.component('processos', () => import('./components/processos/index.vue'))
 Vue.component('create-processo', () => import('./components/processos/create.vue'))
+Vue.component('edit-processo', () => import('./components/processos/edit.vue'))
+
 
 /**
  * Sweetalert2

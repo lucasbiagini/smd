@@ -31,14 +31,14 @@ class RoleRepository implements IRole
         return Role::find($id);
     }
 
-    public function updateRole (Role $user, $name, $status)
+    public function updateRole (Role $role, $name, $status)
     {
-        $user->update([
+        $role->update([
             'name' => $name,
             'status' => $status
         ]);
 
-        return $user->save();
+        return $role->save();
     }
 
     public function findByName ($name)
