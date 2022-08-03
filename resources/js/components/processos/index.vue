@@ -39,7 +39,7 @@
             <!-- Main table element -->
             <b-table
                 class="mt-8"
-                :items="roles"
+                :items="processos"
                 :fields="fields"
                 :per-page="per_page"
                 :sort-by.sync="sortBy"
@@ -58,15 +58,15 @@
                     <b-button
                         size="sm"
                         @click="info(row.item, row.index, $event.target)"
-                        v-if="$can('roles.update', 'role.permissions.list', 'role.permissions.sync')"
+                        v-if="$can('processos.update')"
                         variant="primary"
                     >
                         <b-icon-pencil></b-icon-pencil>
                     </b-button>
-<!--                    <b-button size="sm" @click="row.toggleDetails">-->
-<!--                        <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>-->
-<!--                        <b-icon-eye-slash v-else></b-icon-eye-slash>-->
-<!--                    </b-button>-->
+                    <!--                    <b-button size="sm" @click="row.toggleDetails">-->
+                    <!--                        <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>-->
+                    <!--                        <b-icon-eye-slash v-else></b-icon-eye-slash>-->
+                    <!--                    </b-button>-->
                 </template>
 
                 <template #row-details="row">
@@ -78,31 +78,31 @@
                 </template>
             </b-table>
 
-            <!-- Info modal -->
-            <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
-                <div v-if="selectedItem !== null">
-                    <div>
-                        <b-tabs content-class="mt-3">
-                            <b-tab v-if="$can('roles.update')" title="Editar" :active="tab === 'editar'" @click="tab = 'editar'">
-                                <edit-role :role="selectedItem"></edit-role>
-                            </b-tab>
-                            <b-tab v-if="$can('role.permissions.list', 'role.permissions.sync')" title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">
-                                <role-permissions :role_id="selectedItem.id"></role-permissions>
-                            </b-tab>
-                        </b-tabs>
-                    </div>
-                </div>
-                <template #modal-footer="{ salvar, cancelar }">
-                    <div class="w-100" v-show="selectedItem !== null">
-                        <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">
-                            Cancelar
-                        </b-button>
-                        <b-button id="salvar" variant="primary" size="sm" class="float-right mr-2" @click="save">
-                            Salvar
-                        </b-button>
-                    </div>
-                </template>
-            </b-modal>
+<!--            &lt;!&ndash; Info modal &ndash;&gt;-->
+<!--            <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">-->
+<!--                <div v-if="selectedItem !== null">-->
+<!--                    <div>-->
+<!--                        <b-tabs content-class="mt-3">-->
+<!--                            <b-tab v-if="$can('processos.update')" title="Editar" :active="tab === 'editar'" @click="tab = 'editar'">-->
+<!--                                <edit-processo :processo="selectedItem"></edit-processo>-->
+<!--                            </b-tab>-->
+<!--                            <b-tab v-if="$can('processo.permissions.list', 'processo.permissions.sync')" title="Permissões" :active="tab === 'permissions'" @click="tab = 'permissions'">-->
+<!--                                <processo-permissions :processo_id="selectedItem.id"></processo-permissions>-->
+<!--                            </b-tab>-->
+<!--                        </b-tabs>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <template #modal-footer="{ salvar, cancelar }">-->
+<!--                    <div class="w-100" v-show="selectedItem !== null">-->
+<!--                        <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">-->
+<!--                            Cancelar-->
+<!--                        </b-button>-->
+<!--                        <b-button id="salvar" variant="primary" size="sm" class="float-right mr-2" @click="save">-->
+<!--                            Salvar-->
+<!--                        </b-button>-->
+<!--                    </div>-->
+<!--                </template>-->
+<!--            </b-modal>-->
         </b-container>
     </ol>
 </template>
@@ -117,7 +117,7 @@ export default ({
                 current_page: 1,
                 per_page: 10
             },
-            roles: [],
+            processos: [],
             current_page: 1,
             per_page: 10,
             total: null,
@@ -125,6 +125,7 @@ export default ({
             isFetching: true,
             fields: [
                 { key: 'name', label: 'Nome', sortable: true, sortDirection: 'desc', class: 'text-center', stickyColumn: true, isActive: false},
+                { key: 'ref', label: 'Referência', sortable: true, sortDirection: 'desc', class: 'text-center', stickyColumn: true, isActive: false},
                 { key: 'actions', label: 'Actions', class: 'text-right', stickyColumn: true }
             ],
             pageOptions: null,
@@ -142,12 +143,8 @@ export default ({
     },
     mounted () {
         this.fetch()
-        this.$root.$on('role:created', () => this.fetch())
-        this.$root.$on('role:updated', () => {
-            this.resetInfoModal()
-            this.fetch()
-        })
-        this.$root.$on('role:permissions', () => {
+        this.$root.$on('processo:created', () => this.fetch())
+        this.$root.$on('processo:updated', () => {
             this.resetInfoModal()
             this.fetch()
         })
@@ -155,7 +152,7 @@ export default ({
     methods: {
         async fetch () {
             this.isFetching = true
-            await axios.post('/roles', {
+            await axios.post('/processos', {
                 perPage: this.per_page,
                 page: this.current_page,
                 sortBy: this.sortBy ? this.sortBy : 'id',
@@ -163,7 +160,7 @@ export default ({
             })
                 .then(response => {
                     this.paginator = response.data
-                    this.roles = this.paginator.data
+                    this.processos = this.paginator.data
                     this.current_page = this.paginator.current_page
                     this.per_page = this.paginator.per_page
                     this.total = this.paginator.total
@@ -194,10 +191,10 @@ export default ({
         onFiltered(filteredItems) {
             this.per_page = filteredItems.length > 0 ? filteredItems.length : this.defaults.per_page
         },
-        save() {
-            if (this.tab === 'editar') this.$root.$emit('role:save')
-            else if (this.tab === 'permissions') this.$root.$emit('role:permissions')
-        }
+        // save() {
+        //     if (this.tab === 'editar') this.$root.$emit('processo:save')
+        //     else if (this.tab === 'permissions') this.$root.$emit('processo:permissions')
+        // }
     },
     computed: {
         sortOptions() {

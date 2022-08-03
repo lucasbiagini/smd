@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Permission\IPermission;
 use App\Repositories\Permission\PermissionRepository;
+use App\Repositories\Processo\IProcesso;
+use App\Repositories\Processo\ProcessoRepository;
 use App\Repositories\Role\IRole;
 use App\Repositories\Role\RoleRepository;
 use App\Repositories\Setor\ISetor;
@@ -28,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IRole::class, RoleRepository::class);
         $this->app->bind(ISetorUser::class, SetorUserRepository::class);
         $this->app->bind(IPermission::class, PermissionRepository::class);
+        $this->app->bind(IProcesso::class, ProcessoRepository::class);
     }
 
     /**

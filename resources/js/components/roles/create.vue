@@ -46,7 +46,7 @@ export default({
         }
     },
     mounted () {
-        this.$root.$emit('hahaha')
+
     },
     methods: {
         submit () {

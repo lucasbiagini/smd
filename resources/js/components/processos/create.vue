@@ -1,13 +1,13 @@
 <template>
     <div>
         <b-button
-            v-b-modal.create-setor
+            v-b-modal.create-processo
             variant="success"
         >
-            Adicionar Setor
+            Adicionar Processo
         </b-button>
         <b-modal
-            id="create-setor"
+            id="create-processo"
             title="Criar Setor"
             size="lg"
             ref="modal"
@@ -16,19 +16,18 @@
                 <b-form-input
                     id="nome"
                     v-model="form.name"
-                    placeholder="Insira o nome do setor"
+                    placeholder="Insira o nome do processo"
                     required
                 ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="desc-group" label="Descrição:" label-for="desc">
-                <b-form-textarea
-                    id="desc"
-                    v-model="form.desc"
-                    placeholder="Insira uma descrição para o setor..."
-                    rows="3"
-                    max-rows="6"
-                ></b-form-textarea>
+            <b-form-group id="nome-group" label="Referência:" label-for="ref">
+                <b-form-input
+                    id="ref"
+                    v-model="form.ref"
+                    placeholder="Insira o nome do processo"
+                    required
+                ></b-form-input>
             </b-form-group>
 
             <template #modal-footer="{ criar, cancelar }">
@@ -52,7 +51,7 @@ export default({
         return {
             form: {
                 name: '',
-                desc: ''
+                ref: ''
             }
         }
     },
@@ -61,7 +60,7 @@ export default({
     },
     methods: {
         submit () {
-            axios.post('/setores/create', this.form)
+            axios.post('/processos/create', this.form)
                 .then(response => {
                     this.close()
                     this.$swal.fire({
@@ -73,7 +72,7 @@ export default({
                         position: 'top-end',
                         timerProgressBar: true
                     })
-                    this.$root.$emit('setor:created')
+                    this.$root.$emit('processo:created')
                 })
                 .catch(error => {
 
@@ -82,7 +81,7 @@ export default({
         reset () {
             this.form = {
                 name: '',
-                desc: ''
+                ref: ''
             }
         },
         close () {

@@ -106,6 +106,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ], function () {
                 Route::get('/all', 'AllPermissionsController')->name('permissions.all');
             });
+
+            /**
+             * Processos Routes
+             */
+            Route::group([
+                'namespace' => 'Processo',
+                'prefix' => 'processos'
+            ], function () {
+                Route::middleware(['permission'])->group(function () {
+                    Route::post('/', 'PaginateProcessoController')->name('processos.list');
+                    Route::post('/create', 'StoreProcessoController')->name('processos.store');
+                });
+            });
         });
     });
 });

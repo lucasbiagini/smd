@@ -23,6 +23,8 @@ Vue.component('create-role', () => import('./components/roles/create.vue'))
 Vue.component('role-permissions', () => import('./components/roles/permissions.vue'))
 Vue.component('edit-role', () => import('./components/roles/edit.vue'))
 Vue.component('index-unauthorized', () => import('./components/index/unauthorized.vue'))
+Vue.component('processos', () => import('./components/processos/index.vue'))
+Vue.component('create-processo', () => import('./components/processos/create.vue'))
 
 /**
  * Sweetalert2
