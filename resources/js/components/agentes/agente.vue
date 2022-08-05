@@ -1,11 +1,11 @@
 <template>
     <b-form-group class="mb-3">
         <template #label cols-lg="1">
-            <span class="font-weight-bold pt-0">{{ labels[tipo].title }}</span>
+            <span class="font-weight-bold pt-0">{{ title }}</span>
             <b-icon :id="`${tipo}_${form_index}-icon`" icon="question-circle-fill" variant="warning"></b-icon>
             <b-popover :target="`${tipo}_${form_index}-icon`" triggers="hover" placement="top">
                 <template #title>Ajuda</template>
-                {{ labels[tipo].helper }}
+                {{ helpers[tipo] }}
             </b-popover>
             <b-badge v-if="deletable" href="#" @click.prenv="remove" variant="danger">Excluir</b-badge>
         </template>
@@ -87,6 +87,9 @@ import axios from 'axios'
 
 export default({
     props: {
+        title: {
+            required: true
+        },
         agente: {
             required: true
         },
@@ -100,11 +103,6 @@ export default({
             required: false,
             default: 0
         },
-        operadores: {
-            required: false,
-            default: false,
-            type: Boolean
-        },
         deletable: {
             required: false,
             default: false,
@@ -113,19 +111,10 @@ export default({
     },
     data () {
         return {
-            labels: {
-                controlador: {
-                    title: 'Controlador',
-                    helper: "Pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões referentes ao tratamento de dados pessoais (LGPD, art. 5º, IV). Informar o nome do órgão ou entidade."
-                },
-                encarregado: {
-                    title: 'Encarregado',
-                    helper: "Pessoa indicada pelo controlador e operador para atuar como canal de comunicação entre o controlador, os titulares dos dados e a Autoridade Nacional de Proteção de Dados - ANPD (LGPD, art. 5º, VIII)"
-                },
-                operador: {
-                    title: `${this.operadores ? (this.form_index + 1) + 'º ' : ''} Operador`,
-                    helper: "Pessoa natural ou jurídica, de direito público ou privado, que realiza o tratamento de dados pessoais em nome do controlador; (LGPD, art. 5º, VII)"
-                }
+            helpers: {
+                controlador: "Pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões referentes ao tratamento de dados pessoais (LGPD, art. 5º, IV). Informar o nome do órgão ou entidade.",
+                encarregado: "Pessoa indicada pelo controlador e operador para atuar como canal de comunicação entre o controlador, os titulares dos dados e a Autoridade Nacional de Proteção de Dados - ANPD (LGPD, art. 5º, VIII)",
+                operador: "Pessoa natural ou jurídica, de direito público ou privado, que realiza o tratamento de dados pessoais em nome do controlador; (LGPD, art. 5º, VII)"
             },
             oldForm: null,
             form: null,
@@ -148,9 +137,6 @@ export default({
             options: []
         }
         this.oldForm = { ...this.form }
-    },
-    mounted () {
-
     },
     methods: {
         savingStarted () {

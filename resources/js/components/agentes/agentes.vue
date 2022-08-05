@@ -4,18 +4,20 @@
             <h3>1 - Agentes de  Tratamento e Encarregado</h3>
             <agente
                 :agente="agentes.controlador"
+                title="Controlador"
                 tipo="controlador"
             ></agente>
             <agente
                 :agente="agentes.encarregado"
+                title="Encarregado"
                 tipo="encarregado"
             ></agente>
             <agente
                 v-for="(operador, index) in agentes.operadores"
                 :key="`operador_${operador.id}`"
                 :agente="operador.agente"
+                :title="`${agentes.operadores.length > 1 ? (index + 1) + 'º ' : ''} Operador`"
                 tipo="operador"
-                :operadores="agentes.operadores.length > 1"
                 :operador="operador"
                 :form_index="index"
                 :deletable="agentes.operadores.length > 1"
@@ -33,13 +35,12 @@ export default({
     data () {
         return {
             agentes: null,
-            tipos: null,
             isFetching: false,
             fetching: 0
         }
     },
     mounted () {
-        this.fetchAgentes()
+        this.fetch()
         this.$root.$on('remove:operador', (operador_id) => this.removeOperador(operador_id))
     },
     methods: {
@@ -51,7 +52,7 @@ export default({
             this.fetching--;
             if (this.fetching === 0) this.$root.$emit('stopFetching')
         },
-        async fetchAgentes () {
+        async fetch () {
             this.startFetching()
             await axios.get(`/processos/${this.processo.id}/agentes`)
                 .then(response => {
