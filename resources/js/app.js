@@ -26,7 +26,9 @@ Vue.component('index-unauthorized', () => import('./components/index/unauthorize
 Vue.component('processos', () => import('./components/processos/index.vue'))
 Vue.component('create-processo', () => import('./components/processos/create.vue'))
 Vue.component('edit-processo', () => import('./components/processos/edit.vue'))
-
+Vue.component('processo', () => import('./components/processos/show.vue'))
+Vue.component('agentes', () => import('./components/agentes/agentes.vue'))
+Vue.component('agente', () => import('./components/agentes/agente.vue'))
 
 /**
  * Sweetalert2

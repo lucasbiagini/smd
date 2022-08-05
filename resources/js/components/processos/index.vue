@@ -63,10 +63,10 @@
                     >
                         <b-icon-pencil></b-icon-pencil>
                     </b-button>
-<!--                    <b-button size="sm" @click="row.toggleDetails">-->
-<!--                        <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>-->
-<!--                        <b-icon-eye-slash v-else></b-icon-eye-slash>-->
-<!--                    </b-button>-->
+                    <b-button size="sm" @click="row.toggleDetails">
+                        <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>
+                        <b-icon-eye-slash v-else></b-icon-eye-slash>
+                    </b-button>
                 </template>
 
                 <template #row-details="row">

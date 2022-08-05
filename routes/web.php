@@ -118,7 +118,43 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('/', 'PaginateProcessoController')->name('processos.list');
                     Route::post('/create', 'StoreProcessoController')->name('processos.store');
                     Route::patch('/{processo}', 'UpdateProcessoController')->name('processos.update');
+                    Route::get('/{processo}', 'ProcessoController@show')->name('processos.show');
                 });
+                Route::post('/{processo}', 'GetProcessoController')
+                    ->middleware('permission:processos.show');
+
+                /**
+                 * Dados dos Processos Routes
+                 */
+                Route::group([
+                    'prefix' => '{processo}'
+                ], function () {
+                    Route::middleware(['permission:processos.dados'])->group(function () {
+                        Route::get('/agentes', 'GetAgentesController');
+                        Route::post('/operador', 'AddOperadorController');
+                    });
+                });
+            });
+
+            /**
+             * Agentes Routes
+             */
+            Route::group([
+                'prefix' => 'agentes',
+                'namespace' =>'Agente'
+            ], function () {
+//                Route::get('/tipos', 'GetTiposController'); // deprecated
+                Route::patch('/{agente}', 'UpdateAgenteController');
+            });
+
+            /**
+             * Operadores Routes
+             */
+            Route::group([
+                'prefix' => 'operadores',
+                'namespace' => 'Operador'
+            ], function () {
+               Route::delete('/{operador}', 'DeleteOperadorController');
             });
         });
     });
