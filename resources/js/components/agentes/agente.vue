@@ -20,7 +20,7 @@
                 debounce="1000"
                 @change="save('nome')"
                 v-model="form.nome"
-                :state="form.nome !== null && form.nome !== '' ? true : null"
+                :state="states['nome']"
             ></b-form-input>
         </b-form-group>
 
@@ -34,7 +34,7 @@
                 :id="`${tipo}_${form_index}-endereco`"
                 @change="save('endereco')"
                 v-model="form.endereco"
-                :state="form.endereco !== null && form.endereco !== '' ? true : null"
+                :state="states['endereco']"
             ></b-form-input>
         </b-form-group>
 
@@ -48,7 +48,7 @@
                 :id="`${tipo}_${form_index}-cep`"
                 @change="save('cep')"
                 v-model="form.cep"
-                :state="form.cep !== null && form.cep !== '' ? true : null"
+                :state="states['cep']"
             ></b-form-input>
         </b-form-group>
 
@@ -62,7 +62,7 @@
                 :id="`${tipo}_${form_index}-telefone`"
                 @change="save('telefone')"
                 v-model="form.telefone"
-                :state="form.telefone !== null && form.telefone !== '' ? true : null"
+                :state="states['telefone']"
             ></b-form-input>
         </b-form-group>
 
@@ -76,7 +76,7 @@
                 :id="`${tipo}_${form_index}-email`"
                 @change="save('email')"
                 v-model="form.email"
-                :state="form.email !== null && form.email !== '' ? true : null"
+                :state="states['email']"
             ></b-form-input>
         </b-form-group>
     </b-form-group>
@@ -128,7 +128,14 @@ export default({
                 }
             },
             oldForm: null,
-            form: null
+            form: null,
+            states: {
+                nome: null,
+                endereco: null,
+                cep: null,
+                telefone: null,
+                email: null
+            }
         }
     },
     created () {
@@ -164,9 +171,22 @@ export default({
                 })
                     .then(response => {
                         this.oldForm[prop] = this.form[prop]
+                        this.states[prop] = true
+                        setTimeout(() => {
+                            this.states[prop] = null
+                        }, 10000)
                         this.savingEnded()
                     })
                     .catch(error => {
+                        this.$swal.fire({
+                            timer: 10000,
+                            title: "Ocorreu um erro e não foi possível salvar.",
+                            icon: 'error',
+                            showConfirmButton: false,
+                            toast: true,
+                            position: 'top-end',
+                            timerProgressBar: true
+                        })
                         this.form[prop] = this.oldForm[prop]
                         this.savingFailed()
                     })
