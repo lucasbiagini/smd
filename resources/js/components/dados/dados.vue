@@ -1,6 +1,15 @@
 <template>
-    <ol>
-        <b-container fluid>
+    <div>
+        <h3>Categoria de Dados Pessoais</h3>
+
+        <create-dado
+            :processo_id="processo.id"
+            :categorias="categorias"
+            :bases="bases"
+            :fontes="fontes"
+        ></create-dado>
+
+        <b-container fluid class="mt-5">
             <!-- User Interface controls -->
             <b-row>
                 <b-col sm="5" md="6" class="ml-auto">
@@ -39,7 +48,7 @@
             <!-- Main table element -->
             <b-table
                 class="mt-8"
-                :items="processos"
+                :items="dados"
                 :fields="fields"
                 :per-page="per_page"
                 :sort-by.sync="sortBy"
@@ -52,14 +61,14 @@
                 fixed
                 striped
                 @filtered="onFiltered"
-                empty-text="Nenhum processo para mostrar"
+                empty-text="Nenhum dado para mostrar"
             >
 
                 <template #cell(actions)="row">
                     <b-button
                         size="sm"
                         @click="info(row.item, row.index, $event.target)"
-                        v-if="$can('processos.update')"
+                        v-if="$can('processos.dados')"
                         variant="primary"
                     >
                         <b-icon-pencil></b-icon-pencil>
@@ -68,23 +77,38 @@
                         <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>
                         <b-icon-eye-slash v-else></b-icon-eye-slash>
                     </b-button>
+                    <b-button size="sm" variant="danger" @click="remove(row.item.id)">
+                        <b-icon-trash></b-icon-trash>
+                    </b-button>
                 </template>
 
                 <template #row-details="row">
                     <b-card>
                         <ul>
-                            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+                            <li
+                                v-for="(value, key) in row.item"
+                                :key="key"
+                                v-if="['desc', 'tempo', 'base_dados'].includes(key) && value !== null && value !== ''"
+                            >
+
+                                <strong>{{ columnName(key) }}:</strong> {{ value }}
+                            </li>
                         </ul>
                     </b-card>
                 </template>
             </b-table>
 
             <!-- Info modal -->
-            <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
+            <b-modal :id="infoModal.id" title="Editar categoria de dado pessoal" ref="modal" size="xl">
                 <div v-if="selectedItem !== null">
-                    <edit-processo :processo="selectedItem"></edit-processo>
+                    <dado
+                        :dado="selectedItem"
+                        :categorias="categorias"
+                        :bases="bases"
+                        :fontes="fontes"
+                    ></dado>
                 </div>
-                <template #modal-footer="{ salvar, cancelar }">
+                <template #modal-footer="{ salvar, cancelar }" v-if="selectedItem !== null">
                     <div class="w-100" v-show="selectedItem !== null">
                         <b-button id="cancelar" variant="danger" size="sm" class="float-right mr-auto" @click="resetInfoModal">
                             Cancelar
@@ -95,29 +119,41 @@
                     </div>
                 </template>
             </b-modal>
+
+
         </b-container>
-    </ol>
+    </div>
 </template>
 
 <script>
 import axios from 'axios'
 
-export default ({
+export default({
+    props: ['processo'],
     data () {
         return {
+            isFirstFetch: true,
+            isFetching: false,
+            fetching: 0,
+            categorias: [],
+            bases: [],
+            fontes: [],
             defaults: {
                 current_page: 1,
                 per_page: 10
             },
-            processos: [],
+            dados: [],
             current_page: 1,
             per_page: 10,
             total: null,
             paginator: null,
-            isFetching: true,
             fields: [
-                { key: 'name', label: 'Nome', sortable: true, sortDirection: 'desc', class: 'text-center', stickyColumn: true, isActive: false},
-                { key: 'ref', label: 'Referência', sortable: true, sortDirection: 'desc', class: 'text-center', stickyColumn: true, isActive: false},
+                {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc', strickyColumn: true},
+                { key: 'categoria.text', label: 'Categoria', sortable: true, sortDirection: 'desc', class: 'text-center', stickyColumn: true, isActive: false},
+                // { key: 'desc', label: 'Descrição', sortable: true, class: 'text-center', stickyColumn: true },
+                // { key: 'tempo', label: 'Tempo de Retenção dos Dados', sortable: true, class: 'text-center', stickyColumn: true },
+                { key: 'fonte.text', label: 'Fonte de Retenção', sortable: true, class: 'text-center', stickyColumn: true },
+                // { key: 'base_dados', label: 'Base de Dados', sortable: true, class: 'text-center', stickyColumn: true },
                 { key: 'actions', label: 'Actions', class: 'text-right', stickyColumn: true }
             ],
             pageOptions: null,
@@ -134,16 +170,71 @@ export default ({
     },
     mounted () {
         this.fetch()
-        this.$root.$on('processo:created', () => this.fetch())
-        this.$root.$on('processo:updated', () => {
+        this.fetchCategorias()
+        this.fetchBasesSGD()
+        this.fetchFontesSGD()
+        this.$root.$on('dado:created', () => this.fetch())
+        this.$root.$on('dado:updated', () => {
             this.resetInfoModal()
             this.fetch()
         })
+        this.$root.$on('dado:removed', () => this.fetch())
     },
     methods: {
+        startFetching () {
+            if (this.fetching === 0) this.$root.$emit('startFetching')
+            this.fetching++
+        },
+        stopFetching () {
+            this.fetching--;
+            if (this.fetching === 0) this.$root.$emit('stopFetching')
+        },
+        async fetchCategorias () {
+            this.startFetching()
+            await axios.get(`/dados/categorias`)
+                .then(response => {
+                    this.categorias = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            this.stopFetching()
+        },
+        async fetchBasesSGD () {
+            this.startFetching()
+            await axios.get(`/dados/bases`)
+                .then(response => {
+                    this.bases = response.data.map((base, index) => {
+                        return {
+                            value: index,
+                            text: base
+                        }
+                    })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            this.stopFetching()
+        },
+        async fetchFontesSGD () {
+            this.startFetching()
+            await axios.get(`/dados/fontes`)
+                .then(response => {
+                    this.fontes = response.data.map((fonte, index) => {
+                        return {
+                            value: index,
+                            text: fonte
+                        }
+                    })
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            this.stopFetching()
+        },
         async fetch () {
-            this.isFetching = true
-            await axios.post('/processos', {
+            this.startFetching()
+            await axios.post(`/processos/${this.processo.id}/dados`, {
                 perPage: this.per_page,
                 page: this.current_page,
                 sortBy: this.sortBy ? this.sortBy : 'id',
@@ -151,24 +242,28 @@ export default ({
             })
                 .then(response => {
                     this.paginator = response.data
-                    this.processos = this.paginator.data
+                    this.dados = this.paginator.data
                     this.current_page = this.paginator.current_page
                     this.per_page = this.paginator.per_page
                     this.total = this.paginator.total
                     this.pageOptions = [10, 25, 50, 100, { value: this.total, text: "Todos" }]
+                    if (this.isFirstFetch) this.isFirstFetch = false
                 })
                 .catch(error => {
                     console.log(error)
                 });
-            this.isFetching = false
+            this.stopFetching()
         },
         info(item, index, button) {
             this.infoModal.title = item.name
             this.infoModal.content = item
             this.selectedItem = {
                 id: item.id,
-                name: item.name,
-                ref: item.ref
+                categoria: item.categoria,
+                desc: item.desc,
+                tempo: item.tempo,
+                fonte: item.fonte,
+                base_dados: item.base_dados
             }
             this.$root.$emit('bv::show::modal', this.infoModal.id, button)
         },
@@ -182,7 +277,24 @@ export default ({
             this.per_page = filteredItems.length > 0 ? filteredItems.length : this.defaults.per_page
         },
         save() {
-            this.$root.$emit('processo:save')
+            this.$root.$emit('dado:save')
+        },
+        async remove(dado_id) {
+            this.startFetching()
+            await axios.delete(`/dados/${dado_id}`)
+                .then(response => {
+                    this.$root.$emit('dado:removed')
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            this.stopFetching()
+        },
+        columnName(c)
+        {
+            if (c === 'desc') return 'Descrição'
+            if (c === 'tempo') return 'Tempo'
+            if (c === 'base_dados') return 'Base de dados'
         }
     },
     computed: {
@@ -198,18 +310,18 @@ export default ({
     watch: {
         per_page () {
             this.current_page = 1
-            return !this.isFetching ? this.fetch() : null
+            return !this.isFetching && !this.isFirstFetch ? this.fetch() : null
         },
         current_page () {
-            return !this.isFetching ? this.fetch() : null
+            return !this.isFetching && !this.isFirstFetch ? this.fetch() : null
         },
         sortBy () {
             this.current_page = 1
-            return !this.isFetching ? this.fetch() : null
+            return !this.isFetching && !this.isFirstFetch ? this.fetch() : null
         },
         sortDesc () {
             this.current_page = 1
-            return !this.isFetching ? this.fetch() : null
+            return !this.isFetching && !this.isFirstFetch ? this.fetch() : null
         }
     }
 })

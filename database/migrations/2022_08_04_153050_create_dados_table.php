@@ -16,7 +16,7 @@ class CreateDadosTable extends Migration
         Schema::create('dados', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('processo_id');
-            $table->string('tipo')->nullable();
+            $table->string('categoria')->nullable();
             $table->string('desc')->nullable();
             $table->string('tempo')->nullable();
             $table->string('fonte')->nullable();

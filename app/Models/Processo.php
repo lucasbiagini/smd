@@ -106,4 +106,9 @@ class Processo extends Model
           'operadores' => $this->operadores()->with('agente')->get()
         ];
     }
+
+    public function dados ()
+    {
+        return $this->hasMany(Dado::class);
+    }
 }

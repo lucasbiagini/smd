@@ -52,6 +52,7 @@
                 fixed
                 striped
                 @filtered="onFiltered"
+                empty-text="Nenhum perfil para mostrar"
             >
 
                 <template #cell(actions)="row">

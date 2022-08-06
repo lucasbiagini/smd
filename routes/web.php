@@ -139,41 +139,59 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::post('/operador', 'AddOperadorController');
                         Route::post('/file', 'UploadFileController');
                         Route::get('/files', 'GetFilesController');
+                        Route::post('/dados', 'PaginateDadosController');
                     });
                 });
             });
 
-            /**
-             * Agentes Routes
-             */
-            Route::group([
-                'prefix' => 'agentes',
-                'namespace' =>'Agente'
-            ], function () {
+            Route::middleware(['permission:processos.dados'])->group(function () {
+                /**
+                 * Agentes Routes
+                 */
+                Route::group([
+                    'prefix' => 'agentes',
+                    'namespace' =>'Agente'
+                ], function () {
 //                Route::get('/tipos', 'GetTiposController'); // deprecated
-                Route::patch('/{agente}', 'UpdateAgenteController');
-            });
+                    Route::patch('/{agente}', 'UpdateAgenteController');
+                });
 
-            /**
-             * Operadores Routes
-             */
-            Route::group([
-                'prefix' => 'operadores',
-                'namespace' => 'Operador'
-            ], function () {
-               Route::delete('/{operador}', 'DeleteOperadorController');
-               Route::patch('/{operador}', 'UpdateOperadorController');
-            });
+                /**
+                 * Operadores Routes
+                 */
+                Route::group([
+                    'prefix' => 'operadores',
+                    'namespace' => 'Operador'
+                ], function () {
+                    Route::delete('/{operador}', 'DeleteOperadorController');
+                    Route::patch('/{operador}', 'UpdateOperadorController');
+                });
 
-            /**
-             * Files Routes
-             */
-            Route::group([
-                'prefix' => 'files',
-                'namespace' => 'File'
-            ], function () {
-                Route::get('/{file}', 'DownloadFileController');
-                Route::delete('/{file}', 'DeleteFileController');
+                /**
+                 * Files Routes
+                 */
+                Route::group([
+                    'prefix' => 'files',
+                    'namespace' => 'File'
+                ], function () {
+                    Route::get('/{file}', 'DownloadFileController');
+                    Route::delete('/{file}', 'DeleteFileController');
+                });
+
+                /**
+                 * Dados Routes
+                 */
+                Route::group([
+                    'prefix' => 'dados',
+                    'namespace' => 'Dado'
+                ], function () {
+                    Route::get('/categorias', 'GetCategoriasController');
+                    Route::get('/bases', 'GetBasesSGDController');
+                    Route::get('/fontes', 'GetFontesSGDController');
+                    Route::post('/', 'StoreDadoController');
+                    Route::patch('/{dado}', 'UpdateDadoController');
+                    Route::delete('/{dado}', 'DeleteDadoController');
+                });
             });
         });
     });

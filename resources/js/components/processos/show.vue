@@ -7,7 +7,7 @@
                     <b-list-group-item button @click="open('fluxo')" :active="tab === 'fluxo'">Fluxo do Tratamento</b-list-group-item>
                     <b-list-group-item button @click="open('escopo')" :active="tab === 'escopo'">Escopo e Natureza dos Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('finalidade')" :active="tab === 'finalidade'">Finalidade do Tratamento de Dados Pessoais</b-list-group-item>
-                    <b-list-group-item button @click="open('categoria_dados')" :active="tab === 'categoria_dados'">7 - Categoria de Dados Pessoais</b-list-group-item>
+                    <b-list-group-item button @click="open('dados')" :active="tab === 'dados'">Categoria de Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('categoria_dados_sensiveis')" :active="tab === 'categoria_dados_sensiveis'">8 - Categorias de Dados Pessoais Sensíveis</b-list-group-item>
                     <b-list-group-item button @click="open('frequencia')" :active="tab === 'frequencia'">9 - Frequência e totalização das categorias de dados pessoais tratados</b-list-group-item>
                     <b-list-group-item button @click="open('titulares')" :active="tab === 'titulares'">10 - Categorias dos titulares de dados pessoais</b-list-group-item>
@@ -38,6 +38,9 @@
                     <div v-if="tabs.finalidade">
                         <finalidade v-show="tab === 'finalidade'" :processo="processo"></finalidade>
                     </div>
+                    <div v-if="tabs.dados">
+                        <dados v-show="tab === 'dados'" :processo="processo"></dados>
+                    </div>
                 </div>
                 <div v-if="tab === null">
                     <b-jumbotron header="Inventário de Dados Pessoais">
@@ -67,7 +70,7 @@ export default({
                 fluxo: false,
                 escopo: false,
                 finalidade: false,
-                categoria_dados: false,
+                dados: false,
                 categoria_dados_sensiveis: false,
                 frequencia: false,
                 titulares: false,

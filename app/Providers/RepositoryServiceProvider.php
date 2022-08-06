@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Agente\AgenteRepository;
 use App\Repositories\Agente\IAgente;
+use App\Repositories\Dado\DadoRepository;
+use App\Repositories\Dado\IDado;
 use App\Repositories\File\FileRepository;
 use App\Repositories\File\IFile;
 use App\Repositories\Operador\IOperador;
@@ -44,6 +46,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IAgente::class, AgenteRepository::class);
         $this->app->bind(IOperador::class, OperadorRepository::class);
         $this->app->bind(IFile::class, FileRepository::class);
+        $this->app->bind(IDado::class, DadoRepository::class);
     }
 
     /**
