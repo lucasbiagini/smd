@@ -31,6 +31,7 @@ Vue.component('agentes', () => import('./components/agentes/agentes.vue'))
 Vue.component('agente', () => import('./components/agentes/agente.vue'))
 Vue.component('fluxo', () => import('./components/processos/fluxo.vue'))
 Vue.component('escopo', () => import('./components/processos/escopo.vue'))
+Vue.component('finalidade', () => import('./components/processos/finalidade.vue'))
 
 /**
  * Sweetalert2

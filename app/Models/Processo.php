@@ -11,6 +11,22 @@ class Processo extends Model
 
     const PENDENTE = 'PENDENTE';
 
+    /**
+     * Hipóteses
+     */
+    const HIPOTESES = [
+        'Cumprimento de obrigação legal ou regulatória pelo controlador.',
+        'Execução de políticas públicas.',
+        'Alguma espécie de estudo realizado por órgão de pesquisa.',
+        'Execução de contrato ou de procedimentos preliminares relacionados a contrato do qual seja parte o titular, a pedido do titular dos dados.',
+        'Exercício regular de direitos em processo judicial, administrativo ou arbitral.',
+        'Proteção da vida ou da incolumidade física do titular ou de terceiro.',
+        'Tutela da saúde.',
+        'Atender aos interesses legítimos do controlador ou de terceiro.',
+        'Proteção do crédito.',
+        'Garantia da prevenção à fraude e à segurança do titular.'
+    ];
+
     protected $table = 'processos';
 
     /**

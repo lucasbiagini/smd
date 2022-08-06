@@ -114,6 +114,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'namespace' => 'Processo',
                 'prefix' => 'processos'
             ], function () {
+                Route::middleware(['permission:processos.dados'])->group(function () {
+                    Route::get('/hipoteses', 'GetHipotesesController');
+                });
+
                 Route::middleware(['permission'])->group(function () {
                     Route::post('/', 'PaginateProcessoController')->name('processos.list');
                     Route::post('/create', 'StoreProcessoController')->name('processos.store');

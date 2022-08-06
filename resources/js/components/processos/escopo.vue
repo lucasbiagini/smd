@@ -33,7 +33,7 @@
                     <p>Exemplo 1: Se os dados pessoais são obtidos por meio de preenchimento de formulário eletrônico, então a fonte de dados é o titular dos dados</p>
                     <p>Exemplo 2: Fonte de dados que não seja o titular de dados, é importante detalhar a fonte, como por exemplo, API CONSULTA CPF.</p>
                 </b-popover>
-                <span>Fonte de dados utilizada para obtenção dos dados pessoais</span>
+                <span>Fonte de dados utilizada para obtenção dos dados pessoais:</span>
             </template>
             <b-form-textarea
                 id="fonte-escopo"

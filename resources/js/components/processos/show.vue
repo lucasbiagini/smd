@@ -6,7 +6,7 @@
                     <b-list-group-item button @click="open('agentes')" :active="tab === 'agentes'">Agentes de Tratamento</b-list-group-item>
                     <b-list-group-item button @click="open('fluxo')" :active="tab === 'fluxo'">Fluxo do Tratamento</b-list-group-item>
                     <b-list-group-item button @click="open('escopo')" :active="tab === 'escopo'">Escopo e Natureza dos Dados Pessoais</b-list-group-item>
-                    <b-list-group-item button @click="open('finalidade')" :active="tab === 'finalidade'">6 - Finalidade do Tratamento de Dados Pessoais</b-list-group-item>
+                    <b-list-group-item button @click="open('finalidade')" :active="tab === 'finalidade'">Finalidade do Tratamento de Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('categoria_dados')" :active="tab === 'categoria_dados'">7 - Categoria de Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('categoria_dados_sensiveis')" :active="tab === 'categoria_dados_sensiveis'">8 - Categorias de Dados Pessoais Sensíveis</b-list-group-item>
                     <b-list-group-item button @click="open('frequencia')" :active="tab === 'frequencia'">9 - Frequência e totalização das categorias de dados pessoais tratados</b-list-group-item>
@@ -34,6 +34,9 @@
                     </div>
                     <div v-if="tabs.escopo">
                         <escopo v-show="tab === 'escopo'" :processo="processo"></escopo>
+                    </div>
+                    <div v-if="tabs.finalidade">
+                        <finalidade v-show="tab === 'finalidade'" :processo="processo"></finalidade>
                     </div>
                 </div>
                 <div v-if="tab === null">
