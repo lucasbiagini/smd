@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="agentes !== null">
-            <h3>1 - Agentes de  Tratamento e Encarregado</h3>
+            <h3>Agentes de  Tratamento e Encarregado</h3>
             <agente
                 :agente="agentes.controlador"
                 title="Controlador"

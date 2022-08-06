@@ -76,6 +76,11 @@ class Processo extends Model
         return $this->hasMany(Operador::class);
     }
 
+    public function files ()
+    {
+        return $this->hasMany(File::class);
+    }
+
     public function getAgentesAttribute ()
     {
         return [

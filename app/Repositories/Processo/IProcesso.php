@@ -12,4 +12,6 @@ interface IProcesso
     public function updateProcesso(Processo $processo, $name, $ref);
     public function addOperador(Processo $processo);
     public function getOperadores(Processo $processo);
+    public function updateProcessoProp(Processo $processo, $prop, $value);
+    public function getFiles(Processo $processo);
 }

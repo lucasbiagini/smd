@@ -31,7 +31,6 @@ class CreateProcessosTable extends Migration
             $table->string('status_transferencias')->default(App\Models\Processo::PENDENTE);
             $table->unsignedBigInteger('controlador_id')->nullable();
             $table->unsignedBigInteger('encarregado_id')->nullable();
-            $table->string('imagem')->nullable();
             $table->string('desc')->nullable();
             $table->string('fonte')->nullable();
             $table->string('hipotese')->nullable();

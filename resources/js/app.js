@@ -29,6 +29,7 @@ Vue.component('edit-processo', () => import('./components/processos/edit.vue'))
 Vue.component('processo', () => import('./components/processos/show.vue'))
 Vue.component('agentes', () => import('./components/agentes/agentes.vue'))
 Vue.component('agente', () => import('./components/agentes/agente.vue'))
+Vue.component('fluxo', () => import('./components/processos/fluxo.vue'))
 
 /**
  * Sweetalert2

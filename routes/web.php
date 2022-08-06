@@ -130,8 +130,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     'prefix' => '{processo}'
                 ], function () {
                     Route::middleware(['permission:processos.dados'])->group(function () {
+                        Route::patch('/prop', 'UpdateProcessoPropController');
                         Route::get('/agentes', 'GetAgentesController');
                         Route::post('/operador', 'AddOperadorController');
+                        Route::post('/file', 'UploadFileController');
+                        Route::get('/files', 'GetFilesController');
                     });
                 });
             });
@@ -156,6 +159,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             ], function () {
                Route::delete('/{operador}', 'DeleteOperadorController');
                Route::patch('/{operador}', 'UpdateOperadorController');
+            });
+
+            /**
+             * Files Routes
+             */
+            Route::group([
+                'prefix' => 'files',
+                'namespace' => 'File'
+            ], function () {
+                Route::get('/{file}', 'DownloadFileController');
+                Route::delete('/{file}', 'DeleteFileController');
             });
         });
     });

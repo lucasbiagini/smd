@@ -1,12 +1,12 @@
 <template>
     <b-form-group class="mb-3">
         <template #label cols-lg="1">
-            <span class="font-weight-bold pt-0">{{ title }}</span>
             <b-icon :id="`${tipo}_${form_index}-icon`" icon="question-circle-fill" variant="warning"></b-icon>
             <b-popover :target="`${tipo}_${form_index}-icon`" triggers="hover" placement="top">
                 <template #title>Ajuda</template>
                 {{ helpers[tipo] }}
             </b-popover>
+            <span class="font-weight-bold pt-0">{{ title }}</span>
             <b-badge v-if="deletable" href="#" @click.prenv="remove" variant="danger">Excluir</b-badge>
         </template>
         <b-form-group
@@ -87,12 +87,12 @@
             label-align-sm="right"
         >
             <template #label>
-                <span>Atuação</span>
                 <b-icon :id="`${tipo}_${form_index}-icon-atuacao`" icon="question-circle-fill" variant="warning"></b-icon>
                 <b-popover :target="`${tipo}_${form_index}-icon-atuacao`" triggers="hover" placement="top">
                     <template #title>Fases do ciclo de vida do tratamento de dados pessoais</template>
-                    Informações sobre o ciclo de vida do tratamento de dados pessoais podem ser observadas no capítulo 3 do Guia de Boas Práticas LGPD, disponível <a target="_blank" href="https://www.gov.br/governodigital/pt-br/governanca-de-dados/guia-de-boas-praticas-lei-geral-de-protecao-de-dados-lgpd">aqui</a>.
+                    Informações sobre o ciclo de vida do tratamento de dados pessoais podem ser observadas no capítulo 3 do Guia de Boas Práticas LGPD, disponível <a target="_blank" href="https://www.gov.br/governodigital/pt-br/seguranca-e-protecao-de-dados/guias/guia_lgpd.pdf">aqui</a>.
                 </b-popover>
+                <span>Atuação:</span>
             </template>
             <b-form-checkbox inline :disabled="atuacao.coleta.isSaving" v-model="atuacao.coleta.value" :value="1" :unchecked-value="0" @change="checked('coleta')">Coleta</b-form-checkbox>
             <b-form-checkbox inline :disabled="atuacao.retencao.isSaving" v-model="atuacao.retencao.value" :value="1" :unchecked-value="0" @change="checked('retencao')">Retenção</b-form-checkbox>

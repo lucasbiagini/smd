@@ -61,4 +61,15 @@ class ProcessoRepository implements IProcesso
     {
         return $processo->operadores()->with('agente')->get();
     }
+
+    public function updateProcessoProp (Processo $processo, $prop, $value)
+    {
+        $processo->$prop = $value;
+        $processo->save();
+    }
+
+    public function getFiles (Processo $processo)
+    {
+        return $processo->files;
+    }
 }

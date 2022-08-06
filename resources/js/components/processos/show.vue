@@ -3,8 +3,8 @@
         <b-row>
             <b-col cols="4">
                 <b-list-group>
-                    <b-list-group-item button @click="open('agentes')" :active="tab === 'agentes'">1 - Agentes</b-list-group-item>
-                    <b-list-group-item button @click="open('fluxo')" :active="tab === 'fluxo'">4 - De que forma (como) os dados  pessoais são coletados, retidos/armazenados, processados/usados, compartilhados e eliminados</b-list-group-item>
+                    <b-list-group-item button @click="open('agentes')" :active="tab === 'agentes'">Agentes de Tratamento</b-list-group-item>
+                    <b-list-group-item button @click="open('fluxo')" :active="tab === 'fluxo'">Fluxo do Tratamento</b-list-group-item>
                     <b-list-group-item button @click="open('escopo')" :active="tab === 'escopo'">5 - Escopo e Natureza dos Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('finalidade')" :active="tab === 'finalidade'">6 - Finalidade do Tratamento de Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('categoria_dados')" :active="tab === 'categoria_dados'">7 - Categoria de Dados Pessoais</b-list-group-item>
@@ -29,6 +29,15 @@
                     <div v-if="tabs.agentes">
                       <agentes v-show="tab === 'agentes'" :processo="processo"></agentes>
                     </div>
+                    <div v-if="tabs.fluxo">
+                        <fluxo v-show="tab === 'fluxo'" :processo="processo"></fluxo>
+                    </div>
+                </div>
+                <div v-if="tab === null">
+                    <b-jumbotron header="Inventário de Dados Pessoais">
+                        <p>Para mais informações acesse o link abaixo</p>
+                        <b-button variant="primary" target="_blank" href="https://www.gov.br/governodigital/pt-br/seguranca-e-protecao-de-dados/guias/guia_lgpd.pdf">Guia de Boas Práticas da LGPD</b-button>
+                    </b-jumbotron>
                 </div>
             </b-col>
         </b-row>
@@ -46,7 +55,7 @@ export default({
         return {
             isFetching: false,
             processo: null,
-            tab: 1,
+            tab: null,
             tabs: {
                 agentes: false,
                 fluxo: false,

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Agente\AgenteRepository;
 use App\Repositories\Agente\IAgente;
+use App\Repositories\File\FileRepository;
+use App\Repositories\File\IFile;
 use App\Repositories\Operador\IOperador;
 use App\Repositories\Operador\OperadorRepository;
 use App\Repositories\Permission\IPermission;
@@ -41,6 +43,7 @@ class RepositoryServiceProvider extends ServiceProvider
          */
         $this->app->bind(IAgente::class, AgenteRepository::class);
         $this->app->bind(IOperador::class, OperadorRepository::class);
+        $this->app->bind(IFile::class, FileRepository::class);
     }
 
     /**
