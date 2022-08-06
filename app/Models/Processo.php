@@ -37,6 +37,7 @@ class Processo extends Model
         'encarregado_id',
         'imagem',
         'desc',
+        'abrangencia',
         'fonte',
         'hipotese',
         'finalidade',

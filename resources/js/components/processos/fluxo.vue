@@ -20,7 +20,7 @@
                         <li>5. Os dados pessoais podem ser eliminados à pedido do titular. Nesse caso, o DSP encaminha essa solicitação para a empresa Fictum executar a eliminação dos dados pessoais da base de dados do SND.</li>
                     </ol>
                 </b-popover>
-                <span>Atuação:</span>
+                <span>Descrição do Fluxo do tratamento dos dados pessoais:</span>
             </template>
             <b-form-textarea
                 id="desc-fluxo"

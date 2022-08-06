@@ -24,7 +24,7 @@ class UpdateProcessoPropRequest extends FormRequest
     public function rules()
     {
         return [
-            'prop' => ['required', 'in:desc'],
+            'prop' => ['required', 'in:desc,abrangencia,fonte'],
             'value' => ['string']
         ];
     }

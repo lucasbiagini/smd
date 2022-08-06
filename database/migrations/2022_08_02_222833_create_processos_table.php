@@ -32,6 +32,7 @@ class CreateProcessosTable extends Migration
             $table->unsignedBigInteger('controlador_id')->nullable();
             $table->unsignedBigInteger('encarregado_id')->nullable();
             $table->string('desc')->nullable();
+            $table->string('abrangencia')->nullable();
             $table->string('fonte')->nullable();
             $table->string('hipotese')->nullable();
             $table->string('finalidade')->nullable();
