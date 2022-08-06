@@ -90,7 +90,7 @@
                 <span>Atuação</span>
                 <b-icon :id="`${tipo}_${form_index}-icon-atuacao`" icon="question-circle-fill" variant="warning"></b-icon>
                 <b-popover :target="`${tipo}_${form_index}-icon-atuacao`" triggers="hover" placement="top">
-                    <template #title>Ajuda</template>
+                    <template #title>Fases do ciclo de vida do tratamento de dados pessoais</template>
                     Informações sobre o ciclo de vida do tratamento de dados pessoais podem ser observadas no capítulo 3 do Guia de Boas Práticas LGPD, disponível <a target="_blank" href="https://www.gov.br/governodigital/pt-br/governanca-de-dados/guia-de-boas-praticas-lei-geral-de-protecao-de-dados-lgpd">aqui</a>.
                 </b-popover>
             </template>
