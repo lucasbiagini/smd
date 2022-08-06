@@ -17,11 +17,11 @@ class CreateOperadoresTable extends Migration
             $table->id();
             $table->unsignedBigInteger('agente_id');
             $table->unsignedBigInteger('processo_id');
-            $table->boolean('coleta')->nullable();
-            $table->boolean('retencao')->nullable();
-            $table->boolean('processamento')->nullable();
-            $table->boolean('compartilhamento')->nullable();
-            $table->boolean('eliminacao')->nullable();
+            $table->boolean('coleta')->default(false);
+            $table->boolean('retencao')->default(false);
+            $table->boolean('processamento')->default(false);
+            $table->boolean('compartilhamento')->default(false);
+            $table->boolean('eliminacao')->default(false);
             $table->timestamps();
 
             $table->foreign('agente_id')

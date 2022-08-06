@@ -11,4 +11,10 @@ class OperadorRepository implements IOperador
         $operador->agente->delete();
         $operador->delete();
     }
+
+    public function updateAtuacao (Operador $operador, $prop, $value)
+    {
+        $operador->$prop = $value;
+        $operador->save();
+    }
 }

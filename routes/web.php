@@ -155,6 +155,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 'namespace' => 'Operador'
             ], function () {
                Route::delete('/{operador}', 'DeleteOperadorController');
+               Route::patch('/{operador}', 'UpdateOperadorController');
             });
         });
     });

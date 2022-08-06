@@ -4,7 +4,6 @@
             <b-col cols="4">
                 <b-list-group>
                     <b-list-group-item button @click="open('agentes')" :active="tab === 'agentes'">1 - Agentes</b-list-group-item>
-                    <b-list-group-item button @click="open('ciclos')" :active="tab === 'ciclos'">3 - Fases do Ciclo de Vida do Tratamento Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('fluxo')" :active="tab === 'fluxo'">4 - De que forma (como) os dados  pessoais são coletados, retidos/armazenados, processados/usados, compartilhados e eliminados</b-list-group-item>
                     <b-list-group-item button @click="open('escopo')" :active="tab === 'escopo'">5 - Escopo e Natureza dos Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('finalidade')" :active="tab === 'finalidade'">6 - Finalidade do Tratamento de Dados Pessoais</b-list-group-item>
@@ -50,7 +49,6 @@ export default({
             tab: 1,
             tabs: {
                 agentes: false,
-                ciclos: false,
                 fluxo: false,
                 escopo: false,
                 finalidade: false,
