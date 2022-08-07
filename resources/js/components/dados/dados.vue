@@ -4,6 +4,7 @@
 
         <create-dado
             :processo_id="processo.id"
+            :grouped_categorias="grouped_categorias"
             :categorias="categorias"
             :bases="bases"
             :fontes="fontes"
@@ -90,8 +91,7 @@
                                 :key="key"
                                 v-if="['desc', 'tempo', 'base_dados'].includes(key) && value !== null && value !== ''"
                             >
-
-                                <strong>{{ columnName(key) }}:</strong> {{ value }}
+                                <p><strong>{{ columnName(key) }}:</strong> {{ value.text !== undefined ? value.text : value }}</p>
                             </li>
                         </ul>
                     </b-card>
@@ -135,6 +135,7 @@ export default({
             isFirstFetch: true,
             isFetching: false,
             fetching: 0,
+            grouped_categorias: [],
             categorias: [],
             bases: [],
             fontes: [],
@@ -193,7 +194,8 @@ export default({
             this.startFetching()
             await axios.get(`/dados/categorias`)
                 .then(response => {
-                    this.categorias = response.data
+                    this.grouped_categorias = response.data.grouped_categorias
+                    this.categorias = response.data.categorias
                 })
                 .catch(error => {
                     console.log(error)

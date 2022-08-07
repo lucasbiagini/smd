@@ -3,6 +3,7 @@
         <b-button
             v-b-modal.create-dado
             variant="success"
+            style="position: absolute; top: 0; right: 0"
         >
             Cadastrar
         </b-button>
@@ -23,7 +24,7 @@
                     v-model="form.categoria"
                 >
                     <b-form-select-option-group
-                        v-for="(subcategorias, categoria) in categorias"
+                        v-for="(subcategorias, categoria) in grouped_categorias"
                         :key="categoria"
                         :label="categoria">
                         <b-form-select-option
@@ -46,7 +47,7 @@
                 <b-form-textarea
                     :disabled="form.categoria === null"
                     id="desc-dado"
-                    :placeholder="form.categoria ? form.categoria.desc : ''"
+                    :placeholder="form.categoria !== null ? categorias[form.categoria].desc : ''"
                     rows="4"
                     v-model="form.desc"
                 ></b-form-textarea>
@@ -133,7 +134,7 @@
 import axios from "axios";
 
 export default({
-    props: ['processo_id', 'categorias', 'bases', 'fontes'],
+    props: ['processo_id', 'grouped_categorias', 'categorias', 'bases', 'fontes'],
     data () {
         return {
             form: {

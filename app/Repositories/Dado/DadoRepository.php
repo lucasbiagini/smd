@@ -12,7 +12,10 @@ class DadoRepository implements IDado
 {
     public function getCategorias()
     {
-        return collect(\App\Models\Dado::CATEGORIAS)->groupBy('classe')->toArray();
+        return [
+            'grouped_categorias' => collect(\App\Models\Dado::CATEGORIAS)->groupBy('classe')->toArray(),
+            'categorias' => \App\Models\Dado::CATEGORIAS
+        ];
     }
 
     public function getBasesSGD()
@@ -27,7 +30,7 @@ class DadoRepository implements IDado
 
     public function store(StoreDadoRequest $request)
     {
-        return Dado::create($request->only(['processo_id', 'categoria', 'desc', 'tempo', 'fonte', 'base']));
+        return Dado::create($request->only(['processo_id', 'categoria', 'desc', 'tempo', 'fonte', 'base_dados']));
     }
 
     public function delete(Dado $dado)
