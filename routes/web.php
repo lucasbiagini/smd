@@ -140,6 +140,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::post('/file', 'UploadFileController');
                         Route::get('/files', 'GetFilesController');
                         Route::post('/dados', 'PaginateDadosController');
+                        Route::post('/titulares', 'PaginateTitularesController');
                     });
                 });
             });
@@ -191,6 +192,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('/', 'StoreDadoController');
                     Route::patch('/{dado}', 'UpdateDadoController');
                     Route::delete('/{dado}', 'DeleteDadoController');
+                });
+
+                /**
+                 * Titulares Request
+                 */
+                Route::group([
+                    'prefix' => 'titulares',
+                    'namespace' => 'Titular'
+                ], function () {
+                    Route::get('/tipos', 'GetTiposSGDController');
+                    Route::post('/', 'StoreTitularController');
+                    Route::patch('/{titular}', 'UpdateTitularController');
+                    Route::delete('/{titular}', 'DeleteTitularController');
                 });
             });
         });

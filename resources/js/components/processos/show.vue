@@ -9,7 +9,7 @@
                     <b-list-group-item button @click="open('finalidade')" :active="tab === 'finalidade'">Finalidade do Tratamento de Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('dados')" :active="tab === 'dados'">Categoria de Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('frequencia')" :active="tab === 'frequencia'">Frequência e Totalização</b-list-group-item>
-                    <b-list-group-item button @click="open('titulares')" :active="tab === 'titulares'">10 - Categorias dos titulares de dados pessoais</b-list-group-item>
+                    <b-list-group-item button @click="open('titulares')" :active="tab === 'titulares'">Titulares de dados pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('compartilhamentos')" :active="tab === 'compartilhamentos'">11 - Compartilhamento de  Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('medidas')" :active="tab === 'medidas'">12 - Medidas de Segurança/Privacidade</b-list-group-item>
                     <b-list-group-item button @click="open('transferencias')" :active="tab === 'transferencias'">13 - Transferência Internacional de Dados Pessoais</b-list-group-item>
@@ -42,6 +42,9 @@
                     </div>
                     <div v-if="tabs.frequencia">
                         <frequencia v-show="tab === 'frequencia'" :processo="processo"></frequencia>
+                    </div>
+                    <div v-if="tabs.titulares">
+                        <titulares v-show="tab === 'titulares'" :processo="processo"></titulares>
                     </div>
                 </div>
                 <div v-if="tab === null">

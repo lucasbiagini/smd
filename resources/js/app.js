@@ -36,7 +36,9 @@ Vue.component('frequencia', () => import('./components/processos/frequencia.vue'
 Vue.component('dados', () => import('./components/dados/dados.vue'))
 Vue.component('create-dado', () => import('./components/dados/create.vue'))
 Vue.component('dado', () => import('./components/dados/dado.vue'))
-
+Vue.component('titulares', () => import('./components/titulares/titulares.vue'))
+Vue.component('create-titular', () => import('./components/titulares/create.vue'))
+Vue.component('titular', () => import('./components/titulares/titular.vue'))
 /**
  * Sweetalert2
  */

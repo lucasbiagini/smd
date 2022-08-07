@@ -20,6 +20,8 @@ use App\Repositories\Setor\ISetor;
 use App\Repositories\Setor\SetorRepository;
 use App\Repositories\SetorUser\ISetorUser;
 use App\Repositories\SetorUser\SetorUserRepository;
+use App\Repositories\Titular\ITitular;
+use App\Repositories\Titular\TitularRepository;
 use App\Repositories\User\IUser;
 use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -47,6 +49,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IOperador::class, OperadorRepository::class);
         $this->app->bind(IFile::class, FileRepository::class);
         $this->app->bind(IDado::class, DadoRepository::class);
+        $this->app->bind(ITitular::class, TitularRepository::class);
     }
 
     /**

@@ -111,4 +111,9 @@ class Processo extends Model
     {
         return $this->hasMany(Dado::class);
     }
+
+    public function titulares ()
+    {
+        return $this->hasMany(Titular::class);
+    }
 }

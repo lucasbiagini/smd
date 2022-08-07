@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dado;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dado\StoreDadoRequest;
 use App\Http\Requests\Dado\UpdateDadoRequest;
 use App\Models\Dado;
 use App\Repositories\Dado\IDado;

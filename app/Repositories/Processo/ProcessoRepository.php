@@ -77,4 +77,9 @@ class ProcessoRepository implements IProcesso
     {
         return $processo->dados()->orderBy($sortBy, $sortDirection)->paginate($perPage);
     }
+
+    public function paginateTitulares (Processo $processo, $sortBy, $sortDirection, $perPage)
+    {
+        return $processo->titulares()->orderBy($sortBy, $sortDirection)->paginate($perPage);
+    }
 }

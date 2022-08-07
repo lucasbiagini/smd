@@ -15,4 +15,5 @@ interface IProcesso
     public function updateProcessoProp(Processo $processo, $prop, $value);
     public function getFiles(Processo $processo);
     public function paginateDados(Processo $processo, $sortBy, $sortDirection, $perPage);
+    public function paginateTitulares(Processo $processo, $sortBy, $sortDirection, $perPage);
 }
