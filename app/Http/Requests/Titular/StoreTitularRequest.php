@@ -24,6 +24,7 @@ class StoreTitularRequest extends FormRequest
     public function rules()
     {
         return [
+            'processo_id' => ['required', 'exists:processos,id'],
             'desc' => ['required', 'string'],
             'tipo' => ['required', 'integer', 'min:0', 'max:11'],
         ];

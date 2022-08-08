@@ -17,7 +17,6 @@ class CreateCompartilhamentosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('processo_id');
             $table->string('nome_insituicao')->nullable();
-            $table->string('dados_compartilhados')->nullable();
             $table->string('finalidade')->nullable();
             $table->timestamps();
 

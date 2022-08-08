@@ -435,4 +435,9 @@ class Dado extends Model
             'text' => BaseSGD::BASES[$base_dados]
         ];
     }
+
+//    public function transferencias()
+//    {
+//        return $this->
+//    }
 }

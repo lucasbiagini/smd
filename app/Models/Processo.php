@@ -116,4 +116,24 @@ class Processo extends Model
     {
         return $this->hasMany(Titular::class);
     }
+
+    public function compartilhamentos ()
+    {
+        return $this->hasMany(Compartilhamento::class);
+    }
+
+    public function medidas ()
+    {
+        return $this->hasMany(Medida::class);
+    }
+
+    public function transferencias ()
+    {
+        return $this->hasMany(Transferencia::class);
+    }
+
+    public function contratos ()
+    {
+        return $this->hasMany(Contrato::class);
+    }
 }

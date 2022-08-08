@@ -8,15 +8,15 @@ use App\Repositories\Titular\ITitular;
 
 class StoreTitularController extends Controller
 {
-    private ITitular $dado;
+    private ITitular $titular;
 
-    public function __construct(ITitular $dado)
+    public function __construct(ITitular $titular)
     {
-        $this->dado = $dado;
+        $this->titular = $titular;
     }
 
     public function __invoke (StoreTitularRequest $request)
     {
-        return $this->dado->store($request);
+        return $this->titular->store($request);
     }
 }

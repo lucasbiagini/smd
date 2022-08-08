@@ -39,6 +39,19 @@ Vue.component('dado', () => import('./components/dados/dado.vue'))
 Vue.component('titulares', () => import('./components/titulares/titulares.vue'))
 Vue.component('create-titular', () => import('./components/titulares/create.vue'))
 Vue.component('titular', () => import('./components/titulares/titular.vue'))
+Vue.component('compartilhamentos', () => import('./components/compartilhamentos/compartilhamentos.vue'))
+Vue.component('create-compartilhamento', () => import('./components/compartilhamentos/create.vue'))
+Vue.component('compartilhamento', () => import('./components/compartilhamentos/compartilhamento.vue'))
+Vue.component('medidas', () => import('./components/medidas/medidas.vue'))
+Vue.component('create-medida', () => import('./components/medidas/create.vue'))
+Vue.component('medida', () => import('./components/medidas/medida.vue'))
+Vue.component('transferencias', () => import('./components/transferencias/transferencias.vue'))
+Vue.component('create-transferencia', () => import('./components/transferencias/create.vue'))
+Vue.component('transferencia', () => import('./components/transferencias/transferencia.vue'))
+Vue.component('contratos', () => import('./components/contratos/contratos.vue'))
+Vue.component('create-contrato', () => import('./components/contratos/create.vue'))
+Vue.component('contrato', () => import('./components/contratos/contrato.vue'))
+
 /**
  * Sweetalert2
  */

@@ -10,10 +10,10 @@
                     <b-list-group-item button @click="open('dados')" :active="tab === 'dados'">Categoria de Dados Pessoais</b-list-group-item>
                     <b-list-group-item button @click="open('frequencia')" :active="tab === 'frequencia'">Frequência e Totalização</b-list-group-item>
                     <b-list-group-item button @click="open('titulares')" :active="tab === 'titulares'">Titulares de dados pessoais</b-list-group-item>
-                    <b-list-group-item button @click="open('compartilhamentos')" :active="tab === 'compartilhamentos'">11 - Compartilhamento de  Dados Pessoais</b-list-group-item>
-                    <b-list-group-item button @click="open('medidas')" :active="tab === 'medidas'">12 - Medidas de Segurança/Privacidade</b-list-group-item>
-                    <b-list-group-item button @click="open('transferencias')" :active="tab === 'transferencias'">13 - Transferência Internacional de Dados Pessoais</b-list-group-item>
-                    <b-list-group-item button @click="open('contratos')" :active="tab === 'contratos'">14 - Contrato(s) de serviços e/ou soluções de TI que trata(m) dados pessoais do serviço/processo de negócio</b-list-group-item>
+                    <b-list-group-item button @click="open('compartilhamentos')" :active="tab === 'compartilhamentos'">Compartilhamento de  Dados Pessoais</b-list-group-item>
+                    <b-list-group-item button @click="open('medidas')" :active="tab === 'medidas'">Medidas de Segurança/Privacidade</b-list-group-item>
+                    <b-list-group-item button @click="open('transferencias')" :active="tab === 'transferencias'">Transferência Internacional de Dados Pessoais</b-list-group-item>
+                    <b-list-group-item button @click="open('contratos')" :active="tab === 'contratos'">Contratos de serviços</b-list-group-item>
                 </b-list-group>
             </b-col>
             <b-col cols="8">
@@ -45,6 +45,18 @@
                     </div>
                     <div v-if="tabs.titulares">
                         <titulares v-show="tab === 'titulares'" :processo="processo"></titulares>
+                    </div>
+                    <div v-if="tabs.compartilhamentos">
+                        <compartilhamentos v-show="tab === 'compartilhamentos'" :processo="processo"></compartilhamentos>
+                    </div>
+                    <div v-if="tabs.medidas">
+                        <medidas v-show="tab === 'medidas'" :processo="processo"></medidas>
+                    </div>
+                    <div v-if="tabs.transferencias">
+                        <transferencias v-show="tab === 'transferencias'" :processo="processo"></transferencias>
+                    </div>
+                    <div v-if="tabs.contratos">
+                        <contratos v-show="tab === 'contratos'" :processo="processo"></contratos>
                     </div>
                 </div>
                 <div v-if="tab === null">

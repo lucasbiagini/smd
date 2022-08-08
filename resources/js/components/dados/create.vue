@@ -9,7 +9,7 @@
         </b-button>
         <b-modal
             id="create-dado"
-            title="Criar Setor"
+            title="Cadastrar Dado Pessoal"
             size="xl"
             ref="modal"
         >

@@ -8,7 +8,7 @@
         </b-button>
         <b-modal
             id="create-role"
-            title="Criar Setor"
+            title="Cadastrar Perfil"
             size="lg"
             ref="modal"
         >

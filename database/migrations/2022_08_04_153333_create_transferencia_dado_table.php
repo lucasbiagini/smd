@@ -19,6 +19,16 @@ class CreateTransferenciaDadoTable extends Migration
             $table->timestamps();
 
             $table->index(['dado_id', 'transferencia_id']);
+
+            $table->foreign('dado_id')
+                ->references('id')
+                ->on('dados')
+                ->onDelete('cascade');
+
+            $table->foreign('transferencia_id')
+                ->references('id')
+                ->on('transferencias')
+                ->onDelete('cascade');
         });
     }
 

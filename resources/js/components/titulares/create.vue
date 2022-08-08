@@ -9,7 +9,7 @@
         </b-button>
         <b-modal
             id="create-titular"
-            title="Criar Setor"
+            title="Cadastrar Titular"
             size="xl"
             ref="modal"
         >

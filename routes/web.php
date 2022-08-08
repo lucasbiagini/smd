@@ -141,6 +141,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::get('/files', 'GetFilesController');
                         Route::post('/dados', 'PaginateDadosController');
                         Route::post('/titulares', 'PaginateTitularesController');
+                        Route::post('/compartilhamentos', 'PaginateCompartilhamentosController');
+                        Route::post('/medidas', 'PaginateMedidasController');
+                        Route::post('/transferencias', 'PaginateTransferenciasController');
+                        Route::post('/contratos', 'PaginateContratosController');
+                        Route::get('/dados/all', 'GetAllDadosController');
                     });
                 });
             });
@@ -205,6 +210,56 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('/', 'StoreTitularController');
                     Route::patch('/{titular}', 'UpdateTitularController');
                     Route::delete('/{titular}', 'DeleteTitularController');
+                });
+
+                /**
+                 * Compartilhamentos Request
+                 */
+                Route::group([
+                    'prefix' => 'compartilhamentos',
+                    'namespace' => 'Compartilhamento'
+                ], function () {
+                    Route::post('/', 'StoreCompartilhamentoController');
+                    Route::patch('/{compartilhamento}', 'UpdateCompartilhamentoController');
+                    Route::delete('/{compartilhamento}', 'DeleteCompartilhamentoController');
+                });
+
+                /**
+                 * Medidas Request
+                 */
+                Route::group([
+                    'prefix' => 'medidas',
+                    'namespace' => 'Medida'
+                ], function () {
+                    Route::get('/tipos', 'GetTiposMedidaSGDController');
+                    Route::post('/', 'StoreMedidaController');
+                    Route::patch('/{medida}', 'UpdateMedidaController');
+                    Route::delete('/{medida}', 'DeleteMedidaController');
+                });
+
+                /**
+                 * Transferencias Request
+                 */
+                Route::group([
+                    'prefix' => 'transferencias',
+                    'namespace' => 'Transferencia'
+                ], function () {
+                    Route::get('/garantias', 'GetGarantiasController');
+                    Route::post('/', 'StoreTransferenciaController');
+                    Route::patch('/{transferencia}', 'UpdateTransferenciaController');
+                    Route::delete('/{transferencia}', 'DeleteTransferenciaController');
+                });
+
+                /**
+                 * Contratos Request
+                 */
+                Route::group([
+                    'prefix' => 'contratos',
+                    'namespace' => 'Contrato'
+                ], function () {
+                    Route::post('/', 'StoreContratoController');
+                    Route::patch('/{contrato}', 'UpdateContratoController');
+                    Route::delete('/{contrato}', 'DeleteContratoController');
                 });
             });
         });

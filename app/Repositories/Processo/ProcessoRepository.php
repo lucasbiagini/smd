@@ -82,4 +82,29 @@ class ProcessoRepository implements IProcesso
     {
         return $processo->titulares()->orderBy($sortBy, $sortDirection)->paginate($perPage);
     }
+
+    public function paginateCompartilhamentos (Processo $processo, $sortBy, $sortDirection, $perPage)
+    {
+        return $processo->compartilhamentos()->with('dados')->orderBy($sortBy, $sortDirection)->paginate($perPage);
+    }
+
+    public function paginateMedidas (Processo $processo, $sortBy, $sortDirection, $perPage)
+    {
+        return $processo->medidas()->orderBy($sortBy, $sortDirection)->paginate($perPage);
+    }
+
+    public function paginateTransferencias (Processo $processo, $sortBy, $sortDirection, $perPage)
+    {
+        return $processo->transferencias()->with('dados')->orderBy($sortBy, $sortDirection)->paginate($perPage);
+    }
+
+    public function paginateContratos (Processo $processo, $sortBy, $sortDirection, $perPage)
+    {
+        return $processo->contratos()->orderBy($sortBy, $sortDirection)->paginate($perPage);
+    }
+
+    public function getAllDados(Processo $processo)
+    {
+        return $processo->dados;
+    }
 }

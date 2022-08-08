@@ -8,7 +8,7 @@
         </b-button>
         <b-modal
             id="create-processo"
-            title="Criar Setor"
+            title="Cadastrar Processo"
             size="lg"
             ref="modal"
         >

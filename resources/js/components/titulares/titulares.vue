@@ -96,7 +96,7 @@
             </b-table>
 
             <!-- Info modal -->
-            <b-modal :id="infoModal.id" title="Editar categoria de titular pessoal" ref="modal" size="xl">
+            <b-modal :id="`edit_titular_${infoModal.id}`" title="Editar" ref="modal" size="xl">
                 <div v-if="selectedItem !== null">
                     <titular
                         :titular="selectedItem"
@@ -222,7 +222,7 @@ export default({
                 desc: item.desc,
                 tipo: item.tipo,
             }
-            this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+            this.$root.$emit('bv::show::modal', `edit_titular_${this.infoModal.id}`, button)
         },
         resetInfoModal() {
             this.infoModal.title = ''

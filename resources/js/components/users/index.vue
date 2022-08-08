@@ -80,7 +80,7 @@
         </b-table>
 
         <!-- Info modal -->
-        <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
+        <b-modal :id="`edit_user_${infoModal.id}`" :title="infoModal.title" ref="modal" size="lg">
             <div v-if="selectedItem !== null">
                 <div>
                     <b-tabs content-class="mt-3">
@@ -185,7 +185,7 @@ export default ({
                 status: item.status === 1
             }
             this.tab = 'editar'
-            this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+            this.$root.$emit('bv::show::modal', `edit_user_${this.infoModal.id}`, button)
         },
         resetInfoModal() {
             this.infoModal.title = ''

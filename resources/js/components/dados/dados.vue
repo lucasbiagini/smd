@@ -99,11 +99,11 @@
             </b-table>
 
             <!-- Info modal -->
-            <b-modal :id="infoModal.id" title="Editar categoria de dado pessoal" ref="modal" size="xl">
+            <b-modal :id="`edit_dado_${infoModal.id}`" title="Editar categoria de dado pessoal" ref="modal" size="xl">
                 <div v-if="selectedItem !== null">
                     <dado
                         :dado="selectedItem"
-                        :categorias="categorias"
+                        :categorias="grouped_categorias"
                         :bases="bases"
                         :fontes="fontes"
                     ></dado>
@@ -250,6 +250,7 @@ export default({
                     this.total = this.paginator.total
                     this.pageOptions = [10, 25, 50, 100, { value: this.total, text: "Todos" }]
                     if (this.isFirstFetch) this.isFirstFetch = false
+                    this.$root.$emit('dados:fetched', this.dados)
                 })
                 .catch(error => {
                     console.log(error)
@@ -267,7 +268,7 @@ export default({
                 fonte: item.fonte,
                 base_dados: item.base_dados
             }
-            this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+            this.$root.$emit('bv::show::modal', `edit_dado_${this.infoModal.id}`, button)
         },
         resetInfoModal() {
             this.infoModal.title = ''

@@ -80,7 +80,7 @@
             </b-table>
 
             <!-- Info modal -->
-            <b-modal :id="infoModal.id" :title="infoModal.title" ref="modal" size="lg">
+            <b-modal :id="`edit_processo_${infoModal.id}`" :title="infoModal.title" ref="modal" size="lg">
                 <div v-if="selectedItem !== null">
                     <edit-processo :processo="selectedItem"></edit-processo>
                 </div>
@@ -170,7 +170,7 @@ export default ({
                 name: item.name,
                 ref: item.ref
             }
-            this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+            this.$root.$emit('bv::show::modal', `edit_processo_${this.infoModal.id}`, button)
         },
         resetInfoModal() {
             this.infoModal.title = ''

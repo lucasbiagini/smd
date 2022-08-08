@@ -10,6 +10,6 @@ interface ITitular
 {
     public function getTiposSGD();
     public function store(StoreTitularRequest $request);
-    public function delete(TItular $titular);
-    public function update(TItular $titular, UpdateTitularRequest $request);
+    public function delete(Titular $titular);
+    public function update(Titular $titular, UpdateTitularRequest $request);
 }

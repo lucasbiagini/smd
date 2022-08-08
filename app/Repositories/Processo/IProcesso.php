@@ -16,4 +16,9 @@ interface IProcesso
     public function getFiles(Processo $processo);
     public function paginateDados(Processo $processo, $sortBy, $sortDirection, $perPage);
     public function paginateTitulares(Processo $processo, $sortBy, $sortDirection, $perPage);
+    public function paginateCompartilhamentos(Processo $processo, $sortBy, $sortDirection, $perPage);
+    public function paginateMedidas(Processo $processo, $sortBy, $sortDirection, $perPage);
+    public function paginateTransferencias(Processo $processo, $sortBy, $sortDirection, $perPage);
+    public function paginateContratos(Processo $processo, $sortBy, $sortDirection, $perPage);
+    public function getAllDados(Processo $processo);
 }
