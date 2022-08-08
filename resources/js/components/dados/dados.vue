@@ -10,6 +10,32 @@
             :fontes="fontes"
         ></create-dado>
 
+        <b-form-group label="Trata dados de crianças e adolescentes?" v-slot="{ ariaDescribedby }">
+            <b-form-radio-group
+                id="radio-criancas"
+                v-model="form.criancas"
+                :aria-describedby="ariaDescribedby"
+                name="radio-criancas"
+                @change="saveProp('criancas')"
+            >
+                <b-form-radio value="1">Sim</b-form-radio>
+                <b-form-radio value="0">Não</b-form-radio>
+            </b-form-radio-group>
+        </b-form-group>
+
+        <b-form-group label="Além de crianças e adolescente trata dados de outro grupo vulnerável?" v-slot="{ ariaDescribedby }">
+            <b-form-radio-group
+                id="radio-vulneraveis"
+                v-model="form.vulneraveis"
+                :aria-describedby="ariaDescribedby"
+                name="radio-vulneraveis"
+                @change="saveProp('vulneraveis')"
+            >
+                <b-form-radio value="1">Sim</b-form-radio>
+                <b-form-radio value="0">Não</b-form-radio>
+            </b-form-radio-group>
+        </b-form-group>
+
         <b-container fluid class="mt-5">
             <!-- User Interface controls -->
             <b-row>
@@ -166,8 +192,17 @@ export default({
                 title: '',
                 content: ''
             },
-            selectedItem: null
+            selectedItem: null,
+            oldForm: null,
+            form: null,
         }
+    },
+    created () {
+        this.form = {
+            criancas: this.processo.criancas ?? "",
+            vulneraveis: this.processo.vulneraveis ?? ""
+        }
+        this.oldForm = { ...this.form }
     },
     mounted () {
         this.fetch()
@@ -189,6 +224,15 @@ export default({
         stopFetching () {
             this.fetching--;
             if (this.fetching === 0) this.$root.$emit('stopFetching')
+        },
+        savingStarted () {
+            this.$root.$emit('savingStarted')
+        },
+        savingEnded () {
+            this.$root.$emit('savingEnded')
+        },
+        savingFailed () {
+            this.$root.$emit('savingFailed')
         },
         async fetchCategorias () {
             this.startFetching()
@@ -281,6 +325,30 @@ export default({
         },
         save() {
             this.$root.$emit('dado:save')
+        },
+        saveProp (prop) {
+            this.savingStarted()
+            axios.patch(`/processos/${this.processo.id}/prop`, {
+                prop: prop,
+                value: this.form[prop]
+            })
+                .then(response => {
+                    this.oldForm[prop] = this.form[prop]
+                    this.savingEnded()
+                })
+                .catch(error => {
+                    this.$swal.fire({
+                        timer: 10000,
+                        title: "Ocorreu um erro e não foi possível salvar.",
+                        icon: 'error',
+                        showConfirmButton: false,
+                        toast: true,
+                        position: 'top-end',
+                        timerProgressBar: true
+                    })
+                    this.form[prop] = this.oldForm[prop]
+                    this.savingFailed()
+                })
         },
         async remove(dado_id) {
             this.startFetching()

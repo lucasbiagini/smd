@@ -24,7 +24,7 @@ class UpdateProcessoPropRequest extends FormRequest
     public function rules()
     {
         return [
-            'prop' => ['required', 'in:desc,abrangencia,fonte,hipotese,finalidade,previsao_legal,resultados,beneficios,frequencia,quantidade'],
+            'prop' => ['required', 'in:desc,abrangencia,fonte,hipotese,finalidade,previsao_legal,resultados,beneficios,frequencia,quantidade,criancas,vulneraveis',],
             'value' => ['alpha_num']
         ];
     }
