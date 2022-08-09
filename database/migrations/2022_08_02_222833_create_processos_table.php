@@ -18,17 +18,6 @@ class CreateProcessosTable extends Migration
             $table->string('name');
             $table->string('ref')->nullable();
             $table->unsignedBigInteger('setor_id');
-            $table->string('status')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_agentes')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_fluxo')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_escopo')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_finalidade')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_categoria_dados')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_frequencia')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_titulares')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_compartilhamentos')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_medidas')->default(App\Models\Processo::PENDENTE);
-            $table->string('status_transferencias')->default(App\Models\Processo::PENDENTE);
             $table->unsignedBigInteger('controlador_id')->nullable();
             $table->unsignedBigInteger('encarregado_id')->nullable();
             $table->string('desc')->nullable();

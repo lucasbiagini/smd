@@ -18,6 +18,11 @@ class CreateMedidasTable extends Migration
             $table->unsignedBigInteger('processo_id');
             $table->string('tipo')->nullable();
             $table->timestamps();
+
+            $table->foreign('processo_id')
+                ->references('id')
+                ->on('processos')
+                ->onDelete('cascade');
         });
     }
 

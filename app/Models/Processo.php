@@ -38,20 +38,8 @@ class Processo extends Model
         'name',
         'ref',
         'setor_id',
-        'status',
-        'status_agentes',
-        'status_fluxo',
-        'status_escopo',
-        'status_finalidade',
-        'status_categoria_dados',
-        'status_frequencia',
-        'status_titulares',
-        'status_compartilhamentos',
-        'status_medidas',
-        'status_transferencias',
         'controlador_id',
         'encarregado_id',
-        'imagem',
         'desc',
         'abrangencia',
         'fonte',
@@ -63,7 +51,10 @@ class Processo extends Model
         'frequencia',
         'quantidade',
         'criancas',
-        'vulneraveis'
+        'vulneraveis',
+        'ready_at',
+        'approved_at',
+        'deleted_at'
     ];
 
     public function setor ()

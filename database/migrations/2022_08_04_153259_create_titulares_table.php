@@ -19,6 +19,11 @@ class CreateTitularesTable extends Migration
             $table->string('tipo')->nullable();
             $table->string('desc')->nullable();
             $table->timestamps();
+
+            $table->foreign('processo_id')
+                ->references('id')
+                ->on('processos')
+                ->onDelete('cascade');
         });
     }
 

@@ -15,10 +15,16 @@ class CreateContratosTable extends Migration
     {
         Schema::create('contratos', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('processo_id');
             $table->string('numero');
             $table->string('objeto');
             $table->string('email');
             $table->timestamps();
+
+            $table->foreign('processo_id')
+                ->references('id')
+                ->on('processos')
+                ->onDelete('cascade');
         });
     }
 
