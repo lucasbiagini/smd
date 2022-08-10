@@ -21,7 +21,7 @@ class SetorUser extends Model
 
     public function scopeOfSetor($query)
     {
-        if (!auth()->user()->hasRole('admin') && session()->has('setor_id')) {
+        if (session()->has('setor_id') && session('setor_id') !== -1) {
             $query->where('setor_id', session('setor_id'));
         }
     }

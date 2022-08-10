@@ -46,7 +46,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function scopeOfSetor($query)
     {
-        if (!auth()->user()->hasRole('admin') && session()->has('setor_id')) {
+        if (session()->has('setor_id') && session('setor_id') !== -1) {
             $query->whereHas('setor_user', function ($query) {
                 $query->where('setor_id', session('setor_id'));
             });

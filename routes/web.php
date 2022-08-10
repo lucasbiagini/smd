@@ -61,6 +61,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::post('/search', 'SearchSetorController')
                     ->name('setores.search')
                     ->middleware('permission:users.roles');
+                Route::post('/-1/select', 'SelectTodosSetoresController')->name('setores.select');
                 Route::post('/{setor}/select', 'SelectSetorController')->name('setores.select');
             });
 

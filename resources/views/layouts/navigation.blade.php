@@ -30,6 +30,15 @@
                         </b-dropdown-item>
                     </form>
                 @endforeach
+                @if(auth()->user()->hasRole('admin'))
+                    <b-dropdown-divider></b-dropdown-divider>
+                    <form method="POST" action="/setores/-1/select">
+                        @csrf
+                        <b-dropdown-item onclick="event.preventDefault();
+                                                    this.closest('form').submit();">Todos
+                        </b-dropdown-item>
+                    </form>
+                @endif
             </b-nav-item-dropdown>
             <b-nav-item-dropdown right>
                 <!-- Using 'button-content' slot -->
