@@ -16,6 +16,21 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
+            <b-nav-item-dropdown
+                id="my-nav-dropdown"
+                text="Setor{{session()->has('setor_name') ? ": " . session('setor_name') : ""}}"
+                toggle-class="nav-link-custom"
+                right
+            >
+                @foreach(auth()->user()->setores()->where('status', 1)->get() as $setor)
+                    <form method="POST" action="/setores/{{ $setor->id }}/select">
+                        @csrf
+                        <b-dropdown-item onclick="event.preventDefault();
+                                                    this.closest('form').submit();">{{ $setor->name }}
+                        </b-dropdown-item>
+                    </form>
+                @endforeach
+            </b-nav-item-dropdown>
             <b-nav-item-dropdown right>
                 <!-- Using 'button-content' slot -->
                 <template #button-content>

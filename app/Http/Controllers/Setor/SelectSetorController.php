@@ -11,6 +11,7 @@ class SelectSetorController extends Controller
 
     public function __invoke (Setor $setor)
     {
-        if (auth()->user()->hasSetor($setor)) session(['setor_id' => $setor->id]);
+        if (auth()->user()->hasSetor($setor)) session(['setor_id' => $setor->id, 'setor_name' => $setor->name]);
+        return redirect('/');
     }
 }
