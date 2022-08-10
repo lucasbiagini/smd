@@ -111,4 +111,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
         return $allPermissions;
     }
+
+    public function hasSetorUserRole ($role)
+    {
+        return $this->setor_user
+            ->map(function ($su) use ($role){
+                return $su->hasRole($role);
+            })
+            ->reduce(function ($acc, $value) {
+                return $acc || $value;
+            });
+    }
 }

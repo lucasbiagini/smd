@@ -26,7 +26,16 @@ class RoleRepository implements IRole
 
     public function searchRole ($query)
     {
-        return Role::where('name', 'like', "%$query%")->take(5)->get();
+        return Role::where('name', 'like', "%$query%")
+            ->where(function ($query) {
+                if (!auth()->user()->hasRole('admin')) {
+                    $query->where('name', '!=', 'admin');
+                    if (!auth()->user()->hasSetorUserRole('Administrador')) $query->where('name', '!=', 'Administrador');
+                }
+            })
+            ->where('status', 1)
+            ->take(5)
+            ->get();
     }
 
     public function findById ($id)

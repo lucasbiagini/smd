@@ -23,7 +23,11 @@ class SetorRepository implements ISetor
 
     public function searchSetor ($query)
     {
-        return Setor::ofSetor()->where('name', 'like', "%$query%")->take(5)->get();
+        return Setor::ofSetor()
+            ->where('name', 'like', "%$query%")
+            ->where('status', 1)
+            ->take(5)
+            ->get();
     }
 
     public function updateSetor (Setor $user, $name, $status)
