@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Processo;
+namespace App\Http\Requests\Checklist;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PaginateProcessoRequest extends FormRequest
+class UpdateMessageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class PaginateProcessoRequest extends FormRequest
     public function rules()
     {
         return [
-            'sortBy' => ['required', 'in:id,name,email'],
-            'sortDirection' => ['required', 'in:asc,desc'],
-            'perPage' => ['required', 'integer'],
-            'status' => ['required', 'string', 'in:TODOS,PENDENTE,ANALISE,HOMOLOGADO,ARQUIVADO']
+            'message' => ['string'],
         ];
     }
 }

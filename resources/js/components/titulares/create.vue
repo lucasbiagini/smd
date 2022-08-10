@@ -4,6 +4,7 @@
             v-b-modal.create-titular
             variant="success"
             style="position: absolute; top: 0; right: 0"
+            :disabled="disabled"
         >
             Cadastrar
         </b-button>
@@ -67,7 +68,7 @@
 import axios from "axios";
 
 export default({
-    props: ['processo_id', 'tipos'],
+    props: ['processo_id', 'tipos', 'disabled'],
     data () {
         return {
             form: {

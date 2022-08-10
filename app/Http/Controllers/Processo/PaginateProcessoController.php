@@ -17,6 +17,6 @@ class PaginateProcessoController extends Controller
 
     public function __invoke (PaginateProcessoRequest $request)
     {
-        return $this->processo->paginateProcessos($request->sortBy, $request->sortDirection, $request->perPage);
+        return $this->processo->paginateProcessos($request->sortBy, $request->sortDirection, $request->perPage, $request->status);
     }
 }

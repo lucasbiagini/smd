@@ -6,6 +6,7 @@
             :processo_id="processo.id"
             :dados="dados"
             :garantias="garantias"
+            :disabled="isApproved"
         ></create-transferencia>
 
         <b-container fluid class="mt-5">
@@ -69,6 +70,7 @@
                         @click="info(row.item, row.index, $event.target)"
                         v-if="$can('processos.dados')"
                         variant="primary"
+                        :disabled="isApproved"
                     >
                         <b-icon-pencil></b-icon-pencil>
                     </b-button>
@@ -76,7 +78,7 @@
                         <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>
                         <b-icon-eye-slash v-else></b-icon-eye-slash>
                     </b-button>
-                    <b-button size="sm" variant="danger" @click="remove(row.item.id)">
+                    <b-button size="sm" variant="danger" @click="remove(row.item.id)" :disabled="isApproved">
                         <b-icon-trash></b-icon-trash>
                     </b-button>
                 </template>
@@ -302,6 +304,10 @@ export default({
                 .map(f => {
                     return { text: f.label, value: f.key }
                 })
+        },
+        isApproved () {
+            return this.processo.checklist !== null &&
+                (this.processo.checklist['transferencias'].approved || this.processo.ready_at !== null)
         }
     },
     watch: {

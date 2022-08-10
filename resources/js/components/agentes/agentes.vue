@@ -6,11 +6,13 @@
                 :agente="agentes.controlador"
                 title="Controlador"
                 tipo="controlador"
+                :disabled="isApproved"
             ></agente>
             <agente
                 :agente="agentes.encarregado"
                 title="Encarregado"
                 tipo="encarregado"
+                :disabled="isApproved"
             ></agente>
             <agente
                 v-for="(operador, index) in agentes.operadores"
@@ -18,11 +20,12 @@
                 :agente="operador.agente"
                 :title="`${agentes.operadores.length > 1 ? (index + 1) + 'º ' : ''} Operador`"
                 tipo="operador"
+                :disabled="isApproved"
                 :operador="operador"
                 :form_index="index"
                 :deletable="agentes.operadores.length > 1"
             ></agente>
-            <b-button variant="success" @click="addOperador" class="float-right">Adicionar Operador</b-button>
+            <b-button variant="success" @click="addOperador" class="float-right" v-if="!isApproved">Adicionar Operador</b-button>
         </div>
     </div>
 </template>
@@ -86,5 +89,11 @@ export default({
             this.stopFetching()
         }
     },
+    computed: {
+        isApproved () {
+            return this.processo.checklist !== null &&
+                (this.processo.checklist['agentes'].approved || this.processo.ready_at !== null)
+        }
+    }
 })
 </script>

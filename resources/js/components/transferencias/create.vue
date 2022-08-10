@@ -4,6 +4,7 @@
             v-b-modal.create-transferencia
             variant="success"
             style="position: absolute; top: 0; right: 0"
+            :disabled="disabled"
         >
             Cadastrar
         </b-button>
@@ -110,7 +111,7 @@
 import axios from "axios";
 
 export default({
-    props: ['processo_id', 'dados', 'garantias'],
+    props: ['processo_id', 'dados', 'garantias', 'disabled'],
     data () {
         return {
             form: {

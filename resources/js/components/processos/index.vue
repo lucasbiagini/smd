@@ -1,11 +1,39 @@
 <template>
-    <ol>
-        <b-container fluid>
+    <b-container fluid>
+        <div>
+            <b-overlay no-wrap rounded="sm" :show="isFetching">
+                <template #overlay>
+                </template>
+            </b-overlay>
             <!-- User Interface controls -->
             <b-row>
-                <b-col sm="5" md="6" class="ml-auto">
+                <b-col sm="3" class="ml-auto">
                     <b-form-group
-                        label="Per page"
+                        label="Status"
+                        label-for="status-select"
+                        label-cols-sm="6"
+                        label-cols-md="4"
+                        label-cols-lg="3"
+                        label-align-sm="right"
+                        label-size="sm"
+                        class="mb-0"
+                    >
+                        <b-form-select
+                            id="status-select"
+                            v-model="statusProcesso"
+                            size="sm"
+                        >
+                            <b-select-option value="TODOS" :selected="true">Todos</b-select-option>
+                            <b-select-option value="PENDENTE">Pendente</b-select-option>
+                            <b-select-option value="ANALISE">Em Análise</b-select-option>
+                            <b-select-option value="HOMOLOGADO">Homologado</b-select-option>
+                            <b-select-option value="ARQUIVADO">Arquivado</b-select-option>
+                        </b-form-select>
+                    </b-form-group>
+                </b-col>
+                <b-col sm="3" class="ml-auto">
+                    <b-form-group
+                        label="Itens"
                         label-for="per-page-select"
                         label-cols-sm="6"
                         label-cols-md="4"
@@ -23,7 +51,7 @@
                     </b-form-group>
                 </b-col>
 
-                <b-col sm="7" md="6">
+                <b-col sm="6">
                     <b-pagination
                         v-model="current_page"
                         :total-rows="total"
@@ -55,27 +83,80 @@
                 empty-text="Nenhum processo para mostrar"
             >
 
+                <template #cell(name)="row">
+                    <a :href="`/processos/${row.item.id}`" v-b-tooltip.hover title="Acessar IDP">{{row.item.name}}</a>
+                </template>
+
                 <template #cell(actions)="row">
                     <b-button
                         size="sm"
                         @click="info(row.item, row.index, $event.target)"
                         v-if="$can('processos.update')"
                         variant="primary"
+                        v-b-tooltip.hover
+                        title="Editar"
                     >
                         <b-icon-pencil></b-icon-pencil>
                     </b-button>
-                    <b-button size="sm" @click="row.toggleDetails">
-                        <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>
-                        <b-icon-eye-slash v-else></b-icon-eye-slash>
+<!--                    <b-button-->
+<!--                        v-if="(row.item.ready_at === null || row.item.approved_at !== null) && row.item.archived_at === null"-->
+<!--                        size="sm"-->
+<!--                        @click="analyse(row.item.id)"-->
+<!--                        variant="warning"-->
+<!--                        v-b-tooltip.hover-->
+<!--                        title="Solicitar Análise"-->
+<!--                    >-->
+<!--                        <b-icon-patch-check></b-icon-patch-check>-->
+<!--                    </b-button>-->
+<!--                    <b-button-->
+<!--                        v-if="row.item.ready_at !== null && row.item.approved_at === null && row.item.archived_at === null"-->
+<!--                        size="sm"-->
+<!--                        @click="approve(row.item.id)"-->
+<!--                        variant="success"-->
+<!--                        v-b-tooltip.hover-->
+<!--                        title="Aprovar"-->
+<!--                    >-->
+<!--                        <b-icon-patch-check-fill></b-icon-patch-check-fill>-->
+<!--                    </b-button>-->
+                    <b-button
+                        v-if="row.item.archived_at === null"
+                        size="sm"
+                        @click="archive(row.item.id)"
+                        variant="dark"
+                        v-b-tooltip.hover
+                        title="Arquivar"
+                    >
+                        <b-icon-archive></b-icon-archive>
+                    </b-button>
+                    <b-button
+                        v-if="row.item.archived_at !== null"
+                        size="sm"
+                        @click="unarchive(row.item.id)"
+                        variant="dark"
+                        v-b-tooltip.hover
+                        title="Desarquivar"
+                    >
+                        <b-icon-archive></b-icon-archive>
                     </b-button>
                 </template>
 
-                <template #row-details="row">
-                    <b-card>
-                        <ul>
-                            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-                        </ul>
-                    </b-card>
+                <template #cell(status)="row">
+                    <b-badge
+                        v-if="row.item.archived_at !== null"
+                        variant="dark"
+                    >ARQUIVADO</b-badge>
+                    <b-badge
+                        v-else-if="row.item.approved_at !== null"
+                        variant="success"
+                    >HOMOLOGADO</b-badge>
+                    <b-badge
+                        v-else-if="row.item.ready_at !== null"
+                        variant="warning"
+                    >EM ANÁLISE</b-badge>
+                    <b-badge
+                        v-else
+                        variant="secondary"
+                    >PENDENTE</b-badge>
                 </template>
             </b-table>
 
@@ -95,8 +176,8 @@
                     </div>
                 </template>
             </b-modal>
-        </b-container>
-    </ol>
+        </div>
+    </b-container>
 </template>
 
 <script>
@@ -118,7 +199,8 @@ export default ({
             fields: [
                 { key: 'name', label: 'Nome', sortable: true, sortDirection: 'desc', class: 'text-center', stickyColumn: true, isActive: false},
                 { key: 'ref', label: 'Referência', sortable: true, sortDirection: 'desc', class: 'text-center', stickyColumn: true, isActive: false},
-                { key: 'actions', label: 'Actions', class: 'text-right', stickyColumn: true }
+                { key: 'status', label: 'Status', class: 'text-right', stickyColumn: true },
+                { key: 'actions', label: 'Opções', class: 'text-right', stickyColumn: true }
             ],
             pageOptions: null,
             sortBy: '',
@@ -129,7 +211,8 @@ export default ({
                 title: '',
                 content: ''
             },
-            selectedItem: null
+            selectedItem: null,
+            statusProcesso: 'TODOS'
         }
     },
     mounted () {
@@ -147,7 +230,8 @@ export default ({
                 perPage: this.per_page,
                 page: this.current_page,
                 sortBy: this.sortBy ? this.sortBy : 'id',
-                sortDirection: this.sortDesc ? 'desc' : 'asc'
+                sortDirection: this.sortDesc ? 'desc' : 'asc',
+                status: this.statusProcesso
             })
                 .then(response => {
                     this.paginator = response.data
@@ -183,6 +267,26 @@ export default ({
         },
         save() {
             this.$root.$emit('processo:save')
+        },
+        // async analyse(processo_id) {
+        //     await axios.post(`/processos/${processo_id}/analyse`)
+        //         .then(() => this.fetch())
+        //         .catch(error => {})
+        // },
+        // async approve(processo_id) {
+        //     await axios.post(`/processos/${processo_id}/approve`)
+        //         .then(() => this.fetch())
+        //         .catch(error => {})
+        // },
+        async archive(processo_id) {
+            await axios.post(`/processos/${processo_id}/archive`)
+                .then(() => this.fetch())
+                .catch(error => {})
+        },
+        async unarchive(processo_id) {
+            await axios.post(`/processos/${processo_id}/unarchive`)
+                .then(() => this.fetch())
+                .catch(error => {})
         }
     },
     computed: {
@@ -208,6 +312,10 @@ export default ({
             return !this.isFetching ? this.fetch() : null
         },
         sortDesc () {
+            this.current_page = 1
+            return !this.isFetching ? this.fetch() : null
+        },
+        statusProcesso () {
             this.current_page = 1
             return !this.isFetching ? this.fetch() : null
         }

@@ -8,6 +8,7 @@
             :categorias="categorias"
             :bases="bases"
             :fontes="fontes"
+            :disabled="isApproved"
         ></create-dado>
 
         <b-form-group label="Trata dados de crianças e adolescentes?" v-slot="{ ariaDescribedby }">
@@ -17,6 +18,7 @@
                 :aria-describedby="ariaDescribedby"
                 name="radio-criancas"
                 @change="saveProp('criancas')"
+                :disabled="isApproved"
             >
                 <b-form-radio value="1">Sim</b-form-radio>
                 <b-form-radio value="0">Não</b-form-radio>
@@ -30,6 +32,7 @@
                 :aria-describedby="ariaDescribedby"
                 name="radio-vulneraveis"
                 @change="saveProp('vulneraveis')"
+                :disabled="isApproved"
             >
                 <b-form-radio value="1">Sim</b-form-radio>
                 <b-form-radio value="0">Não</b-form-radio>
@@ -97,6 +100,7 @@
                         @click="info(row.item, row.index, $event.target)"
                         v-if="$can('processos.dados')"
                         variant="primary"
+                        :disabled="isApproved"
                     >
                         <b-icon-pencil></b-icon-pencil>
                     </b-button>
@@ -104,7 +108,7 @@
                         <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>
                         <b-icon-eye-slash v-else></b-icon-eye-slash>
                     </b-button>
-                    <b-button size="sm" variant="danger" @click="remove(row.item.id)">
+                    <b-button size="sm" variant="danger" @click="remove(row.item.id)" :disabled="isApproved">
                         <b-icon-trash></b-icon-trash>
                     </b-button>
                 </template>
@@ -376,6 +380,10 @@ export default({
                 .map(f => {
                     return { text: f.label, value: f.key }
                 })
+        },
+        isApproved () {
+            return this.processo.checklist !== null &&
+                (this.processo.checklist['dados'].approved || this.processo.ready_at !== null)
         }
     },
     watch: {
@@ -394,6 +402,6 @@ export default({
             this.current_page = 1
             return !this.isFetching && !this.isFirstFetch ? this.fetch() : null
         }
-    }
+    },
 })
 </script>

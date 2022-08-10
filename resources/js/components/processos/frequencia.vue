@@ -21,6 +21,7 @@
                 v-model="form.frequencia"
                 debounce="1000"
                 @change="save('frequencia')"
+                :disabled="isApproved"
             ></b-form-textarea>
         </b-form-group>
         <b-form-group
@@ -45,6 +46,7 @@
                 v-model="form.quantidade"
                 debounce="1000"
                 @change="save('quantidade')"
+                :disabled="isApproved"
             ></b-form-textarea>
         </b-form-group>
     </div>
@@ -102,6 +104,11 @@ export default({
                     this.savingFailed()
                 })
         }
+    },
+    computed: {
+        isApproved () {
+            return this.processo.checklist !== null &&
+                (this.processo.checklist['frequencia'].approved || this.processo.ready_at !== null)        }
     }
 })
 </script>

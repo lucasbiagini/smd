@@ -9,7 +9,19 @@ class Processo extends Model
 {
     use HasFactory;
 
-    const PENDENTE = 'PENDENTE';
+    const sections = [
+        'agentes',
+        'fluxo',
+        'escopo',
+        'finalidade',
+        'dados',
+        'frequencia',
+        'titulares',
+        'compartilhamentos',
+        'medidas',
+        'transferencias',
+        'contratos',
+    ];
 
     /**
      * Hipóteses
@@ -54,10 +66,10 @@ class Processo extends Model
         'vulneraveis',
         'ready_at',
         'approved_at',
-        'deleted_at'
+        'archived_at'
     ];
 
-    public function setor ()
+    public function setor()
     {
         return $this->belongsTo(Setor::class);
     }
@@ -69,27 +81,27 @@ class Processo extends Model
         }
     }
 
-    public function controlador ()
+    public function controlador()
     {
         return $this->belongsTo(Agente::class, 'controlador_id');
     }
 
-    public function encarregado ()
+    public function encarregado()
     {
         return $this->belongsTo(Agente::class, 'encarregado_id', 'id');
     }
 
-    public function operadores ()
+    public function operadores()
     {
         return $this->hasMany(Operador::class);
     }
 
-    public function files ()
+    public function files()
     {
         return $this->hasMany(File::class);
     }
 
-    public function getAgentesAttribute ()
+    public function getAgentesAttribute()
     {
         return [
           'controlador' => $this->controlador,
@@ -98,33 +110,38 @@ class Processo extends Model
         ];
     }
 
-    public function dados ()
+    public function dados()
     {
         return $this->hasMany(Dado::class);
     }
 
-    public function titulares ()
+    public function titulares()
     {
         return $this->hasMany(Titular::class);
     }
 
-    public function compartilhamentos ()
+    public function compartilhamentos()
     {
         return $this->hasMany(Compartilhamento::class);
     }
 
-    public function medidas ()
+    public function medidas()
     {
         return $this->hasMany(Medida::class);
     }
 
-    public function transferencias ()
+    public function transferencias()
     {
         return $this->hasMany(Transferencia::class);
     }
 
-    public function contratos ()
+    public function contratos()
     {
         return $this->hasMany(Contrato::class);
+    }
+
+    public function checklists()
+    {
+        return $this->hasMany(Checklist::class);
     }
 }

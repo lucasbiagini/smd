@@ -20,6 +20,7 @@
                 v-model="form.abrangencia"
                 debounce="1000"
                 @change="save('abrangencia')"
+                :disabled="isApproved"
             ></b-form-textarea>
         </b-form-group>
         <b-form-group
@@ -42,6 +43,7 @@
                 v-model="form.fonte"
                 debounce="1000"
                 @change="save('fonte')"
+                :disabled="isApproved"
             ></b-form-textarea>
         </b-form-group>
     </div>
@@ -99,6 +101,11 @@ export default({
                     this.savingFailed()
                 })
         }
+    },
+    computed: {
+        isApproved () {
+            return this.processo.checklist !== null &&
+                (this.processo.checklist['escopo'].approved || this.processo.ready_at !== null)        }
     }
 })
 </script>

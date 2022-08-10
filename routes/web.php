@@ -65,7 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             });
 
             /**
-             * Roles Routes
+             * Role Routes
              */
             Route::group([
                'namespace' => 'Role',
@@ -98,7 +98,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             });
 
             /**
-             * Permissions Routes
+             * Permission Routes
              */
             Route::group([
                 'namespace' => 'Permission',
@@ -108,7 +108,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             });
 
             /**
-             * Processos Routes
+             * Processo Routes
              */
             Route::group([
                 'namespace' => 'Processo',
@@ -128,7 +128,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     ->middleware('permission:processos.show');
 
                 /**
-                 * Dados dos Processos Routes
+                 * Dados dos Processo Routes
                  */
                 Route::group([
                     'prefix' => '{processo}'
@@ -146,13 +146,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::post('/transferencias', 'PaginateTransferenciasController');
                         Route::post('/contratos', 'PaginateContratosController');
                         Route::get('/dados/all', 'GetAllDadosController');
+                        Route::post('/analyse', 'AnalyseProcessoController');
+                        Route::post('/approve', 'ApproveProcessoController');
+                        Route::post('/reject', 'RejectProcessoController');
+                        Route::post('/archive', 'ArchiveProcessoController');
+                        Route::post('/unarchive', 'UnarchiveProcessoController');
                     });
                 });
             });
 
             Route::middleware(['permission:processos.dados'])->group(function () {
                 /**
-                 * Agentes Routes
+                 * Agente Routes
                  */
                 Route::group([
                     'prefix' => 'agentes',
@@ -163,7 +168,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
 
                 /**
-                 * Operadores Routes
+                 * Operador Routes
                  */
                 Route::group([
                     'prefix' => 'operadores',
@@ -174,7 +179,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
 
                 /**
-                 * Files Routes
+                 * File Routes
                  */
                 Route::group([
                     'prefix' => 'files',
@@ -185,7 +190,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
 
                 /**
-                 * Dados Routes
+                 * Dado Routes
                  */
                 Route::group([
                     'prefix' => 'dados',
@@ -200,7 +205,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
 
                 /**
-                 * Titulares Request
+                 * Titular Routes
                  */
                 Route::group([
                     'prefix' => 'titulares',
@@ -213,7 +218,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
 
                 /**
-                 * Compartilhamentos Request
+                 * Compartilhamento Routes
                  */
                 Route::group([
                     'prefix' => 'compartilhamentos',
@@ -225,7 +230,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
 
                 /**
-                 * Medidas Request
+                 * Medida Routes
                  */
                 Route::group([
                     'prefix' => 'medidas',
@@ -238,7 +243,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
 
                 /**
-                 * Transferencias Request
+                 * Transferencia Routes
                  */
                 Route::group([
                     'prefix' => 'transferencias',
@@ -251,7 +256,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 });
 
                 /**
-                 * Contratos Request
+                 * Contrato Routes
                  */
                 Route::group([
                     'prefix' => 'contratos',
@@ -260,6 +265,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('/', 'StoreContratoController');
                     Route::patch('/{contrato}', 'UpdateContratoController');
                     Route::delete('/{contrato}', 'DeleteContratoController');
+                });
+
+                /**
+                 * Checklist Routes
+                 */
+                Route::group([
+                    'prefix' => 'checklists',
+                    'namespace' => 'Checklist'
+                ], function () {
+                    Route::post('/{checklist}/message', 'UpdateMessageController');
+                    Route::post('/{checklist}/approve', 'ApproveChecklistController');
+                    Route::post('/{checklist}/reject', 'RejectChecklistController');
                 });
             });
         });

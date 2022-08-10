@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Repositories\Agente\AgenteRepository;
 use App\Repositories\Agente\IAgente;
+use App\Repositories\Checklist\ChecklistRepository;
+use App\Repositories\Checklist\IChecklist;
 use App\Repositories\Compartilhamento\CompartilhamentoRepository;
 use App\Repositories\Compartilhamento\ICompartilhamento;
 use App\Repositories\Contrato\ContratoRepository;
@@ -62,6 +64,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(IMedida::class, MedidaRepository::class);
         $this->app->bind(ITransferencia::class, TransferenciaRepository::class);
         $this->app->bind(IContrato::class, ContratoRepository::class);
+        $this->app->bind(IChecklist::class, ChecklistRepository::class);
     }
 
     /**

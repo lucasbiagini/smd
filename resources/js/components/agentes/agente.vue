@@ -7,7 +7,7 @@
                 {{ helpers[tipo] }}
             </b-popover>
             <span class="font-weight-bold pt-0">{{ title }}</span>
-            <b-badge v-if="deletable" href="#" @click.prenv="remove" variant="danger">Excluir</b-badge>
+            <b-badge v-if="deletable && !disabled" href="#" @click.prenv="remove" variant="danger">Excluir</b-badge>
         </template>
         <b-form-group
             label="Nome:"
@@ -21,6 +21,7 @@
                 @change="save('nome')"
                 v-model="form.nome"
                 :state="states['nome']"
+                :disabled="disabled"
             ></b-form-input>
         </b-form-group>
 
@@ -35,6 +36,7 @@
                 @change="save('endereco')"
                 v-model="form.endereco"
                 :state="states['endereco']"
+                :disabled="disabled"
             ></b-form-input>
         </b-form-group>
 
@@ -49,6 +51,7 @@
                 @change="save('cep')"
                 v-model="form.cep"
                 :state="states['cep']"
+                :disabled="disabled"
             ></b-form-input>
         </b-form-group>
 
@@ -63,6 +66,7 @@
                 @change="save('telefone')"
                 v-model="form.telefone"
                 :state="states['telefone']"
+                :disabled="disabled"
             ></b-form-input>
         </b-form-group>
 
@@ -77,6 +81,7 @@
                 @change="save('email')"
                 v-model="form.email"
                 :state="states['email']"
+                :disabled="disabled"
             ></b-form-input>
         </b-form-group>
 
@@ -94,11 +99,11 @@
                 </b-popover>
                 <span>Atuação:</span>
             </template>
-            <b-form-checkbox inline :disabled="atuacao.coleta.isSaving" v-model="atuacao.coleta.value" :value="1" :unchecked-value="0" @change="checked('coleta')">Coleta</b-form-checkbox>
-            <b-form-checkbox inline :disabled="atuacao.retencao.isSaving" v-model="atuacao.retencao.value" :value="1" :unchecked-value="0" @change="checked('retencao')">Retenção</b-form-checkbox>
-            <b-form-checkbox inline :disabled="atuacao.processamento.isSaving" v-model="atuacao.processamento.value" :value="1" :unchecked-value="0" @change="checked('processamento')">Processamento</b-form-checkbox>
-            <b-form-checkbox inline :disabled="atuacao.compartilhamento.isSaving" v-model="atuacao.compartilhamento.value" :value="1" :unchecked-value="0" @change="checked('compartilhamento')">Compartilhamento</b-form-checkbox>
-            <b-form-checkbox inline :disabled="atuacao.eliminacao.isSaving" v-model="atuacao.eliminacao.value" :value="1" :unchecked-value="0" @change="checked('eliminacao')">Eliminação</b-form-checkbox>
+            <b-form-checkbox inline :disabled="disabled || atuacao.coleta.isSaving" v-model="atuacao.coleta.value" :value="1" :unchecked-value="0" @change="checked('coleta')">Coleta</b-form-checkbox>
+            <b-form-checkbox inline :disabled="disabled || atuacao.retencao.isSaving" v-model="atuacao.retencao.value" :value="1" :unchecked-value="0" @change="checked('retencao')">Retenção</b-form-checkbox>
+            <b-form-checkbox inline :disabled="disabled || atuacao.processamento.isSaving" v-model="atuacao.processamento.value" :value="1" :unchecked-value="0" @change="checked('processamento')">Processamento</b-form-checkbox>
+            <b-form-checkbox inline :disabled="disabled || atuacao.compartilhamento.isSaving" v-model="atuacao.compartilhamento.value" :value="1" :unchecked-value="0" @change="checked('compartilhamento')">Compartilhamento</b-form-checkbox>
+            <b-form-checkbox inline :disabled="disabled || atuacao.eliminacao.isSaving" v-model="atuacao.eliminacao.value" :value="1" :unchecked-value="0" @change="checked('eliminacao')">Eliminação</b-form-checkbox>
         </b-form-group>
     </b-form-group>
 </template>
@@ -125,6 +130,11 @@ export default({
             default: 0
         },
         deletable: {
+            required: false,
+            default: false,
+            type: Boolean
+        },
+        disabled: {
             required: false,
             default: false,
             type: Boolean

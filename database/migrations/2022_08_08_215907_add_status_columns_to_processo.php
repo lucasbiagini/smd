@@ -16,7 +16,7 @@ class AddStatusColumnsToProcesso extends Migration
         Schema::table('processos', function (Blueprint $table) {
             $table->dateTime('ready_at')->nullable();
             $table->dateTime('approved_at')->nullable();
-            $table->dateTime('deleted_at')->nullable();
+            $table->dateTime('archived_at')->nullable();
         });
     }
 
@@ -30,7 +30,7 @@ class AddStatusColumnsToProcesso extends Migration
         Schema::table('processos', function (Blueprint $table) {
             $table->dropColumn('ready_at');
             $table->dropColumn('approved_at');
-            $table->dropColumn('deleted_at');
+            $table->dropColumn('archived_at');
         });
     }
 }

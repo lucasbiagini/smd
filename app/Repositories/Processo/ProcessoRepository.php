@@ -3,18 +3,33 @@
 namespace App\Repositories\Processo;
 
 use App\Models\Agente;
+use App\Models\Checklist;
 use App\Models\Processo;
+use Carbon\Carbon;
 
 class ProcessoRepository implements IProcesso
 {
     public function findById ($id)
     {
-        return Processo::ofSetor()->find($id);
+        $processo = Processo::ofSetor()->find($id);
+        $processo->checklist = $processo->checklists->groupBy('section')->map(function ($section) {
+            return $section[0];
+        })->toArray();
+        return $processo;
     }
 
-    public function paginateProcessos($sortBy, $sortDirection, $perPage)
+    public function paginateProcessos($sortBy, $sortDirection, $perPage, $status)
     {
-        return Processo::ofSetor()->orderBy($sortBy, $sortDirection)->paginate($perPage);
+        return Processo::ofSetor()
+            ->where(function($query) use ($status) {
+                if ($status === 'ARQUIVADO') $query->whereNotNull('archived_at');
+                else if ($status === 'HOMOLOGADO') $query->whereNotNull('approved_at');
+                else if ($status === 'ANALISE') $query->whereNotNull('ready_at');
+                else if ($status === 'PENDENTE') $query->whereNull(['archived_at', 'approved_at', 'ready_at']);
+                else $query->whereNull('archived_at');
+            })
+            ->orderBy($sortBy, $sortDirection)
+            ->paginate($perPage);
     }
 
     public function store ($name, $ref, $setor_id)
@@ -106,5 +121,59 @@ class ProcessoRepository implements IProcesso
     public function getAllDados(Processo $processo)
     {
         return $processo->dados;
+    }
+
+    public function analyse(Processo $processo)
+    {
+        if ($processo->archived_at === null) {
+            $processo->approved_at = null;
+            $processo->ready_at = Carbon::now();
+            $processo->save();
+
+            if (sizeof($processo->checklists) === 0) {
+                $insert_data = collect([]);
+                foreach (Processo::sections as $section) {
+                    $insert_data->push([
+                        'processo_id' => $processo->id,
+                        'section' => $section,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    ]);
+                }
+                Checklist::insert($insert_data->toArray());
+            }
+        }
+    }
+
+    public function approve(Processo $processo)
+    {
+        if ($processo->ready_at !== null && $processo->approved_at === null && $processo->archived_at === null) {
+            $processo->approved_at = Carbon::now();
+            $processo->save();
+        }
+    }
+
+    public function reject(Processo $processo)
+    {
+        if ($processo->ready_at !== null && $processo->approved_at === null && $processo->archived_at === null) {
+            $processo->ready_at = null;
+            $processo->save();
+        }
+    }
+
+    public function archive(Processo $processo)
+    {
+        if ($processo->archived_at === null) {
+            $processo->archived_at = Carbon::now();
+            $processo->save();
+        }
+    }
+
+    public function unarchive(Processo $processo)
+    {
+        if ($processo->archived_at !== null) {
+            $processo->archived_at = null;
+            $processo->save();
+        }
     }
 }

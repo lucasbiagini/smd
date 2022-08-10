@@ -14,7 +14,7 @@
                 </b-popover>
                 <span>Hipótese de tratamento:</span>
             </template>
-            <b-form-select v-model="form.hipotese" :options="hipoteses" @change="save('hipotese')"></b-form-select>
+            <b-form-select :disabled="isApproved" v-model="form.hipotese" :options="hipoteses" @change="save('hipotese')"></b-form-select>
         </b-form-group>
 
         <b-form-group
@@ -35,6 +35,7 @@
                 v-model="form.finalidade"
                 debounce="1000"
                 @change="save('finalidade')"
+                :disabled="isApproved"
             ></b-form-textarea>
         </b-form-group>
         <b-form-group
@@ -57,6 +58,7 @@
                 v-model="form.previsao_legal"
                 debounce="1000"
                 @change="save('previsao_legal')"
+                :disabled="isApproved"
             ></b-form-textarea>
         </b-form-group>
         <b-form-group
@@ -72,6 +74,7 @@
                 v-model="form.resultados"
                 debounce="1000"
                 @change="save('resultados')"
+                :disabled="isApproved"
             ></b-form-textarea>
         </b-form-group>
         <b-form-group
@@ -87,6 +90,7 @@
                 v-model="form.beneficios"
                 debounce="1000"
                 @change="save('beneficios')"
+                :disabled="isApproved"
             ></b-form-textarea>
         </b-form-group>
     </div>
@@ -177,6 +181,11 @@ export default({
                     this.savingFailed()
                 })
         }
+    },
+    computed: {
+        isApproved () {
+            return this.processo.checklist !== null &&
+                (this.processo.checklist['finalidade'].approved || this.processo.ready_at !== null)        }
     }
 })
 </script>

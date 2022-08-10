@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Processo;
 use App\Repositories\Processo\IProcesso;
 
-class GetProcessoController extends Controller
+class UnarchiveProcessoController extends Controller
 {
     protected IProcesso $processo;
 
@@ -15,8 +15,8 @@ class GetProcessoController extends Controller
         $this->processo = $processo;
     }
 
-    public function __invoke (Processo $processo)
+    public function __invoke(Processo $processo)
     {
-        return $this->processo->findById($processo->id);
+        $this->processo->unarchive($processo);
     }
 }

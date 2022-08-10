@@ -4,6 +4,7 @@
             v-b-modal.create-dado
             variant="success"
             style="position: absolute; top: 0; right: 0"
+            :disabled="disabled"
         >
             Cadastrar
         </b-button>
@@ -134,7 +135,7 @@
 import axios from "axios";
 
 export default({
-    props: ['processo_id', 'grouped_categorias', 'categorias', 'bases', 'fontes'],
+    props: ['processo_id', 'grouped_categorias', 'categorias', 'bases', 'fontes', 'disabled'],
     data () {
         return {
             form: {

@@ -29,10 +29,11 @@
                 v-model="form.desc"
                 debounce="1000"
                 @change="save"
+                :disabled="isApproved"
             ></b-form-textarea>
         </b-form-group>
         <b-form-group>
-            <input type="file" ref="file" class="mt-3" @change="uploadFiles">
+            <input :disabled="isApproved" type="file" ref="file" class="mt-3" @change="uploadFiles">
             <b-progress v-if="isUploading" :value="uploadProgress" max="100" class="mt-2" show-progress animated></b-progress>
         </b-form-group>
         <b-overlay :show="isFetchingFiles" rounded="sm">
@@ -177,6 +178,12 @@ export default({
                     })
                 })
             this.isRemoving = false
+        },
+    },
+    computed: {
+        isApproved () {
+            return this.processo.checklist !== null &&
+                (this.processo.checklist['fluxo'].approved || this.processo.ready_at !== null)
         }
     }
 })
