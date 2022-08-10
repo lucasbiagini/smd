@@ -23,8 +23,8 @@ class ProcessoRepository implements IProcesso
         return Processo::ofSetor()
             ->where(function($query) use ($status) {
                 if ($status === 'ARQUIVADO') $query->whereNotNull('archived_at');
-                else if ($status === 'HOMOLOGADO') $query->whereNotNull('approved_at');
-                else if ($status === 'ANALISE') $query->whereNotNull('ready_at');
+                else if ($status === 'HOMOLOGADO') $query->whereNotNull('approved_at')->whereNull('archived_at');
+                else if ($status === 'ANALISE') $query->whereNotNull('ready_at')->whereNull(['approved_at', 'archived_at']);
                 else if ($status === 'PENDENTE') $query->whereNull(['archived_at', 'approved_at', 'ready_at']);
                 else $query->whereNull('archived_at');
             })

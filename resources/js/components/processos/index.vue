@@ -122,11 +122,7 @@
 
                 <template #cell(status)="row">
                     <b-badge
-                        v-if="row.item.archived_at !== null"
-                        variant="dark"
-                    >ARQUIVADO</b-badge>
-                    <b-badge
-                        v-else-if="row.item.approved_at !== null"
+                        v-if="row.item.approved_at !== null"
                         variant="success"
                     >HOMOLOGADO</b-badge>
                     <b-badge
@@ -137,6 +133,10 @@
                         v-else
                         variant="secondary"
                     >PENDENTE</b-badge>
+                    <b-badge
+                        v-if="row.item.archived_at !== null"
+                        variant="dark"
+                    >ARQUIVADO</b-badge>
                 </template>
             </b-table>
 
