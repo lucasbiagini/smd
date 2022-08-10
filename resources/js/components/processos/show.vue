@@ -207,14 +207,14 @@
                         <b-button variant="primary" target="_blank" href="https://www.gov.br/governodigital/pt-br/seguranca-e-protecao-de-dados/guias/guia_lgpd.pdf">Guia de Boas Práticas da LGPD</b-button>
                     </b-jumbotron>
                     <b-button
-                        v-if="processo !== null && (processo.ready_at === null || processo.approved_at !== null) && processo.archived_at === null"
+                        v-if="$can('processos.analyse') && processo !== null && (processo.ready_at === null || processo.approved_at !== null) && processo.archived_at === null"
                         size="sm"
                         @click="analyseProcesso"
                         variant="warning"
                     >
                         SOLICITAR ANÁLISE
                     </b-button>
-                    <div v-if="processo !== null && processo.ready_at !== null && processo.approved_at === null">
+                    <div v-if="$can('processos.approve', 'processos.reject') && processo !== null && processo.ready_at !== null && processo.approved_at === null">
                         <b-button
                             variant="success"
                             @click="approveProcesso"

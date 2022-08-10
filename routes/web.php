@@ -146,11 +146,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
                         Route::post('/transferencias', 'PaginateTransferenciasController');
                         Route::post('/contratos', 'PaginateContratosController');
                         Route::get('/dados/all', 'GetAllDadosController');
-                        Route::post('/analyse', 'AnalyseProcessoController');
-                        Route::post('/approve', 'ApproveProcessoController');
-                        Route::post('/reject', 'RejectProcessoController');
-                        Route::post('/archive', 'ArchiveProcessoController');
-                        Route::post('/unarchive', 'UnarchiveProcessoController');
+                    });
+
+                    Route::middleware(['permission'])->group(function () {
+                        Route::post('/analyse', 'AnalyseProcessoController')->name('processos.analyse');
+                        Route::post('/approve', 'ApproveProcessoController')->name('processos.approve');
+                        Route::post('/reject', 'RejectProcessoController')->name('processos.reject');
+                        Route::post('/archive', 'ArchiveProcessoController')->name('processos.archive');
+                        Route::post('/unarchive', 'UnarchiveProcessoController')->name('processos.unarchive');
                     });
                 });
             });

@@ -99,7 +99,7 @@
                         <b-icon-pencil></b-icon-pencil>
                     </b-button>
                     <b-button
-                        v-if="row.item.archived_at === null"
+                        v-if="$can('processos.archive') && row.item.archived_at === null"
                         size="sm"
                         @click="archive(row.item.id)"
                         variant="dark"
@@ -109,7 +109,7 @@
                         <b-icon-archive></b-icon-archive>
                     </b-button>
                     <b-button
-                        v-if="row.item.archived_at !== null"
+                        v-if="$can('processos.unarchive') && row.item.archived_at !== null"
                         size="sm"
                         @click="unarchive(row.item.id)"
                         variant="dark"
