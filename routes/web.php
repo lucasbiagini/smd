@@ -56,7 +56,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('/', 'PaginateSetorController')->name('setores.list');
                     Route::post('/create', 'StoreSetorController')->name('setores.store');
                     Route::patch('/{setor}', 'UpdateSetorController')->name('setores.update');
-//                    Route::get('/all', 'AllSetoresController')->name('setores.all'); //deprecated
                 });
                 Route::post('/search', 'SearchSetorController')
                     ->name('setores.search')
@@ -164,7 +163,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     'prefix' => 'agentes',
                     'namespace' =>'Agente'
                 ], function () {
-//                Route::get('/tipos', 'GetTiposController'); // deprecated
                     Route::patch('/{agente}', 'UpdateAgenteController');
                 });
 
