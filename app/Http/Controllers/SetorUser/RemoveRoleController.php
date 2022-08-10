@@ -24,7 +24,6 @@ class RemoveRoleController extends Controller
         $role = $this->role->findById($request->role_id);
         if ($role->name === 'Administrador') {
             $count_other_adminstradores = SetorUser::where('setor_id', $setor_user->setor_id)
-                ->where('user_id', '!=', $setor_user->user_id)
                 ->whereHas('roles', function ($query) {
                     $query->where('name', 'Administrador');
                 })

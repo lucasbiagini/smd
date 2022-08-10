@@ -95,6 +95,9 @@ class User extends Authenticatable implements MustVerifyEmail
         if (!session()->has('setor_id')) return collect([]);
 
         $setor_user = $this->setor_user()
+            ->whereHas('setor', function($query) {
+                $query->where('status', 1);
+            })
             ->where('setor_id', '=', session('setor_id'))
             ->first();
 
@@ -105,8 +108,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
         $allPermissions = collect([]);
         foreach ($setor_user->roles as $role) {
-            $permissions = $role->permissions->pluck('name');
-            $allPermissions = $allPermissions->concat($permissions)->unique();
+            if ($role->status === 1) {
+                $permissions = $role->permissions->pluck('name');
+                $allPermissions = $allPermissions->concat($permissions)->unique();
+            }
         }
 
         return $allPermissions;
@@ -121,5 +126,15 @@ class User extends Authenticatable implements MustVerifyEmail
             ->reduce(function ($acc, $value) {
                 return $acc || $value;
             });
+    }
+
+    public function hasActiveRoles ()
+    {
+        foreach ($this->setor_user as $su) {
+            foreach($su->roles as $role) {
+                if ($role->status === 1) return true;
+            }
+        }
+        return false;
     }
 }
