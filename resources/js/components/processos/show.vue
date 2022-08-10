@@ -8,7 +8,7 @@
                         Início
                     </b-list-group-item>
                     <b-list-group-item button @click="open('agentes')" :active="tab === 'agentes'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.agentes.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-else-if="processo.checklist.agentes.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-else-if="processo.checklist.agentes.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -16,7 +16,7 @@
                         {{ columnName('agentes') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('fluxo')" :active="tab === 'fluxo'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.fluxo.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.fluxo.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.fluxo.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -24,7 +24,7 @@
                         {{ columnName('fluxo') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('escopo')" :active="tab === 'escopo'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.escopo.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.escopo.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.escopo.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -32,7 +32,7 @@
                         {{ columnName('escopo') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('finalidade')" :active="tab === 'finalidade'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.finalidade.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.finalidade.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.finalidade.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -40,7 +40,7 @@
                         {{ columnName('finalidade') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('dados')" :active="tab === 'dados'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.dados.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.dados.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.dados.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -48,7 +48,7 @@
                         {{ columnName('dados') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('frequencia')" :active="tab === 'frequencia'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.frequencia.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.frequencia.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.frequencia.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -56,7 +56,7 @@
                         {{ columnName('frequencia') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('titulares')" :active="tab === 'titulares'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.titulares.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.titulares.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.titulares.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -64,7 +64,7 @@
                         {{ columnName('titulares') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('compartilhamentos')" :active="tab === 'compartilhamentos'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.compartilhamentos.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.compartilhamentos.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.compartilhamentos.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -72,7 +72,7 @@
                         {{ columnName('compartilhamentos') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('medidas')" :active="tab === 'medidas'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.medidas.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.medidas.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.medidas.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -80,7 +80,7 @@
                         {{ columnName('medidas') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('transferencias')" :active="tab === 'transferencias'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.transferencias.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.transferencias.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.transferencias.approved === false" variant="danger" pill>REJEITADO</b-badge>
@@ -88,7 +88,7 @@
                         {{ columnName('transferencias') }}
                     </b-list-group-item>
                     <b-list-group-item button @click="open('contratos')" :active="tab === 'contratos'">
-                        <div v-if="processo !== null && processo.checklist !== null">
+                        <div v-if="processo !== null && processo.checklists.length > 0">
                             <b-badge v-if="processo.checklist.contratos.approved === null" variant="secondary" pill>PENDENTE</b-badge>
                             <b-badge v-if="processo.checklist.contratos.approved === true" variant="success" pill>APROVADO</b-badge>
                             <b-badge v-if="processo.checklist.contratos.approved === false" variant="danger" pill>REJEITADO</b-badge>

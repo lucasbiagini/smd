@@ -41,10 +41,12 @@ class ProcessoRepository implements IProcesso
         ]);
 
         $controlador = Agente::create();
-        $processo->associate($controlador)->save();
+        $processo->controlador_id = $controlador->id;
 
         $encarregado = Agente::create();
-        $processo->associate($encarregado)->save();
+        $processo->encarregado_id = $encarregado->id;
+
+        $processo->save();
 
         $agente_operador = Agente::create();
         $processo->operadores()->create([

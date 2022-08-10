@@ -306,7 +306,7 @@ export default({
                 })
         },
         isApproved () {
-            return this.processo.checklist !== null &&
+            return this.processo.checklists.length > 0 &&
                 (this.processo.checklist['transferencias'].approved || this.processo.ready_at !== null)
         }
     },
