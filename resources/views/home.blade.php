@@ -10,7 +10,7 @@
                 </h2>
             </b-col>
             <b-col>
-                @if(auth()->user()->hasPermissionTo('processos.store'))
+                @if(auth()->user()->hasPermissionTo('processos.store') && session('setor_id') !== -1)
                     <create-processo></create-processo>
                 @endif
             </b-col>
