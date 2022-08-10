@@ -31,7 +31,7 @@
             <b-form-textarea
                 id="finalidade-finalidade"
                 placeholder="Descreva aqui a finalidade."
-                rows="16"
+                rows="8"
                 v-model="form.finalidade"
                 debounce="1000"
                 @change="save('finalidade')"
@@ -54,7 +54,7 @@
             <b-form-textarea
                 id="previsao_legal-finalidade"
                 placeholder="Descreva aqui a previsão legal."
-                rows="16"
+                rows="8"
                 v-model="form.previsao_legal"
                 debounce="1000"
                 @change="save('previsao_legal')"
@@ -70,7 +70,7 @@
             <b-form-textarea
                 id="resultados-finalidade"
                 placeholder="Descreva aqui a os resultados pretendidos."
-                rows="16"
+                rows="8"
                 v-model="form.resultados"
                 debounce="1000"
                 @change="save('resultados')"
@@ -86,7 +86,7 @@
             <b-form-textarea
                 id="beneficios-finalidade"
                 placeholder="Descreva aqui os benefícios esperados."
-                rows="16"
+                rows="8"
                 v-model="form.beneficios"
                 debounce="1000"
                 @change="save('beneficios')"

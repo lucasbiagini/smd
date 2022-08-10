@@ -25,7 +25,7 @@
             <b-form-textarea
                 id="desc-fluxo"
                 placeholder="Descreva aqui o fluxo de dados do processo."
-                rows="16"
+                rows="8"
                 v-model="form.desc"
                 debounce="1000"
                 @change="save"

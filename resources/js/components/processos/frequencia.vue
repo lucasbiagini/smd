@@ -17,7 +17,7 @@
             <b-form-textarea
                 id="frequencia-freq"
                 placeholder="Descreva aqui sobre a frequência de tratamento dos dados pessoais."
-                rows="16"
+                rows="8"
                 v-model="form.frequencia"
                 debounce="1000"
                 @change="save('frequencia')"
@@ -42,7 +42,7 @@
             <b-form-textarea
                 id="quantidade-freq"
                 placeholder="Descreva aqui sobre a quantidade de dados tratados."
-                rows="16"
+                rows="8"
                 v-model="form.quantidade"
                 debounce="1000"
                 @change="save('quantidade')"

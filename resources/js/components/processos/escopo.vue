@@ -16,7 +16,7 @@
             <b-form-textarea
                 id="abrangencia-escopo"
                 placeholder="Descreva aqui a abrangência da área geográfica."
-                rows="16"
+                rows="8"
                 v-model="form.abrangencia"
                 debounce="1000"
                 @change="save('abrangencia')"
@@ -39,7 +39,7 @@
             <b-form-textarea
                 id="fonte-escopo"
                 placeholder="Descreva aqui a abrangência da área geográfica."
-                rows="16"
+                rows="8"
                 v-model="form.fonte"
                 debounce="1000"
                 @change="save('fonte')"
