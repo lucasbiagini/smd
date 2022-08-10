@@ -25,7 +25,7 @@ class StoreDadoRequest extends FormRequest
     {
         return [
             'processo_id' => ['required', 'exists:processos,id'],
-            'categoria' => ['required', 'integer', 'min:0', 'max:10'],
+            'categoria' => ['required', 'integer', 'min:0', 'max:63'],
             'desc' => ['required', 'string'],
             'tempo' => ['required', 'string'],
             'fonte' => ['required', 'integer', 'min:0', 'max:5'],

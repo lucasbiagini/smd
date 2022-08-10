@@ -18,6 +18,6 @@ class UpdateProcessoController extends Controller
 
     public function __invoke (UpdateProcessoRequest $request, Processo $processo)
     {
-        return $this->processo->updateProcesso($processo, $request->name, $request->ref);
+        return $this->processo->updateProcesso($processo, $request->name, $request->ref, $request->description);
     }
 }

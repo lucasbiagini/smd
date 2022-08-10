@@ -8,8 +8,10 @@ interface IProcesso
 {
     public function findById($id);
     public function paginateProcessos($sortBy, $sortDirection, $perPage, $status);
-    public function store($name, $ref, $setor_id);
-    public function updateProcesso(Processo $processo, $name, $ref);
+    public function store($name, $ref, $description, $setor_id);
+    public function updateProcesso(Processo $processo, $name, $description, $ref);
+    public function uploadImage(Processo $processo, $path, $filename, $type);
+    public function deleteImage(Processo $processo);
     public function addOperador(Processo $processo);
     public function getOperadores(Processo $processo);
     public function updateProcessoProp(Processo $processo, $prop, $value);

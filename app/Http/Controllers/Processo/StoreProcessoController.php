@@ -19,6 +19,6 @@ class StoreProcessoController extends Controller
     {
         if (!session()->has('setor_id')) return response(['message' => 'Setor indefinido'], 400);
         $setor_id = session('setor_id');
-        return $this->processo->store($request->name, $request->ref, $setor_id);
+        return $this->processo->store($request->name, $request->ref, $request->description, $setor_id);
     }
 }

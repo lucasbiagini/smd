@@ -25,7 +25,8 @@ class StoreProcessoRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:1', 'max:250'],
-            'ref' => ['string', 'max:250']
+            'ref' => ['string', 'max:250'],
+            'description' => ['string']
         ];
     }
 }

@@ -10,6 +10,7 @@ class RoleRepository implements IRole
     {
         return Role::whereNotIn('name', ['admin', 'Administrador'])
             ->where(function ($query) use ($status) {
+//                if (!auth()->user()->hasRole('admin')) $query->where('name', '!=', 'Administrador');
                 if (isset($status)) $query->where('status', $status);
             })
             ->orderBy($sortBy, $sortDirection)

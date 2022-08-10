@@ -6,6 +6,7 @@ use App\Models\Agente;
 use App\Models\Checklist;
 use App\Models\Processo;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class ProcessoRepository implements IProcesso
 {
@@ -32,12 +33,13 @@ class ProcessoRepository implements IProcesso
             ->paginate($perPage);
     }
 
-    public function store ($name, $ref, $setor_id)
+    public function store ($name, $ref, $description, $setor_id)
     {
         $processo = Processo::create([
             'name' => $name,
             'ref' => $ref,
-            'setor_id' => $setor_id
+            'setor_id' => $setor_id,
+            'description' => $description
         ]);
 
         $controlador = Agente::create();
@@ -56,11 +58,12 @@ class ProcessoRepository implements IProcesso
         return $processo;
     }
 
-    public function updateProcesso (Processo $processo, $name, $ref)
+    public function updateProcesso (Processo $processo, $name, $ref, $description)
     {
         $processo->update([
             'name' => $name,
-            'ref' => $ref
+            'ref' => $ref,
+            'description' => $description
         ]);
 
         return $processo->save();
@@ -177,5 +180,22 @@ class ProcessoRepository implements IProcesso
             $processo->archived_at = null;
             $processo->save();
         }
+    }
+
+    public function uploadImage(Processo $processo, $path, $filename, $type)
+    {
+        $processo->image_path = $path;
+        $processo->image_filename = $filename;
+        $processo->image_type = $type;
+        $processo->save();
+    }
+
+    public function deleteImage(Processo $processo)
+    {
+        Storage::delete($processo->image_path);
+        $processo->image_path = null;
+        $processo->image_filename = null;
+        $processo->image_type = null;
+        $processo->save();
     }
 }

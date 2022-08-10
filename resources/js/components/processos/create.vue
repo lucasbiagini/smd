@@ -25,9 +25,18 @@
                 <b-form-input
                     id="ref"
                     v-model="form.ref"
-                    placeholder="Insira o nome do processo"
+                    placeholder="Insira o código de referência do processo"
                     required
                 ></b-form-input>
+            </b-form-group>
+
+            <b-form-group id="description-group" label="Descrição:" label-for="description">
+                <b-form-textarea
+                    id="description"
+                    placeholder="Descreva aqui sobre o processo."
+                    rows="8"
+                    v-model="form.description"
+                ></b-form-textarea>
             </b-form-group>
 
             <template #modal-footer="{ criar, cancelar }">
@@ -51,7 +60,8 @@ export default({
         return {
             form: {
                 name: '',
-                ref: ''
+                ref: '',
+                description: ''
             }
         }
     },
@@ -81,7 +91,8 @@ export default({
         reset () {
             this.form = {
                 name: '',
-                ref: ''
+                ref: '',
+                description: ''
             }
         },
         close () {

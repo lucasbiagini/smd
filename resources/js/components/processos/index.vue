@@ -88,6 +88,10 @@
                 </template>
 
                 <template #cell(actions)="row">
+                    <b-button size="sm" @click="row.toggleDetails">
+                        <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>
+                        <b-icon-eye-slash v-else></b-icon-eye-slash>
+                    </b-button>
                     <b-button
                         size="sm"
                         @click="info(row.item, row.index, $event.target)"
@@ -137,6 +141,25 @@
                         v-if="row.item.archived_at !== null"
                         variant="dark"
                     >ARQUIVADO</b-badge>
+                </template>
+
+                <template #row-details="row">
+                    <b-card>
+                        <ul>
+                            <li
+                                v-for="(value, key) in row.item"
+                                :key="key"
+                                v-if="['description'].includes(key) && value !== null && value !== ''"
+                            >
+                                <p><strong>{{ columnName(key) }}:</strong> {{ value.text !== undefined ? value.text : value }}</p>
+                            </li>
+                        </ul>
+                        <b-form-group v-if="row.item.image === null">
+                            <input type="file" ref="image" class="mt-3" accept="image/*" @change="uploadImage(row.item.id)">
+                        </b-form-group>
+                        <b-badge v-if="row.item.image !== null" href="#" @click.prenv="deleteImage(row.item.id)" variant="danger">Excluir</b-badge>
+                        <b-img v-if="row.item.image !== null" :src="row.item.image" fluid alt="Imagem do Processo"></b-img>
+                    </b-card>
                 </template>
             </b-table>
 
@@ -204,6 +227,10 @@ export default ({
         })
     },
     methods: {
+        columnName(c)
+        {
+            if (c === 'description') return 'Descrição'
+        },
         async fetch () {
             this.isFetching = true
             await axios.post('/processos', {
@@ -256,6 +283,47 @@ export default ({
         async unarchive(processo_id) {
             await axios.post(`/processos/${processo_id}/unarchive`)
                 .then(() => this.fetch())
+                .catch(error => {})
+        },
+        async uploadImage (processo_id) {
+            var formData = new FormData();
+            formData.append('file', this.$refs.image.files[0])
+            formData.append('filename', this.$refs.image.files[0].name)
+            await axios.post(`/processos/${processo_id}/image`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                })
+                .then(response => {
+                    this.$swal.fire({
+                        timer: 1000,
+                        title: 'Sucesso!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        toast: true,
+                        position: 'top-end',
+                        timerProgressBar: true
+                    })
+                    this.$root.$emit('processo:updated')
+                })
+                .catch(error => {
+
+                })
+        },
+        async deleteImage (processo_id) {
+            await axios.post(`/processos/${processo_id}/image`)
+                .then(response => {
+                    this.$swal.fire({
+                        timer: 1000,
+                        title: 'Sucesso!',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        toast: true,
+                        position: 'top-end',
+                        timerProgressBar: true
+                    })
+                    this.$root.$emit('processo:updated')
+                })
                 .catch(error => {})
         }
     },

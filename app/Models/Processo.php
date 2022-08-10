@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Processo extends Model
 {
@@ -49,6 +50,7 @@ class Processo extends Model
     protected $fillable = [
         'name',
         'ref',
+        'description',
         'setor_id',
         'controlador_id',
         'encarregado_id',
@@ -67,6 +69,10 @@ class Processo extends Model
         'ready_at',
         'approved_at',
         'archived_at'
+    ];
+
+    protected $appends = [
+        'image'
     ];
 
     public function setor()
@@ -143,5 +149,10 @@ class Processo extends Model
     public function checklists()
     {
         return $this->hasMany(Checklist::class);
+    }
+
+    public function getImageAttribute()
+    {
+        return $this->image_path ? Storage::url($this->image_path) : null;
     }
 }

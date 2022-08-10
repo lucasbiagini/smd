@@ -130,6 +130,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasActiveRoles ()
     {
+        if ($this->hasRole('admin')) return true;
+
         foreach ($this->setor_user as $su) {
             foreach($su->roles as $role) {
                 if ($role->status === 1) return true;
