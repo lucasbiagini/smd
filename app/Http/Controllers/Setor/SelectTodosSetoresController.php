@@ -12,6 +12,6 @@ class SelectTodosSetoresController extends Controller
     public function __invoke ()
     {
         if (auth()->user()->hasRole('admin')) session(['setor_id' => -1, 'setor_name' => 'Todos']);
-        return redirect('/');
+        return redirect()->back();
     }
 }
