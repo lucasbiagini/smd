@@ -17,6 +17,6 @@ class PaginateRoleController extends Controller
 
     public function __invoke (PaginateRoleRequest $request)
     {
-        return $this->role->paginateRoles($request->sortBy, $request->sortDirection, $request->perPage);
+        return $this->role->paginateRoles($request->sortBy, $request->sortDirection, $request->perPage, $request->status);
     }
 }

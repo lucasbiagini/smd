@@ -6,7 +6,7 @@ use App\Models\Setor;
 
 interface ISetor
 {
-    public function paginateSetores($sortBy, $sortDirection, $perPage);
+    public function paginateSetores($sortBy, $sortDirection, $perPage, $status);
     public function store($name, $desc);
     public function searchSetor($query);
     public function updateSetor(Setor $setor, $name, $status);

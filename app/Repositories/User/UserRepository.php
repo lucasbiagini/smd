@@ -12,9 +12,11 @@ class UserRepository implements IUser
         return User::ofSetor()->find($id);
     }
 
-    public function paginateUsers($sortBy, $sortDirection, $perPage)
+    public function paginateUsers($sortBy, $sortDirection, $perPage, $status)
     {
-        return User::ofSetor()->orderBy($sortBy, $sortDirection)->paginate($perPage);
+        return User::ofSetor()->where(function($query) use ($status) {
+            if (isset($status)) $query->where('status', $status);
+        })->orderBy($sortBy, $sortDirection)->paginate($perPage);
     }
 
     public function updateUser (User $user, $name, $status)

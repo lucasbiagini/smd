@@ -17,6 +17,6 @@ class PaginateUserController extends Controller
 
     public function __invoke (PaginateUserRequest $request)
     {
-        return $this->user->paginateUsers($request->sortBy, $request->sortDirection, $request->perPage);
+        return $this->user->paginateUsers($request->sortBy, $request->sortDirection, $request->perPage, $request->statusUser);
     }
 }

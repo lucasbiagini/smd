@@ -6,7 +6,7 @@ use App\Models\Role;
 
 interface IRole
 {
-    public function paginateRoles($sortBy, $sortDirection, $perPage);
+    public function paginateRoles($sortBy, $sortDirection, $perPage, $status);
     public function store($name);
     public function searchRole($query);
     public function findById($id);

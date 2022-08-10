@@ -26,7 +26,8 @@ class PaginateUserRequest extends FormRequest
         return [
             'sortBy' => ['required', 'in:id,name,email'],
             'sortDirection' => ['required', 'in:asc,desc'],
-            'perPage' => ['required', 'integer']
+            'perPage' => ['required', 'integer'],
+            'statusUser' => ['boolean', 'nullable']
         ];
     }
 }

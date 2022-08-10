@@ -26,7 +26,8 @@ class PaginateSetorRequest extends FormRequest
         return [
             'sortBy' => ['required', 'in:id,name,desc'],
             'sortDirection' => ['required', 'in:asc,desc'],
-            'perPage' => ['required', 'integer']
+            'perPage' => ['required', 'integer'],
+            'status' => ['boolean', 'nullable']
         ];
     }
 }

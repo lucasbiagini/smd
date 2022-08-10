@@ -6,9 +6,11 @@ use App\Models\Setor;
 
 class SetorRepository implements ISetor
 {
-    public function paginateSetores ($sortBy, $sortDirection, $perPage)
+    public function paginateSetores ($sortBy, $sortDirection, $perPage, $status)
     {
-        return Setor::ofSetor()->orderBy($sortBy, $sortDirection)->paginate($perPage);
+        return Setor::ofSetor()->where(function ($query) use ($status){
+            if (isset($status)) $query->where('status', $status);
+        })->orderBy($sortBy, $sortDirection)->paginate($perPage);
     }
 
     public function store ($name, $desc)

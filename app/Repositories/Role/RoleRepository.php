@@ -6,9 +6,12 @@ use App\Models\Role;
 
 class RoleRepository implements IRole
 {
-    public function paginateRoles ($sortBy, $sortDirection, $perPage)
+    public function paginateRoles ($sortBy, $sortDirection, $perPage, $status)
     {
         return Role::whereNotIn('name', ['admin', 'Administrador'])
+            ->where(function ($query) use ($status) {
+                if (isset($status)) $query->where('status', $status);
+            })
             ->orderBy($sortBy, $sortDirection)
             ->paginate($perPage);
     }

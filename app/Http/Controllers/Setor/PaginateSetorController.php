@@ -17,6 +17,6 @@ class PaginateSetorController extends Controller
 
     public function __invoke (PaginateSetorRequest $request)
     {
-        return $this->setor->paginateSetores($request->sortBy, $request->sortDirection, $request->perPage);
+        return $this->setor->paginateSetores($request->sortBy, $request->sortDirection, $request->perPage, $request->status);
     }
 }

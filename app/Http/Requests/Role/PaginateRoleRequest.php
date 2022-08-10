@@ -26,7 +26,8 @@ class PaginateRoleRequest extends FormRequest
         return [
             'sortBy' => ['required', 'in:id,name'],
             'sortDirection' => ['required', 'in:asc,desc'],
-            'perPage' => ['required', 'integer']
+            'perPage' => ['required', 'integer'],
+            'status' => ['boolean', 'nullable']
         ];
     }
 }

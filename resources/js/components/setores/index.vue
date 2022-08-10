@@ -1,9 +1,34 @@
 <template>
-    <ol>
-        <b-container fluid>
-            <!-- User Interface controls -->
+    <b-container fluid>
+        <div>
+            <b-overlay no-wrap rounded="sm" :show="isFetching">
+                <template #overlay>
+                </template>
+            </b-overlay>
             <b-row>
-                <b-col sm="5" md="6" class="ml-auto">
+                <b-col sm="3" class="ml-auto">
+                    <b-form-group
+                        label="Status"
+                        label-for="status-select"
+                        label-cols-sm="6"
+                        label-cols-md="4"
+                        label-cols-lg="3"
+                        label-align-sm="right"
+                        label-size="sm"
+                        class="mb-0"
+                    >
+                        <b-form-select
+                            id="status-select"
+                            v-model="status"
+                            size="sm"
+                        >
+                            <b-select-option :value="null" :selected="true">Todos</b-select-option>
+                            <b-select-option :value="1">Ativo</b-select-option>
+                            <b-select-option :value="0">Inativo</b-select-option>
+                        </b-form-select>
+                    </b-form-group>
+                </b-col>
+                <b-col sm="3" class="ml-auto">
                     <b-form-group
                         label="Per page"
                         label-for="per-page-select"
@@ -23,7 +48,7 @@
                     </b-form-group>
                 </b-col>
 
-                <b-col sm="7" md="6">
+                <b-col sm="6">
                     <b-pagination
                         v-model="current_page"
                         :total-rows="total"
@@ -64,18 +89,17 @@
                     >
                         <b-icon-pencil></b-icon-pencil>
                     </b-button>
-<!--                    <b-button size="sm" @click="row.toggleDetails">-->
-<!--                        <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>-->
-<!--                        <b-icon-eye-slash v-else></b-icon-eye-slash>-->
-<!--                    </b-button>-->
                 </template>
 
-                <template #row-details="row">
-                    <b-card>
-                        <ul>
-                            <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-                        </ul>
-                    </b-card>
+                <template #cell(status)="row">
+                    <b-badge
+                        v-if="row.item.status === 1"
+                        variant="success"
+                    >ATIVO</b-badge>
+                    <b-badge
+                        v-else-if="row.item.status === 0"
+                        variant="secondary"
+                    >INATIVO</b-badge>
                 </template>
             </b-table>
 
@@ -95,8 +119,8 @@
                     </div>
                 </template>
             </b-modal>
-        </b-container>
-    </ol>
+        </div>
+    </b-container>
 </template>
 
 <script>
@@ -118,6 +142,7 @@ export default ({
             fields: [
                 { key: 'name', label: 'Nome', sortable: true, sortDirection: 'desc', class: 'text-center', stickyColumn: true, isActive: false},
                 { key: 'desc', label: 'Descrição', sortable: true, class: 'text-center', stickyColumn: true },
+                { key: 'status', label: 'Status', class: 'text-right', stickyColumn: true },
                 { key: 'actions', label: 'Actions', class: 'text-right', stickyColumn: true }
             ],
             pageOptions: null,
@@ -129,7 +154,8 @@ export default ({
                 title: '',
                 content: ''
             },
-            selectedItem: null
+            selectedItem: null,
+            status: null
         }
     },
     mounted () {
@@ -147,7 +173,8 @@ export default ({
                 perPage: this.per_page,
                 page: this.current_page,
                 sortBy: this.sortBy ? this.sortBy : 'id',
-                sortDirection: this.sortDesc ? 'desc' : 'asc'
+                sortDirection: this.sortDesc ? 'desc' : 'asc',
+                status: this.status
             })
                 .then(response => {
                     this.paginator = response.data
@@ -210,7 +237,11 @@ export default ({
         sortDesc () {
             this.current_page = 1
             return !this.isFetching ? this.fetch() : null
-        }
+        },
+        status () {
+            this.current_page = 1
+            return !this.isFetching ? this.fetch() : null
+        },
     }
 })
 </script>
