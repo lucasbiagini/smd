@@ -98,26 +98,6 @@
                     >
                         <b-icon-pencil></b-icon-pencil>
                     </b-button>
-<!--                    <b-button-->
-<!--                        v-if="(row.item.ready_at === null || row.item.approved_at !== null) && row.item.archived_at === null"-->
-<!--                        size="sm"-->
-<!--                        @click="analyse(row.item.id)"-->
-<!--                        variant="warning"-->
-<!--                        v-b-tooltip.hover-->
-<!--                        title="Solicitar Análise"-->
-<!--                    >-->
-<!--                        <b-icon-patch-check></b-icon-patch-check>-->
-<!--                    </b-button>-->
-<!--                    <b-button-->
-<!--                        v-if="row.item.ready_at !== null && row.item.approved_at === null && row.item.archived_at === null"-->
-<!--                        size="sm"-->
-<!--                        @click="approve(row.item.id)"-->
-<!--                        variant="success"-->
-<!--                        v-b-tooltip.hover-->
-<!--                        title="Aprovar"-->
-<!--                    >-->
-<!--                        <b-icon-patch-check-fill></b-icon-patch-check-fill>-->
-<!--                    </b-button>-->
                     <b-button
                         v-if="row.item.archived_at === null"
                         size="sm"
@@ -268,16 +248,6 @@ export default ({
         save() {
             this.$root.$emit('processo:save')
         },
-        // async analyse(processo_id) {
-        //     await axios.post(`/processos/${processo_id}/analyse`)
-        //         .then(() => this.fetch())
-        //         .catch(error => {})
-        // },
-        // async approve(processo_id) {
-        //     await axios.post(`/processos/${processo_id}/approve`)
-        //         .then(() => this.fetch())
-        //         .catch(error => {})
-        // },
         async archive(processo_id) {
             await axios.post(`/processos/${processo_id}/archive`)
                 .then(() => this.fetch())
