@@ -88,9 +88,24 @@
                 </template>
 
                 <template #cell(actions)="row">
-                    <b-button size="sm" @click="row.toggleDetails">
+                    <b-button
+                        size="sm"
+                        @click="row.toggleDetails"
+                        v-if="$can('processos.show')"
+                    >
                         <b-icon-eye v-if="!row.detailsShowing"></b-icon-eye>
                         <b-icon-eye-slash v-else></b-icon-eye-slash>
+                    </b-button>
+                    <b-button
+                        size="sm"
+                        :href="`/processos/${row.item.id}/pdf`"
+                        target="_blank"
+                        v-if="$can('processos.show')"
+                        variant="secondary"
+                        v-b-tooltip.hover
+                        title="Download PDF"
+                    >
+                        <b-icon-download></b-icon-download>
                     </b-button>
                     <b-button
                         size="sm"
@@ -311,7 +326,7 @@ export default ({
                 })
         },
         async deleteImage (processo_id) {
-            await axios.post(`/processos/${processo_id}/image`)
+            await axios.delete(`/processos/${processo_id}/image`)
                 .then(response => {
                     this.$swal.fire({
                         timer: 1000,

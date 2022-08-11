@@ -124,11 +124,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
                     Route::post('/{processo}', 'UpdateProcessoController')->name('processos.update');
                     Route::post('/{processo}/image', 'UploadImageController')
                         ->middleware('permission:processos.update');
-                    Route::post('/{processo}/image', 'DeleteImageController')
+                    Route::delete('/{processo}/image', 'DeleteImageController')
                         ->middleware('permission:processos.update');
                     Route::get('/{processo}', 'ProcessoController@show')->name('processos.show');
                 });
                 Route::post('/{processo}', 'GetProcessoController')
+                    ->middleware('permission:processos.show');
+                Route::get('/{processo}/pdf', 'GetProcessoPDFController')
                     ->middleware('permission:processos.show');
 
                 /**
