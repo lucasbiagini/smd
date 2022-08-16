@@ -19,7 +19,9 @@
     <body class="font-sans antialiased">
         <div id="app">
             <div class="min-h-screen bg-gray-100" v-cloak>
-                @if (!auth()->user()->hasActiveRoles())
+                @if (!auth()->user()->status)
+                    <index-unauthorized message="Usuário inativo."></index-unauthorized>
+                @elseif (!auth()->user()->hasActiveRoles())
                     <index-unauthorized message="Perfil inativo."></index-unauthorized>
                 @elseif(auth()->user()->status && session()->has('setor_id') && ( session('setor_id') === -1 || \App\Models\Setor::find(session('setor_id'))->status === 1))
                     @include('layouts.navigation')
@@ -43,8 +45,6 @@
                             </div>
                         </div>
                     </main>
-                @elseif (!auth()->user()->status)
-                    <index-unauthorized message="Usuário inativo."></index-unauthorized>
                 @elseif (auth()->user()->setores()->where('status', 1)->count() > 0)
                     <select-setor :user_id="{{ auth()->user()->id }}"></select-setor>
                 @else

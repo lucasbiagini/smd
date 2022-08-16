@@ -14,7 +14,7 @@
 
     <div class="page_break"></div>
     <h1>Imagem do Processo</h1>
-    <img  src="{{public_path($image)}}" alt="image" >
+    <img style="width:100%" src="{{public_path($image)}}" alt="image" >
 
     <div class="page_break"></div>
     <h1>Agentes de Tratamento</h1>

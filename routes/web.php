@@ -121,7 +121,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
                 Route::middleware(['permission'])->group(function () {
                     Route::post('/', 'PaginateProcessoController')->name('processos.list');
                     Route::post('/create', 'StoreProcessoController')->name('processos.store');
-                    Route::post('/{processo}', 'UpdateProcessoController')->name('processos.update');
+                    Route::patch('/{processo}', 'UpdateProcessoController')->name('processos.update');
                     Route::post('/{processo}/image', 'UploadImageController')
                         ->middleware('permission:processos.update');
                     Route::delete('/{processo}/image', 'DeleteImageController')

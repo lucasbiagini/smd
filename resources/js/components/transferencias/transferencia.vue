@@ -48,12 +48,12 @@
                     <template #title>Ajuda</template>
                     <p>Indique o país caso realize transferência internacional de dados pessoais.</p>
                 </b-popover>
-                <span>Nome da instituição:</span>
+                <span>País da Instituição:</span>
             </template>
             <b-form-input
                 id="pais-transferencia"
                 v-model="form.pais"
-                placeholder="Insira o nome da instituição"
+                placeholder="Insira o país da instituição"
                 required
             ></b-form-input>
         </b-form-group>

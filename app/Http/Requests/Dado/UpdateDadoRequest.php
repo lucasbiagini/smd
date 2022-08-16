@@ -24,7 +24,7 @@ class UpdateDadoRequest extends FormRequest
     public function rules()
     {
         return [
-            'categoria' => ['required', 'integer', 'min:0', 'max:10'],
+            'categoria' => ['required', 'integer', 'min:0', 'max:63'],
             'desc' => ['required', 'string'],
             'tempo' => ['required', 'string'],
             'fonte' => ['required', 'integer', 'min:0', 'max:5'],
