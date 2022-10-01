@@ -17,7 +17,7 @@ class CreateContratosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('processo_id');
             $table->string('numero');
-            $table->string('objeto');
+            $table->longText('objeto');
             $table->string('email');
             $table->timestamps();
 

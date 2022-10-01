@@ -35,6 +35,7 @@
                 id="organizacao-transferencia"
                 v-model="form.organizacao"
                 placeholder="Insira o nome da organização"
+                maxlength="255"
                 required
             ></b-form-input>
         </b-form-group>
@@ -54,6 +55,7 @@
                 id="pais-transferencia"
                 v-model="form.pais"
                 placeholder="Insira o país da instituição"
+                maxlength="255"
                 required
             ></b-form-input>
         </b-form-group>

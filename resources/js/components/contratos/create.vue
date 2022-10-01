@@ -31,6 +31,7 @@
                     id="numero-contrato"
                     v-model="form.numero"
                     placeholder="Insira o número do contrato"
+                    maxlength="255"
                     required
                 ></b-form-input>
             </b-form-group>
@@ -63,6 +64,8 @@
                     id="email-contrato"
                     v-model="form.email"
                     placeholder="Insira o email do gestor do contrato"
+                    type="email"
+                    maxlength="255"
                     required
                 ></b-form-input>
             </b-form-group>
@@ -135,10 +138,13 @@ export default({
             this.reset()
             this.$refs['modal'].hide()
         },
+        checkEmailFormat() {
+            return this.form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+        }
     },
     computed: {
         isReadyToSubmit () {
-            return this.form.numero !== null && this.form.objeto !== '' && this.form.email !== null
+            return this.form.numero !== null && this.form.objeto !== '' && this.form.email !== null && this.checkEmailFormat()
         }
     }
 })

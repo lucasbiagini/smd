@@ -78,23 +78,43 @@ export default({
             }
         },
         save () {
-            axios.patch('/contratos/' + this.contrato.id, this.form)
-                .then(response => {
-                    this.$swal.fire({
-                        timer: 1000,
-                        title: 'Sucesso!',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        toast: true,
-                        position: 'top-end',
-                        timerProgressBar: true
+            if (this.isReadyToSubmit) {
+                axios.patch('/contratos/' + this.contrato.id, this.form)
+                    .then(response => {
+                        this.$swal.fire({
+                            timer: 1000,
+                            title: 'Sucesso!',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            toast: true,
+                            position: 'top-end',
+                            timerProgressBar: true
+                        })
+                        this.$root.$emit('contrato:updated')
                     })
-                    this.$root.$emit('contrato:updated')
-                })
-                .catch(error => {
+                    .catch(error => {
 
-                })
+                    })
+            } else {
+                this.$swal.fire({
+                    timer: 10000,
+                    title: "Ocorreu um erro e não foi possível salvar o contrato.",
+                    icon: 'error',
+                    showConfirmButton: false,
+                    toast: true,
+                    position: 'top-end',
+                    timerProgressBar: true
+                });
+            }
         },
+        checkEmailFormat() {
+            return this.form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
+        }
+    },
+    computed: {
+        isReadyToSubmit () {
+            return this.form.numero !== null && this.form.objeto !== '' && this.form.email !== null && this.checkEmailFormat()
+        }
     }
 })
 </script>

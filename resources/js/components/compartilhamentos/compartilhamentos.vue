@@ -152,7 +152,9 @@ export default({
             paginator: null,
             fields: [
                 {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc', strickyColumn: true},
-                { key: 'nome_instituicao', label: 'Nome da Instituição', sortable: true, class: 'text-center', stickyColumn: true },
+                { key: 'nome_instituicao', label: 'Nome da Instituição', sortable: true, class: 'text-center', stickyColumn: true, formatter: nome => {
+                    return nome.substring(0, 35) + "..."
+                    } },
                 { key: 'actions', label: 'Actions', class: 'text-right', stickyColumn: true }
             ],
             pageOptions: null,

@@ -17,7 +17,7 @@ class CreateTitularesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('processo_id');
             $table->string('tipo')->nullable();
-            $table->string('desc')->nullable();
+            $table->longText('desc')->nullable();
             $table->timestamps();
 
             $table->foreign('processo_id')

@@ -49,6 +49,7 @@
                     v-model="form.nome_instituicao"
                     placeholder="Insira o nome da instituição"
                     required
+                    maxlength="255"
                 ></b-form-input>
             </b-form-group>
 

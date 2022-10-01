@@ -33,6 +33,7 @@
                 id="nome_instituicao-contrato"
                 v-model="form.nome_instituicao"
                 placeholder="Insira o nome da instituição"
+                maxlength="255"
                 required
             ></b-form-input>
         </b-form-group>

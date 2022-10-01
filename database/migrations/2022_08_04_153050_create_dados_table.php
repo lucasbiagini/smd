@@ -17,8 +17,8 @@ class CreateDadosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('processo_id');
             $table->string('categoria')->nullable();
-            $table->string('desc')->nullable();
-            $table->string('tempo')->nullable();
+            $table->longText('desc')->nullable();
+            $table->longText('tempo')->nullable();
             $table->string('fonte')->nullable();
             $table->string('base_dados')->nullable();
             $table->timestamps();

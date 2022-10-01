@@ -16,7 +16,8 @@ class CreateMedidasTable extends Migration
         Schema::create('medidas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('processo_id');
-            $table->string('tipo')->nullable();
+            $table->string('tipo');
+            $table->longText('desc')->nullable();
             $table->timestamps();
 
             $table->foreign('processo_id')
