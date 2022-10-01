@@ -25,7 +25,7 @@ class UpdateProcessoPropRequest extends FormRequest
     {
         return [
             'prop' => ['required', 'in:desc,abrangencia,fonte,hipotese,finalidade,previsao_legal,resultados,beneficios,frequencia,quantidade,criancas,vulneraveis',],
-            'value' => ['alpha_num']
+            'value' => ['string_or_integer']
         ];
     }
 }
