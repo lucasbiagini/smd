@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Categorias dos titulares de titulars pessoais</h3>
+        <h3>Categorias dos titulares de dados pessoais</h3>
 
         <create-titular
             :processo_id="processo.id"
