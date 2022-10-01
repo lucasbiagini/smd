@@ -28,8 +28,8 @@ class CreateProcessosTable extends Migration
             $table->longText('previsao_legal')->nullable();
             $table->longText('resultados')->nullable();
             $table->longText('beneficios')->nullable();
-            $table->string('frequencia')->nullable();
-            $table->string('quantidade')->nullable();
+            $table->longText('frequencia')->nullable();
+            $table->longText('quantidade')->nullable();
             $table->boolean('criancas')->nullable();
             $table->boolean('vulneraveis')->nullable();
             $table->timestamps();
