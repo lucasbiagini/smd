@@ -22,6 +22,7 @@
                 v-model="form.nome"
                 :state="states['nome']"
                 :disabled="disabled"
+                maxlength="255"
             ></b-form-input>
         </b-form-group>
 
@@ -37,6 +38,7 @@
                 v-model="form.endereco"
                 :state="states['endereco']"
                 :disabled="disabled"
+                maxlength="255"
             ></b-form-input>
         </b-form-group>
 
@@ -48,10 +50,13 @@
         >
             <b-form-input
                 :id="`${tipo}_${form_index}-cep`"
-                @change="save('cep')"
+                @change="form.cep.length === 10 ? save('cep') : resetState('cep')"
                 v-model="form.cep"
                 :state="states['cep']"
                 :disabled="disabled"
+                v-mask="'##.###-###'"
+                masked="false"
+                maxlength="255"
             ></b-form-input>
         </b-form-group>
 
@@ -63,10 +68,12 @@
         >
             <b-form-input
                 :id="`${tipo}_${form_index}-telefone`"
-                @change="save('telefone')"
+                @change="form.telefone.length === 14 || form.telefone.length === 15 ? save('telefone') : resetState('telefone')"
                 v-model="form.telefone"
                 :state="states['telefone']"
+                v-mask="['(##) ####-####', '(##) #####-####']"
                 :disabled="disabled"
+                maxlength="255"
             ></b-form-input>
         </b-form-group>
 
@@ -78,10 +85,11 @@
         >
             <b-form-input
                 :id="`${tipo}_${form_index}-email`"
-                @change="save('email')"
+                @change="checkFormat('email') ? save('email') : resetState('email')"
                 v-model="form.email"
                 :state="states['email']"
                 :disabled="disabled"
+                maxlength="255"
             ></b-form-input>
         </b-form-group>
 
@@ -110,8 +118,10 @@
 
 <script>
 import axios from 'axios'
+import {mask} from 'vue-the-mask'
 
 export default({
+    directives: {mask},
     props: {
         title: {
             required: true
@@ -256,6 +266,15 @@ export default({
                     this.atuacao[prop].value = this.atuacao[prop].value === 1 ? 0 : 1
                     this.savingFailed()
                 })
+        },
+        resetState(prop) {
+            this.states[prop] = null
+        },
+        checkFormat(prop) {
+            if (prop === 'email') {
+                let emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                return this.form[prop].match(emailFormat)
+            }
         }
     }
 })
